@@ -1,0 +1,12 @@
+<div class="inicio">
+    <div class="titulo">
+        <h1>Kahoot!</h1>
+    </div>
+    <form class="entrarPin">
+        <input name="pin" type="text" placeholder="PIN del juego" [(ngModel)]="pin">
+        <button routerLink="/nombreJugador" (click)="savePin()">Ingresar</button>
+        <a routerLink="/login">Login</a>
+    </form>
+    <div class="forma1"></div>
+    <div class="forma2"></div>
+</div>

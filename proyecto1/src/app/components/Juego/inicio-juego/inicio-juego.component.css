@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
+
+.inicioJuego {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.inicioJuego .pregunta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.801);
+    width: 100%;
+}
+
+.inicioJuego .pregunta p{
+    color: rgb(51, 51, 51);
+    font-size: 2.5rem;
+    font-weight: 750;
+    margin-top: 20px;
+}
+
+.inicioJuego .barra-carga{
+    position: absolute;
+    width: 90%;
+    height: 20px;
+    border-radius: 20px;
+    top: 65%;
+}
+
+.inicioJuego .contador{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: blue;
+    border-radius: 30px;
+    padding: 0px 15px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}

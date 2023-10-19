@@ -1,0 +1,45 @@
+.salaEsperaJugador{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.salaEsperaJugador .contenido{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.salaEsperaJugador .avatar{
+    background-color: bisque;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.salaEsperaJugador .avatar img{
+    width: 140px;
+    height: auto;
+}
+
+.salaEsperaJugador .nombre{
+    color: white;
+    font-size: 2.5rem;
+    line-height: normal;
+    font-weight: bold;
+}
+
+.salaEsperaJugador p{
+    color: white;
+    margin: 1.5rem 0px 0px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.281);
+    padding: 5px;
+}

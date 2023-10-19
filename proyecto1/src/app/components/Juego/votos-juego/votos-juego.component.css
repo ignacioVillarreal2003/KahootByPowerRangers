@@ -1,0 +1,154 @@
+.votosJuego{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.votosJuego h1{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+    border-radius: 2px;
+    align-self: center;
+    padding: 16px 32px;
+    margin-top: 40px;
+    line-height: 1.25;
+    font-weight: 700;
+    font-size: 4.68333vmin;
+    color: rgb(51, 51, 51);
+    letter-spacing: 0.05rem;
+}
+
+.votosJuego .siguiente{
+    position: absolute;
+    top: 40px;
+    right: 30px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+    border-radius: 2px;
+    align-self: center;
+    padding: 10px 22px;
+    border: none;
+    transition: all 350ms ease;
+    line-height: 1.20;
+    font-weight: 600;
+    font-size: 2vmin;
+    color: rgb(51, 51, 51);
+}
+
+.votosJuego .siguiente:hover{
+    transform: scale(1.1);
+}
+
+.votosJuego .foot{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.541);
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 0;
+}
+
+.votosJuego .foot h2{
+    color: white;
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+    margin-left: 40px;
+    width: 80%;
+    text-align: center;
+}
+
+.votosJuego .foot p{
+    color: white;
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+    margin-left: 40px;
+}
+
+.votosJuego .grafico{
+    width: 80%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.votosJuego .grafico .cont{
+    margin-top: 100px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.votosJuego .grafico .op1,
+.votosJuego .grafico .op2,
+.votosJuego .grafico .op3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.votosJuego .grafico .op1 .base, 
+.votosJuego .grafico .op2 .base,
+.votosJuego .grafico .op3 .base{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 148px;
+    height: 42px;
+    min-height: 3.2vmin;
+    max-width: 100%;
+    border-radius: 0px 0px 4px 4px;
+    color: rgb(255, 255, 255);
+    fill: rgb(255, 255, 255);
+    margin-top: 10px;
+}
+
+.votosJuego .grafico .op1 .relleno, 
+.votosJuego .grafico .op2 .relleno,
+.votosJuego .grafico .op3 .relleno{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    fill: rgb(255, 255, 255);
+}
+
+.votosJuego .grafico .op1 .base{
+    background: #b0142c;
+}
+
+.votosJuego .grafico .op2 .base{
+    background-color: #a87c04;
+}
+
+.votosJuego .grafico .op3 .base{
+    background-color: #206c0c;
+}
+
+.votosJuego .grafico .op1 .relleno{
+    background: #b0142c;
+}
+
+.votosJuego .grafico .op2 .relleno{
+    background-color: #a87c04;
+}
+
+.votosJuego .grafico .op3 .relleno{
+    background-color: #206c0c;
+}
