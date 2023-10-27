@@ -1,0 +1,19 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "jesus",
+      "author": "typicode"
+    },
+    {
+      "id": 2,
+      "title": "json-serverasd",
+      "author": "typicodeds"
+    },
+    {
+      "id": 3,
+      "title": "adsasd-server",
+      "author": "fdsfsd"
+    }
+  ] 
+}

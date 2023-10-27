@@ -3,8 +3,7 @@ import cardRouter from './routes/cards'
 
 const app = express()
 app.use(express.json()) 
-
-const PORT = 3000
+const PORT = 3001
 
 function authenticate(req: any, res: any, next: any) { /* solo para administradores */
     const authorizationHeader = req.headers.authorization;
@@ -23,6 +22,12 @@ app.get('/test', authenticate, (req, res) => {
 });
 
 app.use('/api/cards', cardRouter)
+
+app.post('/login', (req, res) => {
+    fetch('http://127.0.0.1:3000/posts', {method: 'GET'})
+        .then(response => response.json)
+        .then(data => res.send(data));
+})
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
