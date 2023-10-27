@@ -2,18 +2,18 @@
   "posts": [
     {
       "id": 1,
-      "title": "jesus",
-      "author": "typicode"
+      "username": "jesus",
+      "password": "mi3nfsdj"
     },
     {
       "id": 2,
-      "title": "json-serverasd",
-      "author": "typicodeds"
+      "username": "json-serverasd",
+      "password": "typicodeds"
     },
     {
       "id": 3,
-      "title": "adsasd-server",
-      "author": "fdsfsd"
+      "username": "adsasd-server",
+      "password": "fdsfsd"
     }
   ] 
 }

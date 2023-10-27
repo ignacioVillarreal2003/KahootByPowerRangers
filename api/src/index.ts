@@ -4,7 +4,7 @@ import cardRouter from './routes/cards'
 const app = express()
 app.use(express.json()) 
 const jwt = require('jsonwebtoken');
-const PORT = 3000
+const PORT = 3001
 
 /* Middleware */
 function authenticate(req: any, res: any, next: any) {
@@ -37,8 +37,25 @@ app.post('/registrarUsuario', (req, res) => {
 
 app.post('/loguearUsuario', (req, res) => {
     /* Logueo en base de datos */
-    const token = generateAccessToken(req.body.username);
-    res.send(token);
+    let users: userInfo[] = [];
+    fetch('http://localhost:3000/posts', {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            users = data;
+            users.forEach(user => {
+                if (req.body.username == user.username && req.body.password == user.password) {
+                    const token = generateAccessToken(req.body.username);
+                    res.send(token);
+                }
+            });
+            res.status(400).send({
+                message: "Datos de logueo incorrectos."
+            });
+        }, () => {
+            res.status(500).send({
+                message: "Error al conectar a la BD."
+            });
+        });
 });
 
 app.get('/getToken', (req, res) => {
@@ -55,15 +72,34 @@ app.get('/test', authenticate, (req, res) => {
 
 app.use('/api/cards', cardRouter)
 
-app.post('/login', (req, res) => {
-    fetch('http://127.0.0.1:3000/posts', {method: 'GET'})
-        .then(response => response.json)
-        .then(data => res.send(data));
-})
+/*
+Función que debería conectar a la BD y devolver true o false.
+No implementado todavía.
+async function login(username: string, password: string) : Promise<boolean> {
+    let users: userInfo[] = [];
+    fetch('http://localhost:3000/posts', {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            users = data;
+            users.forEach(user => {
+                if (username == user.username && password == user.password) true;
+            });
+            return false;
+        }, () => {
+            return false;
+        });
+    return false;
+};
+*/
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
+interface userInfo {
+    id: number,
+    username: string,
+    password: string
+}
 
 //npm run dev
