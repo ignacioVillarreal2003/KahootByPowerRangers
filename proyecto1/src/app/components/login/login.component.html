@@ -1,0 +1,13 @@
+<div class="inicio">
+    <div class="titulo">
+        <h1>Login</h1>
+    </div>
+    <form class="entrarPin">
+        <input name="usuario" type="text" placeholder="Usuario" [(ngModel)]="usuario">
+        <input name="contra" type="password" placeholder="Contraseña" [(ngModel)]="contra">
+        <button class="iniciar" routerLink="/nombreJugador" (click)="guardarDatosUsuario()">Iniciar sesión</button>
+        <button class="registrarse" routerLink="/nombreJugador" (click)="guardarDatosUsuario()">Registrarse</button>
+    </form>
+    <div class="forma1"></div>
+    <div class="forma2"></div>
+</div>
