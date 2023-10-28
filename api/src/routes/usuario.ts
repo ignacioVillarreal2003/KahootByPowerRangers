@@ -1,19 +1,25 @@
 import express from 'express'
+import { listaUsuarios, listaPuntuaciones } from '../index';
+import { ICalificarActividad } from './ICalificarActividad';
+
 
 const router = express.Router()
 
-router.get('/', (req, res)=> {
-    res.send(['1', '2', '3'])
+router.post('/agregarUsuario', (req, res)=> {
+    const nombreUsuario: string = req.body.usuario
+    listaUsuarios.push(nombreUsuario);
+    res.send("")
 })
 
-router.post('/', (req, res)=> {
-    res.send({'hello': 'world'})
+router.post('/calificarActividad/:id', (req, res)=> {
+    const actividadId = req.params.id;
+    const obj : ICalificarActividad = {
+        idActividad: req.body.actividadId,
+        calificacion: req.body.calificacion
+    }
+    listaPuntuaciones.push(obj)
+    res.send("");
 })
-
-router.get('/test', (req, res) => {
-    console.log("hello world");
-    res.send('V 1.1');
-});
 
 
 export default router

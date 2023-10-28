@@ -1,6 +1,5 @@
 import express from 'express'
 import { authenticate, listaPuntuaciones } from '../index';
-import { ICalificarActividad } from './ICalificarActividad';
 
 const router = express.Router()
 
@@ -42,16 +41,6 @@ router.get('/getPropuestas', authenticate, (req, res)=> {
 
 router.get('/getPropuesta/:id', authenticate, (req, res)=> {
     /* agarra la Propuesta de la base de datos */
-    res.send("");
-})
-
-router.post('/calificarActividad/:id', authenticate, (req, res)=> {
-    const actividadId = req.params.id;
-    const obj : ICalificarActividad = {
-        idActividad: req.body.actividadId,
-        calificacion: req.body.calificacion
-    }
-    listaPuntuaciones.push(obj)
     res.send("");
 })
 

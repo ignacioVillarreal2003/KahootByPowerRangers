@@ -16,6 +16,7 @@ app.listen(PORT, () => {
 })
 
 export const listaPuntuaciones: ICalificarActividad[] = [];
+export const listaUsuarios: string[] = [];
 
 /* Middleware */
 export function authenticate(req: any, res: any, next: any) {
