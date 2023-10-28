@@ -1,13 +1,24 @@
 import express from 'express'
-import cardRouter from './routes/cards'
+import administradorRouter from './routes/administrador'
+import usuarioRouter from './routes/usuario'
+import { ICalificarActividad } from './routes/ICalificarActividad'
 
 const app = express()
 app.use(express.json()) 
 const jwt = require('jsonwebtoken');
 const PORT = 3000
 
+app.use('/api/administrador', administradorRouter)
+app.use('/api/usuario', usuarioRouter)
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
+
+export const listaPuntuaciones: ICalificarActividad[] = [];
+
 /* Middleware */
-function authenticate(req: any, res: any, next: any) {
+export function authenticate(req: any, res: any, next: any) {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
         return res.status(401).send('Unauthorized');
@@ -43,20 +54,6 @@ app.post('/loguearUsuario', (req, res) => {
 
 app.get('/getToken', (req, res) => {
     res.send(jwt.verify(req.body.token, 'shhhhh'))
-})
-
-
-
-/* Operaciones */
-app.get('/test', authenticate, (req, res) => {
-    console.log("hello world");
-    res.send('V 1.1');
-});
-
-app.use('/api/cards', cardRouter)
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
 })
 
 

@@ -1,5 +1,5 @@
 export interface IActividad{
-    numeroPregunta: number,
+    id: number,
     titulo: string,
     descripcion: string,
     imagen: string
