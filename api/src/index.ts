@@ -49,13 +49,35 @@ app.post('/registrarUsuario', (req, res) => {
 
 app.post('/loguearUsuario', (req, res) => {
     /* Logueo en base de datos */
-    const token = generateAccessToken(req.body.username);
-    res.send(token);
+    let users: userInfo[] = [];
+    fetch('http://localhost:3000/posts', {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            users = data;
+            users.forEach(user => {
+                if (req.body.username == user.username && req.body.password == user.password) {
+                    const token = generateAccessToken(req.body.username);
+                    res.send(token);
+                }
+            });
+            res.status(400).send({
+                message: "Datos de logueo incorrectos."
+            });
+        }, () => {
+            res.status(500).send({
+                message: "Error al conectar a la BD."
+            });
+        });
 });
 
 app.get('/getToken', (req, res) => {
     res.send(jwt.verify(req.body.token, 'shhhhh'))
 })
 
+interface userInfo {
+    id: number,
+    username: string,
+    password: string
+}
 
 //npm run dev

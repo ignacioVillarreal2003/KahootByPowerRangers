@@ -15,4 +15,6 @@ export class InicioComponent {
   }
 
   constructor(private datosJugadorService: DatosJugadorService){}
+
+  
 }
