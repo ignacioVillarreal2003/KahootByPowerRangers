@@ -1,0 +1,19 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "username": "jesus",
+      "password": "mi3nfsdj"
+    },
+    {
+      "id": 2,
+      "username": "json-serverasd",
+      "password": "typicodeds"
+    },
+    {
+      "id": 3,
+      "username": "adsasd-server",
+      "password": "fdsfsd"
+    }
+  ] 
+}
