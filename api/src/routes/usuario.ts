@@ -12,7 +12,7 @@ router.post('/agregarUsuario', (req, res)=> {
 })
 
 router.post('/calificarActividad/:id', (req, res)=> {
-    const actividadId = req.params.id;
+    //const actividadId = req.params.id;
     const obj : ICalificarActividad = {
         idActividad: req.body.actividadId,
         calificacion: req.body.calificacion
