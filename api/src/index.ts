@@ -1,11 +1,12 @@
 import express from 'express'
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
-import { ICalificarActividad } from './routes/ICalificarActividad'
+import { ICalificarActividad } from './routes/ICalificarActividad';
+
 
 const app = express()
 app.use(express.json())
-const jwt = require('jsonwebtoken');
+export const jwt = require('jsonwebtoken');
 const PORT = 3000
 
 app.use('/api/administrador', administradorRouter)
@@ -15,26 +16,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
-export const listaPuntuaciones: ICalificarActividad[] = [];
 export const listaUsuarios: string[] = [];
+export const listaPuntuaciones: ICalificarActividad[] = [];
 
-/* Middleware */
-export function authenticate(req: any, res: any, next: any) {
-    const authorizationHeader = req.headers.authorization;
-    if (!authorizationHeader) {
-        return res.status(401).send('Unauthorized');
-    } else {
-        const token: string = authorizationHeader.split(' ')[1];
-        try {
-            jwt.verify(token, 'shhhhh');
-            next();
-        } catch (err) {
-            console.log(err);
-            const error = new Error("Error! Something went wrong.");
-            return next(error);
-        }
-    }
-}
 
 /* Generar tokens */
 function generateAccessToken(username: string) {
