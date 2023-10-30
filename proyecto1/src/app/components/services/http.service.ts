@@ -8,32 +8,52 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  registrarUsuario(username: string, password: string) {
-    const requestBody = { username: username, password: password };
-    this.http.post<any>('http://localhost:3000/registrarUsuario', requestBody).subscribe(
-      (response: any) => {
-        // Guardar la respuesta en el localStorage
-        localStorage.setItem('token', response.token);
-        return response;
-      },
-      (error: any) => {
-        console.error('Error al registrar el usuario', error);
+  async registrarUsuario(username: string, password: string) {
+    try {
+      const requestBody = { username: username, password: password };
+      const response = await fetch('http://localhost:3001/registrarUsuario', {
+        method: "POST",
+        body: JSON.stringify(requestBody),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const token = await response.text();
+        localStorage.setItem('token', token);
+        alert(token);
+      } else {
+        const errorData = await response.json();
+        console.error('Hubo un error al registrar el usuario:', errorData.message);
       }
-    );
+    } catch (error) {
+      console.error('Hubo un error al registrar el usuario:', error);
+    }
   }
 
-  loguearUsuario(username: string, password: string) {
-    const requestBody = { username: username, password: password };
-    this.http.post<any>('http://localhost:3000/loguearUsuario', requestBody).subscribe(
-      (response: any) => {
-        // Guardar la respuesta en el localStorage
-        localStorage.setItem('token', response.token);
-        return response;
-      },
-      (error: any) => {
-        console.error('Error al registrar el usuario', error);
+  async loguearUsuario(username: string, password: string): Promise<boolean> {
+    try {
+      const requestBody = { username: username, password: password };
+      const response = await fetch('http://localhost:3001/loguearUsuario', {
+        method: "POST",
+        body: JSON.stringify(requestBody),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const token = await response.text();
+        localStorage.setItem('token', token);
+        return true;
+      } else {
+        const errorData = await response.json();
+        console.error('Hubo un error al logear el usuario:', errorData.message);
+        return false;
       }
-    );
+    } catch (error) {
+      console.error('Hubo un error al logear el usuario:', error);
+      return false;
+    }
   }
 
 

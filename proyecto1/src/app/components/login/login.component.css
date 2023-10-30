@@ -29,7 +29,7 @@
     justify-content: center;
     flex-direction: column;
     width: 320px;
-    height: px;
+    height: 300px;
     background-color: white;
     padding: 10px 16px;
     border-radius: 4px;
@@ -140,5 +140,10 @@
     bottom: -15vmin;
     right: -15vmin;
     z-index: 1;
-    
+}
+
+.textoLog{
+    color: red;
+    font-size: 15px;
+    margin-top: 5px;
 }
