@@ -9,7 +9,7 @@ export class ActividadesService {
 
   ACTIVIDADES: IActividad[] = [
     {
-      numeroPregunta: 1,
+      id: 1,
       titulo: "Titulo",
       descripcion: "Descripcion",
       imagen: "Foto"

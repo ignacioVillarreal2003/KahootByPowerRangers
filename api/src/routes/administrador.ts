@@ -1,7 +1,25 @@
 import express from 'express'
-import { authenticate, listaPuntuaciones } from '../index';
+import { listaPuntuaciones, jwt } from '../index';
 
 const router = express.Router()
+
+/* Middleware */
+export function authenticate(req: any, res: any, next: any) {
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader) {
+        return res.status(401).send('Unauthorized');
+    } else {
+        const token: string = authorizationHeader.split(' ')[1];
+        try {
+            jwt.verify(token, 'shhhhh');
+            next();
+        } catch (err) {
+            console.log(err);
+            const error = new Error("Error! Something went wrong.");
+            return next(error);
+        }
+    }
+}
 
 router.post('/crearActividad', authenticate, (req, res)=> {
     const actividad = {

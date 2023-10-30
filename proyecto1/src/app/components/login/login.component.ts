@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +8,17 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent {
 
+  constructor(private httpService: HttpService){}
+
   usuario: string = "";
   contra: string = "";
 
-  guardarDatosUsuario(){
-    this.loginService.usuario = this.usuario;
-    this.loginService.contra = this.contra;
+  loguearUsuario(){
+    this.httpService.loguearUsuario(this.usuario, this.contra)
   }
 
-  constructor(private loginService: LoginService){}
+  registrarUsuario(){
+    this.httpService.registrarUsuario(this.usuario, this.contra)
+  }
+
 }
