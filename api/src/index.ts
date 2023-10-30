@@ -4,7 +4,7 @@ import usuarioRouter from './routes/usuario'
 import { ICalificarActividad } from './routes/ICalificarActividad'
 
 const app = express()
-app.use(express.json()) 
+app.use(express.json())
 const jwt = require('jsonwebtoken');
 const PORT = 3000
 
@@ -24,11 +24,11 @@ export function authenticate(req: any, res: any, next: any) {
     if (!authorizationHeader) {
         return res.status(401).send('Unauthorized');
     } else {
-        const token : string = authorizationHeader.split(' ')[1];
+        const token: string = authorizationHeader.split(' ')[1];
         try {
             jwt.verify(token, 'shhhhh');
             next();
-          } catch(err) {
+        } catch (err) {
             console.log(err);
             const error = new Error("Error! Something went wrong.");
             return next(error);
