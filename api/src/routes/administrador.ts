@@ -1,5 +1,7 @@
 import express from 'express'
-import { listaPuntuaciones, jwt } from '../index';
+import { listaPuntuacionesActividad, jwt } from '../index';
+import { IActividad } from './IActividad';
+import { IPropuesta } from './IPropuesta';
 
 const router = express.Router()
 
@@ -21,52 +23,124 @@ export function authenticate(req: any, res: any, next: any) {
     }
 }
 
-router.post('/crearActividad', authenticate, (req, res)=> {
-    const actividad = {
-        id : req.body.id,
-        titulo : req.body.titulo,
-        descripcion : req.body.descripcion,
-        imagen : req.body.imagen,
+/* IMPORTANTE: MANEJAR ERRORES DE SI NO ENCUENTRA ID ... */
+
+router.post('/crearActividad', authenticate, async (req, res) => {
+    const actividad: IActividad = {
+        id: req.body.id,
+        titulo: req.body.titulo,
+        descripcion: req.body.descripcion,
+        imagen: req.body.imagen,
     }
-    /* añadir a la base de datos */
-    res.send(actividad);
-})
-
-router.get('/getActividades', authenticate, (req, res)=> {
-    /* agarrar las actividades de la base de datos*/
-    res.send("");
-})
-
-router.get('/getActividad/:id', authenticate, (req, res)=> {
-    /* agarra la actividad de la base de datos */
-    res.send("");
-})
-
-router.post('/crearPropuesta', authenticate, (req, res)=> {
-    const propuesta = {
-        id : req.body.id,
-        titulo : req.body.titulo,
-        listaActividades : req.body.listaActividades
+    // Guardar la actividad en la base de datos
+    try {
+        await fetch('http://localhost:3000/actividades', {
+            method: "POST",
+            body: JSON.stringify(actividad),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return res.send(200);
     }
-    /* añadir a la base de datos */
-    res.send(propuesta);
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
 })
 
-router.get('/getPropuestas', authenticate, (req, res)=> {
-    /* agarrar las Propuestas de la base de datos*/
-    res.send("");
+router.get('/getActividades', authenticate, async (req, res) => {
+    // Obtener las actividades de la base de datos
+    try {
+        const response = await fetch('http://localhost:3000/actividades');
+        const actividades: IActividad[] = await response.json();
+        res.send(actividades);
+    }
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+    return res.send(500);
 })
 
-router.get('/getPropuesta/:id', authenticate, (req, res)=> {
-    /* agarra la Propuesta de la base de datos */
-    res.send("");
+router.get('/getActividad/:id', authenticate, async(req, res) => {
+    // Obtener la actividad de la base de datos
+    try {
+        const response = await fetch('http://localhost:3000/actividades');
+        const actividades: IActividad[] = await response.json();
+        const actividadEncontrada = actividades.filter((actividad) => actividad.id === req.params.id);
+        res.send(actividadEncontrada);
+    }
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+    return res.send(500);
 })
 
-router.get('/calificacionActividad/:id', authenticate, (req, res)=> {
+router.post('/crearPropuesta', authenticate, async (req, res) => {
+    const propuesta: IPropuesta = {
+        id: req.body.id,
+        titulo: req.body.titulo,
+        listaActividades: req.body.listaActividades
+    }
+    // Guardar la actividad en la base de datos
+    try {
+        await fetch('http://localhost:3000/propuestas', {
+            method: "POST",
+            body: JSON.stringify(propuesta),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return res.send(200);
+    }
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+})
+
+router.get('/getPropuestas', authenticate, async(req, res) => {
+    // Obtener las propuestas de la base de datos
+    try {
+        const response = await fetch('http://localhost:3000/propuestas');
+        const propuestas: IActividad[] = await response.json();
+        res.send(propuestas);
+    }
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+    return res.send(500);
+})
+
+router.get('/getPropuesta/:id', authenticate, async(req, res) => {
+    // Obtener la propuesta de la base de datos
+    try {
+        const response = await fetch('http://localhost:3000/propuestas');
+        const propuestas: IActividad[] = await response.json();
+        const propuestaEncontrada = propuestas.filter((propuesta) => propuesta.id === req.params.id);
+        res.send(propuestaEncontrada);
+    }
+    catch (error) {
+        return res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+    return res.send(500);
+})
+
+router.get('/calificacionActividad/:id', authenticate, (req, res) => {
     const actividadId = req.params.id;
-    const actDeID = listaPuntuaciones.filter(id => id.idActividad = actividadId)
+    const actDeID = listaPuntuacionesActividad.filter(id => id.idActividad = actividadId)
     var total = 0;
-    actDeID.forEach(x=> total += x.calificacion)
+    actDeID.forEach(x => total += x.calificacion)
     res.send(total);
 })
 
@@ -74,10 +148,10 @@ interface Diccionario {
     [clave: string]: number;
 }
 
-router.get('/topCalificaciones', authenticate, (req, res)=> {
+router.get('/topCalificaciones', authenticate, (req, res) => {
     // Total calificaciones
-    const sumaPorId : Diccionario = {};
-    listaPuntuaciones.forEach(obj => {
+    const sumaPorId: Diccionario = {};
+    listaPuntuacionesActividad.forEach(obj => {
         const { idActividad, calificacion } = obj;
         if (sumaPorId[idActividad]) {
             sumaPorId[idActividad] += calificacion;

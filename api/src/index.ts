@@ -1,6 +1,7 @@
 import express from 'express'
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
+
 import { ICalificarActividad } from './routes/ICalificarActividad';
 
 const cors = require('cors');
@@ -24,7 +25,8 @@ app.listen(PORT, () => {
 })
 
 export const listaUsuarios: string[] = [];
-export const listaPuntuaciones: ICalificarActividad[] = [];
+export const listaPuntuacionesActividad: ICalificarActividad[] = [];
+
 
 
 /* Generar tokens */
@@ -97,6 +99,7 @@ app.post('/loguearUsuario', async (req, res) => {
     }
 });
 
+
 app.get('/getToken', (req, res) => {
     res.send(jwt.verify(req.body.token, 'shhhhh'))
 })
@@ -106,6 +109,8 @@ interface userInfo {
     username: string,
     password: string
 }
+
+
 
 //npm run dev
 // json-server --watch db.json

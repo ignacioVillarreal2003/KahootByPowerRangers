@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class DatosJugadorService {
 
-  pin: any;
-  nombre: any
+  pin: string = "";
+  nombre: string = "";
 
   constructor() { }
 }

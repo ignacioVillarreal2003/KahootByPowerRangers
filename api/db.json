@@ -1,96 +1,11 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "username": "jesus",
-      "password": "mi3nfsdj"
-    },
-    {
-      "id": 2,
-      "username": "json-serverasd",
-      "password": "typicodeds"
-    },
-    {
-      "id": 3,
-      "username": "adsasd-server",
-      "password": "fdsfsd"
-    },
-    {
-      "id": 4,
-      "username": "santiago",
-      "password": "yowhat"
-    },
-    {
-      "id": 5,
-      "username": "saxrctfvgybnhijmkntiago",
-      "password": "yocfvgbhnjwhat"
-    },
-    {
-      "id": 6,
-      "username": "dfgfdsfs",
-      "password": "dfgfsdf"
-    },
-    {
-      "id": 7,
-      "username": "vc",
-      "password": "bvcbvc"
-    }
-  ],
   "usuarios": [
-    {
-      "id": 1,
-      "username": "asdsadas",
-      "password": "asdasd"
-    },
-    {
-      "id": 2,
-      "username": "vc",
-      "password": "bvcbvc"
-    },
-    {
-      "id": 3,
-      "username": "vcvcb",
-      "password": "bvcbvcgdfgdf"
-    },
-    {
-      "id": 4,
-      "username": "dasdsa",
-      "password": "asdsadasdasd"
-    },
-    {
-      "id": 5,
-      "username": "gdf",
-      "password": "gf"
-    },
-    {
-      "id": 6,
-      "username": "ffffffffffff",
-      "password": "ffffffffffffff"
-    },
-    {
-      "id": 7,
-      "username": "sdfddddddddd",
-      "password": "ddddddddddd"
-    },
-    {
-      "id": 8,
-      "username": "mmmmmmmmmm",
-      "password": "mmmmmmmmmmmmmmm"
-    },
-    {
-      "id": 9,
-      "username": "mmmmo",
-      "password": "mmmmmmmmmmo"
-    },
-    {
-      "id": 10,
-      "username": "mmmmmmmmm",
-      "password": "mmmmmmmmmmmmmm"
-    },
-    {
-      "id": 11,
-      "username": "ffffffff",
-      "password": "ffffffffffffff"
-    }
+
+  ],
+  "actividades": [
+    
+  ],
+  "propuestas": [
+
   ]
 }
