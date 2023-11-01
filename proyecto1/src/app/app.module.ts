@@ -13,8 +13,8 @@ import { InicioJuegoComponent } from './components/Juego/inicio-juego/inicio-jue
 import { VotosJuegoComponent } from './components/Juego/votos-juego/votos-juego.component';
 import { PantallaCargaJuegoComponent } from './components/Juego/pantalla-carga-juego/pantalla-carga-juego.component';
 import { NombreJugadorComponent } from './components/Jugador/nombre-jugador/nombre-jugador.component';
-import { LoginComponent } from './components/login/login.component';
-import { CrearComponent } from './components/crear/crear.component';
+import { LoginComponent } from './components/Juego/login/login.component';
+import { CrearComponent } from './components/Juego/crear/crear.component';
 
 @NgModule({
   declarations: [

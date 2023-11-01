@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DatosJugadorService } from '../../services/datos-jugador.service';
+import { UserService } from '../../services/HTTPServices/user.service';
 
 @Component({
   selector: 'app-nombre-jugador',
@@ -8,12 +9,12 @@ import { DatosJugadorService } from '../../services/datos-jugador.service';
 })
 export class NombreJugadorComponent {
 
-  pin: string = this.datosJugadorService.pin;
-  nombre: string = "";
+  nombreJugador: string = "";
 
-  saveNombre(){
-    this.datosJugadorService.nombre = this.nombre;
+  savePlayer(){
+    this.datosJugadorService.nombre = this.nombreJugador;
+    this.userService.agregarUsuarioEnPantalla();
   }
 
-  constructor (private datosJugadorService: DatosJugadorService){}
+  constructor (private datosJugadorService: DatosJugadorService, private userService: UserService){}
 }

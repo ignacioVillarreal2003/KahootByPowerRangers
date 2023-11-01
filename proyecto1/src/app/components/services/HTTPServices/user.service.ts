@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private datosJugadorService: DatosJugadorService) { }
 
-  async agregarUsuario() {
+  async agregarUsuarioEnPantalla() {
     try {
       const requestBody = {
         nombreUsuario: this.datosJugadorService.nombre
