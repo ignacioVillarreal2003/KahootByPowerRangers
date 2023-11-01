@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
+
+.pantallaJugadores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    color: white;
+    font-family: 'Arial', sans-serif; 
+}
+
+.pantallaJugadores h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.listaJugadores {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.jugador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jugador img {
+    width: 140px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.jugador p {
+    font-size: 1.2rem;
+}
+
+.pantallaJugadores p {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.281);
+    padding: 5px;
+}
+
+.iniciar {
+    background-color: #4CAF50; /* Color verde, puedes cambiarlo */
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.iniciar:hover {
+    background-color: #45a049; /* Cambia el color al pasar el ratón */
+}

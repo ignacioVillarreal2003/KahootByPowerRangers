@@ -1,0 +1,16 @@
+<!-- pantalla-jugadores.component.html -->
+
+<div class="pantallaJugadores">
+    <h1>Jugadores Conectados</h1>
+
+    <div class="listaJugadores">
+        <div class="jugador" *ngFor="let jugador of jugadores">
+            <img [src]="jugador.avatar" alt="{{ jugador.nombre }}">
+            <p>{{ jugador.nombre }}</p>
+        </div>
+    </div>
+
+    <p>Link de la Partida: {{ codigoPartida }}</p>
+
+    <button class="iniciar" (click)="empezarPartida()">Empezar</button>
+</div>

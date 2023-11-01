@@ -1,0 +1,15 @@
+<div class="inicio">
+    <h2>Seleccionar Propuesta</h2>
+    <form>    
+      <div *ngFor="let propuesta of propuestas">
+        <label>
+          <input type="radio" [(ngModel)]="propuestaSeleccionada" [value]="propuesta">
+          {{ propuesta.nombre }}
+        </label>
+      </div>
+    
+      <button type="submit" (click)="aceptar()">Aceptar</button>
+      <button type="button" routerLink="/crear">Cancelar</button>
+    </form>
+    </div>
+    

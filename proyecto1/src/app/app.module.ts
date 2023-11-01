@@ -15,6 +15,10 @@ import { PantallaCargaJuegoComponent } from './components/Juego/pantalla-carga-j
 import { NombreJugadorComponent } from './components/Jugador/nombre-jugador/nombre-jugador.component';
 import { LoginComponent } from './components/login/login.component';
 import { CrearComponent } from './components/crear/crear.component';
+import { CrearActividadComponent } from './components/crear-actividad/crear-actividad.component';
+import { CrearPropuestaComponent } from './components/crear-propuesta/crear-propuesta.component';
+import { CrearJuegoComponent } from './components/crear-juego/crear-juego.component';
+import { SalaEsperaJugadoresComponent } from './components/sala-espera-jugadores/sala-espera-jugadores.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { CrearComponent } from './components/crear/crear.component';
     PantallaCargaJuegoComponent,
     NombreJugadorComponent,
     LoginComponent,
-    CrearComponent
+    CrearComponent,
+    CrearActividadComponent,
+    CrearPropuestaComponent,
+    CrearJuegoComponent,
+    SalaEsperaJugadoresComponent
   ],
   imports: [
     BrowserModule,
