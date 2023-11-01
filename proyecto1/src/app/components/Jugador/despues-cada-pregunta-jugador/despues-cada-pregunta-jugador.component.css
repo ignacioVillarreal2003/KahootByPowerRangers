@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
+
+.despuesCadaPreguntaJugador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.despuesCadaPreguntaJugador h1{
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.despuesCadaPreguntaJugador .spinner{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.despuesCadaPreguntaJugador p{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.despuesCadaPreguntaJugador .jugador{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.801);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.despuesCadaPreguntaJugador .jugador img{
+    width: 100px;
+    margin-left: 20px;
+    position: relative;
+    bottom: 10px;
+}
+
+.despuesCadaPreguntaJugador .jugador p{
+    margin-left: 30px;
+    color: rgb(51, 51, 51);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
