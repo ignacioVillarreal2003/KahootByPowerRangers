@@ -17,21 +17,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.authService.getToken() != null && this.authService.getToken()){
-      const httpRequest = request.clone()
-      httpRequest.headers.set('authorization',`bearer ${ this.authService.getToken() }`)
-      return next.handle(httpRequest);
-    }else{
-      (error : HttpErrorResponse ) => {
-        if (error.status == 401) {
-            if (this.authService.getTimeToken() < 0){
-              this.authService.logout();
-            }
-            this.router.navigate(['/login']);
-        }
-      }
-      return EMPTY;
-    }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { 
+    const httpRequest = request.clone();
+    let authorization = `bearer ${ this.authService.getToken() }`
+    httpRequest.headers.set('authorization', authorization);
+    return next.handle(httpRequest);
   }
+  
 }

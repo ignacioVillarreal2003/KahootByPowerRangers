@@ -19,7 +19,7 @@ import { CuentaRegresivaJugadorComponent } from './components/Jugador/cuenta-reg
 import { OpcionesVotarJuegoJugadorComponent } from './components/Jugador/opciones-votar-juego-jugador/opciones-votar-juego-jugador.component';
 
 const routes: Routes = [
-  { path: 'inicio', component: InicioComponent },
+  { path: '', component: InicioComponent },
   { path: 'crear', component: CrearComponent },
   { path: 'crearActividad', component: CrearActividadComponent},
   { path: 'crearJuego', component: CrearJuegoComponent},

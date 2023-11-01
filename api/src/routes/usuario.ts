@@ -1,13 +1,13 @@
 import express from 'express'
-import { listaUsuarios, listaPuntuacionesActividad } from '../index';
+import { listaUsuariosEnPantalla, listaPuntuacionesActividad } from '../index';
 import { ICalificarActividad } from './ICalificarActividad';
 
 
 const router = express.Router()
 
-router.post('/agregarUsuario', (req, res)=> {
+router.post('/agregarUsuarioEnPantalla', (req, res)=> {
     const nombreUsuario: string = req.body.usuario
-    listaUsuarios.push(nombreUsuario);
+    listaUsuariosEnPantalla.push(nombreUsuario);
     res.send(200)
 })
 

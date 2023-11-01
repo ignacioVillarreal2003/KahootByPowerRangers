@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,53 +10,51 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  async registrarUsuario(username: string, password: string) {
-    try {
-      const requestBody = { username: username, password: password };
-      const response = await fetch('http://localhost:3001/registrarUsuario', {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const token = await response.text();
-        localStorage.setItem('token', token);
-        alert(token);
-      } else {
-        const errorData = await response.json();
-        console.error('Hubo un error al registrar el usuario:', errorData.message);
-      }
-    } catch (error) {
-      console.error('Hubo un error al registrar el usuario:', error);
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Error desconocido';
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.status} ${error.error.message}`;
+    } else if (error.status) {
+      // Error devuelto por el servidor
+      errorMessage = `Error: ${error.status} ${error.error.message}`;
     }
+    // Devuelve un mensaje de error observable
+    return throwError(errorMessage);
+  }
+  
+  
+
+  registrarUsuario(username: string, password: string): Observable<any> {
+    const requestBody = { username: username, password: password };
+    return this.http.post<any>('http://localhost:3001/registrarUsuario', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError),
+      map(response => {
+        if (response && response.token) {
+          return response.token; // Devuelve solo el token
+        }
+        // Maneja cualquier otro tipo de respuesta aquí si es necesario
+        return null; // O devuelve algo más si se requiere
+      })
+    );
   }
 
-  async loguearUsuario(username: string, password: string): Promise<boolean> {
-    try {
-      const requestBody = { username: username, password: password };
-      const response = await fetch('http://localhost:3001/loguearUsuario', {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const token = await response.text();
-        localStorage.setItem('token', token);
-        return true;
-      } else {
-        const errorData = await response.json();
-        console.error('Hubo un error al logear el usuario:', errorData.message);
-        return false;
-      }
-    } catch (error) {
-      console.error('Hubo un error al logear el usuario:', error);
-      return false;
-    }
+  loguearUsuario(username: string, password: string): Observable<any> {
+    const requestBody = { username: username, password: password };
+    return this.http.post<any>('http://localhost:3001/loguearUsuario', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError),
+      map(response => {
+        if (response && response.token) {
+          return response.token; // Devuelve solo el token
+        }
+        // Maneja cualquier otro tipo de respuesta aquí si es necesario
+        return null; // O devuelve algo más si se requiere
+      })
+    );
   }
-
 
 }

@@ -1,11 +1,10 @@
 import express from 'express'
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
-
 import { ICalificarActividad } from './routes/ICalificarActividad';
 
+// Configuracion
 const cors = require('cors');
-
 const app = express()
 app.use(express.json())
 export const jwt = require('jsonwebtoken');
@@ -24,12 +23,13 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
-export const listaUsuarios: string[] = [];
+// Variables
+export const listaUsuariosEnPantalla: string[] = [];
 export const listaPuntuacionesActividad: ICalificarActividad[] = [];
 
 
 
-/* Generar tokens */
+// Generar tokens 
 function generateAccessToken(username: string) {
     return jwt.sign({ user: username }, 'shhhhh', { expiresIn: '1h' });
 }
@@ -61,7 +61,7 @@ app.post('/registrarUsuario', async (req, res) => {
             });
 
             const token = generateAccessToken(req.body.username);
-            return res.send(token); // Se envía el token si todo está correcto
+            return res.send({ token: token }); // Se envía el token si todo está correcto
         }
     } catch (error) {
         return res.status(500).send({
@@ -81,7 +81,7 @@ app.post('/loguearUsuario', async (req, res) => {
         if (existingUser) {
             if (req.body.username == existingUser.username && req.body.password == existingUser.password) {
                 const token = generateAccessToken(req.body.username);
-                return res.send(token); // Se envía el token si todo está correcto
+                return res.send({ token: token }); // Se envía el token si todo está correcto
             } else {
                 return res.status(400).send({
                     message: "Contraseña incorrecta."
@@ -101,7 +101,7 @@ app.post('/loguearUsuario', async (req, res) => {
 
 
 app.get('/getToken', (req, res) => {
-    res.send(jwt.verify(req.body.token, 'shhhhh'))
+    return res.send({ token: jwt.verify(req.body.token, 'shhhhh') });
 })
 
 interface userInfo {
@@ -111,6 +111,5 @@ interface userInfo {
 }
 
 
-
-//npm run dev
+// npm run dev
 // json-server --watch db.json

@@ -10,22 +10,12 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  getTimeToken(){
-    const storedData: any = JSON.parse(localStorage.getItem("token")!);
-    if (storedData && storedData.time != null) {
-      return storedData.time;
-    } else {
-      return null;
+  getToken(): string {
+    const storedData = localStorage.getItem('token');
+    if (!storedData) {
+      return "TokenGenericoDeUsuario";
     }
-  }
-
-  getToken(){
-    const storedData: any = JSON.parse(localStorage.getItem('token')!);
-    if (storedData && storedData.token != null) {
-      return storedData.token;
-    } else {
-      return null;
-    }
+    return storedData;
   }
   
   constructor() { }

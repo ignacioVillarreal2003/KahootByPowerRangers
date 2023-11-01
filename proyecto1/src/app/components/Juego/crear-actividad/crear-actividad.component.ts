@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IActividad } from '../../services/IActividad';
+import { AdminService } from '../../services/HTTPServices/admin.service';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -8,29 +9,27 @@ import { IActividad } from '../../services/IActividad';
 })
 export class CrearActividadComponent {
 
-  actividades:any;
-  titulo:string='';
-  descripcion:string='';
-  archivo:any=null;
+  actividades: any;
+  titulo: string = '';
+  descripcion: string = '';
+  archivo: any = null;
 
+  constructor(private adminService: AdminService) { }
 
-  crearActividad():void{
-    if(this.titulo!="" && this.descripcion!="" && this.archivo!=null)
-    {
-       const nuevaActividad:IActividad={descripcion:this.descripcion,imagen:this.archivo,titulo:this.titulo,id:'0'};
-       this.titulo="";
-       this.descripcion="";
-       this.archivo=null;
+  crearActividad(): void {
+    if (this.titulo != "" && this.descripcion != "" && this.archivo != null) {
+      this.adminService.crearActividad(this.titulo, this.descripcion, "ASdas").subscribe((message: string) => {
+        console.log(message);
+      })
     }
 
 
   }
 
 
-  onFileSelected(event:any){
-    if(event.target.files.length>0)
-    {
-      this.archivo=event.target.files[0];
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.archivo = event.target.files[0];
 
     }
   }

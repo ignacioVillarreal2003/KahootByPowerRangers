@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DatosJugadorService } from '../datos-jugador.service';
 import { ICalificarActividad } from '../ICalificarActividad';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,50 +13,41 @@ export class UserService {
 
   constructor(private http: HttpClient, private datosJugadorService: DatosJugadorService) { }
 
-  async agregarUsuarioEnPantalla() {
-    try {
-      const requestBody = {
-        nombreUsuario: this.datosJugadorService.nombre
-      };
-      const response = await fetch('http://localhost:3001/agregarUsuario', {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        console.log(response);
-      } else {
-        const errorData = await response.json();
-        console.error('Hubo un error al agregar usuario: ', errorData.message);
-      }
-    } catch (error) {
-      console.error('Hubo un error al agregar usuario: ', error);
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Error desconocido';
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // El backend retornó un código de error
+      errorMessage = `Código: ${error.status}, Mensaje: ${error.error.message}`;
     }
+    // Devuelve un mensaje de error observable
+    return throwError(errorMessage);
   }
 
-  async calificarActividad(idActividad: string, calificacion: number) {
-    try {
-      const requestBody: ICalificarActividad = {
-        idActividad: idActividad,
-        calificacion: calificacion
-      }
-      const response = await fetch('http://localhost:3001/calificarActividad', {
-        method: "POST",
-        body: JSON.stringify(requestBody),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        console.log(response);
-      } else {
-        const errorData = await response.json();
-        console.error('Hubo un error al agregar usuario: ', errorData.message);
-      }
-    } catch (error) {
-      console.error('Hubo un error al agregar usuario: ', error);
-    }
+  agregarUsuarioEnPantalla(): Observable<any> {
+    const requestBody = {
+      nombreUsuario: this.datosJugadorService.nombre
+    };
+    return this.http.post<any>('http://localhost:3001/agregarUsuarioEnPantalla', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
+
+  calificarActividad(idActividad: string, calificacion: number): Observable<any> {
+    const requestBody: ICalificarActividad = {
+      idActividad: idActividad,
+      calificacion: calificacion
+    }
+    return this.http.post<any>('http://localhost:3001/calificarActividad', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 }

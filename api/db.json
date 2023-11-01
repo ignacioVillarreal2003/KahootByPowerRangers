@@ -1,11 +1,26 @@
 {
   "usuarios": [
-
+    {
+      "id": 1,
+      "username": "sdfsdfsdfsdf",
+      "password": "sdfsdfsdfdsfsd"
+    },
+    {
+      "id": 2,
+      "username": "xcvxcvxcvxcv",
+      "password": "vcbvcbcvbcvbcv"
+    },
+    {
+      "id": 3,
+      "username": "dfgdfdfgdfgdf",
+      "password": "dfgdfgdfgdfg"
+    },
+    {
+      "id": 4,
+      "username": "dvxcvxcvvcb",
+      "password": "cvbcvbcvbcvb"
+    }
   ],
-  "actividades": [
-    
-  ],
-  "propuestas": [
-
-  ]
+  "actividades": [],
+  "propuestas": []
 }
