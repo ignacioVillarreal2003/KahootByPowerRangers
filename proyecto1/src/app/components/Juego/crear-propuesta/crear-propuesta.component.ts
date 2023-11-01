@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IActividad } from '../services/IActividad';
+import { IActividad } from '../../services/IActividad';
 
 @Component({
   selector: 'app-crear-propuesta',

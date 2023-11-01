@@ -15,11 +15,14 @@ import { PantallaCargaJuegoComponent } from './components/Juego/pantalla-carga-j
 import { NombreJugadorComponent } from './components/Jugador/nombre-jugador/nombre-jugador.component';
 import { LoginComponent } from './components/Juego/login/login.component';
 import { CrearComponent } from './components/Juego/crear/crear.component';
-import { CrearActividadComponent } from './components/crear-actividad/crear-actividad.component';
-import { CrearPropuestaComponent } from './components/crear-propuesta/crear-propuesta.component';
-import { CrearJuegoComponent } from './components/crear-juego/crear-juego.component';
+import { CrearActividadComponent } from './components/Juego/crear-actividad/crear-actividad.component';
+import { CrearPropuestaComponent } from './components/Juego/crear-propuesta/crear-propuesta.component';
+import { CrearJuegoComponent } from './components/Juego/crear-juego/crear-juego.component';
 import { PreguntaTerminadaJugadorComponent } from './components/Jugador/pregunta-terminada-jugador/pregunta-terminada-jugador.component';
 import { FinalJugadorComponent } from './components/Jugador/final-jugador/final-jugador.component';
+import { CuentaRegresivaJugadorComponent } from './components/Jugador/cuenta-regresiva-jugador/cuenta-regresiva-jugador.component';
+import { OpcionesVotarJuegoJugadorComponent } from './components/Jugador/opciones-votar-juego-jugador/opciones-votar-juego-jugador.component';
+import { DespuesCadaPreguntaJugadorComponent } from './components/Jugador/despues-cada-pregunta-jugador/despues-cada-pregunta-jugador.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { FinalJugadorComponent } from './components/Jugador/final-jugador/final-
     CrearComponent,
     CrearActividadComponent,
     CrearPropuestaComponent,
-    CrearJuegoComponent
+    CrearJuegoComponent,
+    CuentaRegresivaJugadorComponent,
+    OpcionesVotarJuegoJugadorComponent,
+    DespuesCadaPreguntaJugadorComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,8 @@
     border-radius: 8px;
     margin-top: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    z-index: 2;
 }
 
 .inicio form label {
@@ -109,25 +111,28 @@
     transform: scale(1.05);
 }
 
-
-.forma1,
-.forma2 {
-    position: absolute;
+.forma1{
+    z-index: 1;
+    position: fixed;
+    pointer-events: none;
     background-color: rgb(0, 0, 0);
+    transform: rotate(45deg);
     opacity: 0.1;
+    top: -15vmin;
+    left: -15vmin;
     min-width: 75vmin;
     min-height: 75vmin;
 }
 
-.forma1 {
-    z-index: 1;
-    transform: rotate(45deg);
-    top: -15vmin;
-    left: -15vmin;
-}
-
-.forma2 {
+.forma2{
+    position: fixed;
+    pointer-events: none;
     border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.1;
+    min-width: 75vmin;
+    min-height: 75vmin;
     bottom: -15vmin;
     right: -15vmin;
+    z-index: 1;
 }
