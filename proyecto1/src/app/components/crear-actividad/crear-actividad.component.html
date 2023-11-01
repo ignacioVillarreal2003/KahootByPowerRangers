@@ -1,0 +1,22 @@
+<div class="inicio">
+    <div class="titulo">
+        <h1>Crear Nueva Actividad</h1>
+    </div>
+    <form (ngSubmit)="crearActividad()" class="entrarPin">
+    
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" [(ngModel)]="titulo" required>
+      
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcion" required></textarea>
+      
+        <label for="imagen">Imagen:</label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" id="imagen" name="imagen">
+      
+        <button type="button2" class="iniciar">Aceptar</button>
+        <button type="button" class="registrarse" routerLink="/crear">Cancelar</button>
+        
+    </form>
+    <div class="forma1"></div>
+    <div class="forma2"></div>
+</div>
