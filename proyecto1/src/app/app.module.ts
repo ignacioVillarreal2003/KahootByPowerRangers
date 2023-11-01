@@ -18,6 +18,8 @@ import { CrearComponent } from './components/Juego/crear/crear.component';
 import { CrearActividadComponent } from './components/crear-actividad/crear-actividad.component';
 import { CrearPropuestaComponent } from './components/crear-propuesta/crear-propuesta.component';
 import { CrearJuegoComponent } from './components/crear-juego/crear-juego.component';
+import { PreguntaTerminadaJugadorComponent } from './components/Jugador/pregunta-terminada-jugador/pregunta-terminada-jugador.component';
+import { FinalJugadorComponent } from './components/Jugador/final-jugador/final-jugador.component';
 
 @NgModule({
   declarations: [
