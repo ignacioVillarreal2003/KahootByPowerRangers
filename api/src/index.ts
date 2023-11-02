@@ -1,35 +1,43 @@
 import express from 'express'
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
-import { ICalificarActividad } from './routes/ICalificarActividad';
 
-// Configuracion
+/* Configuracion de servidor */
 const cors = require('cors');
-const app = express()
-app.use(express.json())
+
+const app = express();
+
+app.use(express.json());
+
 export const jwt = require('jsonwebtoken');
+
 const PORT = 3001;
+
 var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200,
     methods: "GET, PUT, POST, DELETE"
-}
+};
 
 app.use(cors(corsOptions));
-app.use('/api/administrador', administradorRouter)
-app.use('/api/usuario', usuarioRouter)
+app.use('/administrador', administradorRouter);
+app.use('/usuario', usuarioRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
-})
+});
 
-// Variables
+
+/* Variables e interfazes */
+import { ICalificarActividad } from './routes/ICalificarActividad';
+
 export const listaUsuariosEnPantalla: string[] = [];
 export const listaPuntuacionesActividad: ICalificarActividad[] = [];
 
 
 
-// Generar tokens 
+/* Generar tokens */
+
 function generateAccessToken(username: string) {
     return jwt.sign({ user: username }, 'shhhhh', { expiresIn: '1h' });
 }
@@ -113,3 +121,4 @@ interface userInfo {
 
 // npm run dev
 // json-server --watch db.json
+

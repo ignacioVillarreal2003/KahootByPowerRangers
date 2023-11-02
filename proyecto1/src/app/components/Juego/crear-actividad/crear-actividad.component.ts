@@ -9,29 +9,71 @@ import { AdminService } from '../../services/HTTPServices/admin.service';
 })
 export class CrearActividadComponent {
 
-  actividades: any;
   titulo: string = '';
   descripcion: string = '';
   archivo: any = null;
+  textoLog: string = "";
 
   constructor(private adminService: AdminService) { }
 
   crearActividad(): void {
-    if (this.titulo != "" && this.descripcion != "" && this.archivo != null) {
-      this.adminService.crearActividad(this.titulo, this.descripcion, "ASdas").subscribe((message: string) => {
-        console.log(message);
-      })
+    if (this.checkDatos()) {
+      this.adminService.crearActividad(this.titulo, this.descripcion, this.archivo).subscribe(
+        (response: any) => {
+          console.log("Actividad creada con exito.");
+        },
+        (error: any) => {
+          if (error === "Error: 500 Error al conectar a la BD.") {
+            console.log('Error al conectar a la BD.');
+          }
+          else {
+            console.log(error);
+          }
+        }
+      );
     }
+  }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0]; // Obtener el archivo de la lista de archivos seleccionados
 
+    if (file) {
+      this.getBase64(file).then((data: string) => {
+        this.archivo = data; // Establecer la URL de la imagen para mostrarla en la vista
+      });
+    }
+  }
+
+  getBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        resolve(reader.result as string);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
   }
 
 
-  onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.archivo = event.target.files[0];
-
+  checkDatos() {
+    if (this.titulo.length === 0) {
+      this.textoLog = "Requiere titulo.";
+      return false;
     }
+    if (this.descripcion.length === 0) {
+      this.textoLog = "Requiere descripcion.";
+      return false;
+    }
+    if (this.archivo === null) {
+      this.textoLog = "Requiere imagen.";
+      return false;
+    }
+    return true;
   }
 
 }

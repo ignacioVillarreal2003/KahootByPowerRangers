@@ -136,3 +136,9 @@
     right: -15vmin;
     z-index: 1;
 }
+
+.textoLog{
+    color: red;
+    font-size: 15px;
+    margin-top: 5px;
+}

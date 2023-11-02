@@ -8,7 +8,7 @@ const router = express.Router()
 router.post('/agregarUsuarioEnPantalla', (req, res)=> {
     const nombreUsuario: string = req.body.usuario
     listaUsuariosEnPantalla.push(nombreUsuario);
-    res.send(200)
+    res.status(200)
 })
 
 router.post('/calificarActividad', (req, res)=> {
@@ -17,7 +17,7 @@ router.post('/calificarActividad', (req, res)=> {
         calificacion: req.body.calificacion
     }
     listaPuntuacionesActividad.push(obj)
-    res.send(200);
+    res.status(200);
 })
 
 

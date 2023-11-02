@@ -1,13 +1,18 @@
-<div class="inicio">
-    <h2>Crear Nueva Propuesta</h2>
-    
-    <form (ngSubmit)="guardarPropuesta()">
-      <select multiple (change)="onSelectionChange($event)">
-        <option *ngFor="let actividad of actividades" [value]="actividad.id">{{actividad.titulo}}-{{actividad.descripcion}}</option>
-      </select>
-      <button type="submit">Guardar</button>
-      <button type="button" routerLink="/crear">Cancelar</button>
-    </form>
-    <div class="forma1"></div>
-    <div class="forma2"></div>
-    </div>
+<div class="crearPropuesta">
+  <h2>Crear Nueva Propuesta</h2>
+
+  <div class="form">
+    <input id="tituloPropuesta" type="text" placeholder="titulo" [(ngModel)]="tituloPropuesta">
+    <ul class="listaActividades">
+      <li *ngFor="let actividad of actividades">
+        <h3>{{actividad.titulo}}</h3>
+        <input class="actividadParaPropuesta" type="checkbox" [id]="actividad.id" (change)="toggleActividad(actividad)">
+      </li>
+    </ul>
+    <button type="submit" (click)="guardarPropuesta()">Guardar</button>
+    <button type="button" routerLink="/crear">Cancelar</button>
+  </div>
+
+  <div class="forma1"></div>
+  <div class="forma2"></div>
+</div>

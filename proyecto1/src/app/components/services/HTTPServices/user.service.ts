@@ -34,7 +34,7 @@ export class UserService {
     const requestBody = {
       nombreUsuario: this.datosJugadorService.nombre
     };
-    return this.http.post<any>('http://localhost:3001/agregarUsuarioEnPantalla', requestBody, this.httpOptions).pipe(
+    return this.http.post<any>('http://localhost:3001/usuario/agregarUsuarioEnPantalla', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
@@ -44,7 +44,7 @@ export class UserService {
       idActividad: idActividad,
       calificacion: calificacion
     }
-    return this.http.post<any>('http://localhost:3001/calificarActividad', requestBody, this.httpOptions).pipe(
+    return this.http.post<any>('http://localhost:3001/usuario/calificarActividad', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
 
 
-.inicio {
+.crearPropuesta {
     background-color: #3c1474;
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.inicio h2 {
+.crearPropuesta h2 {
     font-family: 'Sigmar One', sans-serif;
     font-size: 50px;
     color: white;
@@ -22,44 +22,21 @@
     margin-bottom: 20px;
 }
 
-.inicio form {
+.crearPropuesta .form {
     width: 320px;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.inicio form label {
-    color: #333;
-    margin-top: 10px;
-    display: block;
-}
-
-.inicio form input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.inicio form button {
-    width: 290px;
-    height: 48px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: bottom;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px -4px inset;
-    border: 0;
-    border-radius: 4px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    padding: 0px 16px 4px;
-    margin-top: 20px;
-    transition: all 350ms ease;
-}
-
-.inicio form button[type="submit"] {
+.crearPropuesta .form button[type="submit"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -80,7 +57,7 @@
     transition: all 350ms ease;
 }
 
-.inicio form button[type="button"] {
+.crearPropuesta .form button[type="button"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -101,11 +78,11 @@
     transition: all 350ms ease;
 }
 
-.inicio form button:hover {
+.crearPropuesta .form button:hover {
     background-color: #45a049;
     transform: scale(1.05);
 }
-.inicio form button[type="button"]:hover {
+.crearPropuesta .form button[type="button"]:hover {
     background-color: #bb0000c0;  
     transform: scale(1.05);
 }
@@ -133,6 +110,43 @@
     min-height: 75vmin;
     bottom: -15vmin;
     right: -15vmin;
-    z-index: 1;
-    
+    z-index: 1;   
+}
+
+.crearPropuesta .listaActividades{
+    width: 280px;
+    height: 300px;
+    background-color: #bdbbc088;
+    border-radius: 5px;
+    padding: 15px 10px;
+    overflow-y: scroll;
+}
+
+.crearPropuesta .listaActividades li{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+}
+
+.crearPropuesta .listaActividades h3{
+    width: 220px;
+    overflow-x: scroll;
+    padding-bottom: 5px;
+}
+
+.crearPropuesta .listaActividades input{
+    position: relative;
+    left: 15px;
+}
+
+.crearPropuesta #tituloPropuesta{
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.350s ease;
+}
+
+.crearPropuesta #tituloPropuesta:hover{
+    transform: scale(1.05);
 }

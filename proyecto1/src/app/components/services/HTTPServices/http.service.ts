@@ -26,8 +26,6 @@ export class HttpService {
     // Devuelve un mensaje de error observable
     return throwError(errorMessage);
   }
-  
-  
 
   registrarUsuario(username: string, password: string): Observable<any> {
     const requestBody = { username: username, password: password };

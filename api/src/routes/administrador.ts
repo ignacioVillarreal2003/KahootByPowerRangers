@@ -25,7 +25,7 @@ export function authenticate(req: any, res: any, next: any) {
 
 /* IMPORTANTE: MANEJAR ERRORES DE SI NO ENCUENTRA ID ... */
 
-router.post('/crearActividad', authenticate, async (req, res) => {
+router.post('/crearActividad', authenticate, async (req, res) => {        
     const actividad: IActividad = {
         id: req.body.id,
         titulo: req.body.titulo,
@@ -41,9 +41,8 @@ router.post('/crearActividad', authenticate, async (req, res) => {
                 "Content-Type": "application/json",
             },
         });
-        return res.send(200);
-    }
-    catch (error) {
+        return res.status(200);
+    } catch (error) {
         return res.status(500).send({
             message: "Error al conectar a la BD."
         });
@@ -55,31 +54,30 @@ router.get('/getActividades', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/actividades');
         const actividades: IActividad[] = await response.json();
-        res.send(actividades);
-    }
-    catch (error) {
-        return res.status(500).send({
+        res.send({ actividades: actividades });
+    } catch (error) {
+        console.error("Error al conectar a la BD:", error);
+        res.status(500).send({
             message: "Error al conectar a la BD."
         });
     }
-    return res.send(500);
-})
+});
 
-router.get('/getActividad/:id', authenticate, async(req, res) => {
-    // Obtener la actividad de la base de datos
+
+router.get('/getActividad/:id', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/actividades');
         const actividades: IActividad[] = await response.json();
-        const actividadEncontrada = actividades.filter((actividad) => actividad.id === req.params.id);
-        res.send(actividadEncontrada);
-    }
-    catch (error) {
-        return res.status(500).send({
+        const actividadEncontrada = actividades.filter(actividad => actividad.id === req.params.id);
+        res.send({ actividadEncontrada: actividadEncontrada });
+    } catch (error) {
+        console.error("Error al conectar a la BD:", error);
+        res.status(500).send({
             message: "Error al conectar a la BD."
         });
     }
-    return res.send(500);
-})
+});
+
 
 router.post('/crearPropuesta', authenticate, async (req, res) => {
     const propuesta: IPropuesta = {
@@ -97,8 +95,7 @@ router.post('/crearPropuesta', authenticate, async (req, res) => {
             },
         });
         return res.send(200);
-    }
-    catch (error) {
+    } catch (error) {
         return res.status(500).send({
             message: "Error al conectar a la BD."
         });
@@ -106,42 +103,40 @@ router.post('/crearPropuesta', authenticate, async (req, res) => {
 })
 
 router.get('/getPropuestas', authenticate, async(req, res) => {
-    // Obtener las propuestas de la base de datos
     try {
         const response = await fetch('http://localhost:3000/propuestas');
         const propuestas: IActividad[] = await response.json();
-        res.send(propuestas);
-    }
-    catch (error) {
-        return res.status(500).send({
+        res.send({propuestas: propuestas});
+    } catch (error) {
+        console.error("Error al conectar a la BD:", error);
+        res.status(500).send({
             message: "Error al conectar a la BD."
         });
     }
-    return res.send(500);
-})
+});
 
-router.get('/getPropuesta/:id', authenticate, async(req, res) => {
-    // Obtener la propuesta de la base de datos
+
+router.get('/getPropuesta/:id', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/propuestas');
         const propuestas: IActividad[] = await response.json();
         const propuestaEncontrada = propuestas.filter((propuesta) => propuesta.id === req.params.id);
-        res.send(propuestaEncontrada);
-    }
-    catch (error) {
-        return res.status(500).send({
+        res.send({propuestaEncontrada: propuestaEncontrada});
+    } catch (error) {
+        console.error("Error al conectar a la BD:", error);
+        res.status(500).send({
             message: "Error al conectar a la BD."
         });
     }
-    return res.send(500);
-})
+});
+
 
 router.get('/calificacionActividad/:id', authenticate, (req, res) => {
     const actividadId = req.params.id;
     const actDeID = listaPuntuacionesActividad.filter(id => id.idActividad = actividadId)
     var total = 0;
     actDeID.forEach(x => total += x.calificacion)
-    res.send(total);
+    res.send({total:total});
 })
 
 interface Diccionario {
@@ -172,9 +167,9 @@ router.get('/topCalificaciones', authenticate, (req, res) => {
             calificacion: sumaPorId[id]
         }));
 
-    res.json(actividadesTop);
+    res.send({actividadesTop:actividadesTop});
 })
 
 
 
-export default router
+export default router;
