@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
+
+.actividadConOpciones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.actividad-container {
+    text-align: center;
+  }
+  
+  .titulo-actividad {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  
+  .opciones-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .opcion {
+    margin: 0.5rem 0;
+  }
+  
+  .opcion1 button {
+    width: 280px;
+    height: 48px;
+    font-size: 1rem;
+    margin: 0px;
+    border: 0px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    box-shadow: rgba(255, 0, 0, 0.25) 0px -4px inset;
+    background: rgb(190, 0, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 16px 4px;
+    margin-bottom: 0.625rem;
+    transition: all 350ms ease;
+  }
+  
+  .opcion1 button:hover {
+    background-color: #ff0000; 
+  }
+
+  .opcion2 button {
+    width: 280px;
+    height: 48px;
+    font-size: 1rem;
+    margin: 0px;
+    border: 0px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    box-shadow: rgba(0, 26, 255, 0.25) 0px -4px inset;
+    background: rgb(0, 13, 197);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 16px 4px;
+    margin-bottom: 0.625rem;
+    transition: all 350ms ease;
+  }
+  
+  .opcion2 button:hover {
+    background-color: #1900ff; 
+  }
+
+  .opcion3 button {
+    width: 280px;
+    height: 48px;
+    font-size: 1rem;
+    margin: 0px;
+    border: 0px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    box-shadow: rgba(255, 217, 0, 0.25) 0px -4px inset;
+    background: rgb(214, 182, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 16px 4px;
+    margin-bottom: 0.625rem;
+    transition: all 350ms ease;
+  }
+  
+  .opcion3 button:hover {
+    background-color: #ffe600; 
+  }
+
+  .opcion4 button {
+    width: 280px;
+    height: 48px;
+    font-size: 1rem;
+    margin: 0px;
+    border: 0px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    box-shadow: rgba(30, 255, 0, 0.25) 0px -4px inset;
+    background: rgb(46, 199, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    padding: 0px 16px 4px;
+    margin-bottom: 0.625rem;
+    transition: all 350ms ease;
+  }
+  
+  .opcion4 button:hover {
+    background-color: #15ff00;
+  }

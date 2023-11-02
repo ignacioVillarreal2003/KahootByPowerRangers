@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
+
+.fondo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../assets/fondo/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+.actividadesMasVotadas {
+    text-align: center;
+  }
+  
+  .titulo-actividades {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  
+  .actividad {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+  }
+  
