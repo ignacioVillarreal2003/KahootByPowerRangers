@@ -67,13 +67,13 @@ export class AdminService {
     );
   }
 
-  crearPropuesta(id: string, titulo: string, listaActividades: string[]): Observable<any> {
+  crearPropuesta(titulo: string, listaActividades: IActividad[]): Observable<any> {
     const uniqueID = uuidv4();
     const requestBody: IPropuesta = {
       id: uniqueID,
       titulo: titulo,
       listaActividades: listaActividades
-    }
+    } 
     return this.http.post<any>("http://localhost:3001/administrador/crearPropuesta", this.httpOptions).pipe(
       catchError(this.handleError)
     );

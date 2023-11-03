@@ -80,11 +80,21 @@ router.get('/getActividad/:id', authenticate, async (req, res) => {
 
 
 router.post('/crearPropuesta', authenticate, async (req, res) => {
+    console.log(123);
+    console.log(req.body.id);
+    console.log(req.body.titulo);
+    console.log(req.body.listaActividades);
+    
+    
+    
     const propuesta: IPropuesta = {
+        
         id: req.body.id,
         titulo: req.body.titulo,
         listaActividades: req.body.listaActividades
     }
+    console.log(propuesta);
+    
     // Guardar la actividad en la base de datos
     try {
         await fetch('http://localhost:3000/propuestas', {

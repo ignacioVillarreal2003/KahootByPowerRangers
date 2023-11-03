@@ -17,7 +17,7 @@ import { PreguntaTerminadaJugadorComponent } from './components/Jugador/pregunta
 import { DespuesCadaPreguntaJugadorComponent } from './components/Jugador/despues-cada-pregunta-jugador/despues-cada-pregunta-jugador.component';
 import { CuentaRegresivaJugadorComponent } from './components/Jugador/cuenta-regresiva-jugador/cuenta-regresiva-jugador.component';
 import { OpcionesVotarJuegoJugadorComponent } from './components/Jugador/opciones-votar-juego-jugador/opciones-votar-juego-jugador.component';
-import { SalaDeJuegoComponent } from './sala-de-juego/sala-de-juego.component';
+import { SalaDeJuegoComponent } from './components/Juego/sala-de-juego/sala-de-juego.component';
 import { ActividadConOpcionesComponent } from './components/Juego/actividad-con-opciones/actividad-con-opciones.component';
 import { ActividadesMasVotadasComponent } from './components/Juego/actividades-mas-votadas/actividades-mas-votadas.component';
 

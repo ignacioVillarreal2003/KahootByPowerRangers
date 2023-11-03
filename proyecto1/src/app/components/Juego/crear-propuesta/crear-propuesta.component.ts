@@ -3,6 +3,7 @@ import { IActividad } from '../../services/IActividad';
 import { AdminService } from '../../services/HTTPServices/admin.service';
 import { interval } from 'rxjs';
 import { ActividadesService } from '../../services/actividades.service';
+import { IPropuesta } from '../../services/IPropuesta';
 
 
 @Component({
@@ -37,12 +38,6 @@ export class CrearPropuestaComponent {
     }
   }
 
-  guardarPropuesta() {
-    if (this.checkDatos()){
-      console.log('Actividades seleccionadas:', this.actividadesSeleccionadas); // llamar al servidor
-    }
-  }
-
   checkDatos(){
     if (this.tituloPropuesta.length === 0){
       return false;
@@ -53,6 +48,22 @@ export class CrearPropuestaComponent {
     return true;
   }
 
+  crearPropuesta(): void {   
+    if (this.checkDatos()) {
+      this.adminService.crearPropuesta(this.tituloPropuesta, this.actividadesSeleccionadas).subscribe(
+        (response: any) => {
+          console.log("Propuesta creada con éxito.");
+        },
+        (error: any) => {
+          if (error === "Error: 500 Error al conectar a la BD.") {
+            console.log('Error al conectar a la BD.');
+          } else {
+            console.log(error);
+          }
+        }
+      );
+    }
+  }
 }
 
 
