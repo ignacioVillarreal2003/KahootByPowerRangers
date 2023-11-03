@@ -105,7 +105,7 @@ router.post('/crearPropuesta', authenticate, async (req, res) => {
 router.get('/getPropuestas', authenticate, async(req, res) => {
     try {
         const response = await fetch('http://localhost:3000/propuestas');
-        const propuestas: IActividad[] = await response.json();
+        const propuestas: IPropuesta[] = await response.json();
         res.send({propuestas: propuestas});
     } catch (error) {
         console.error("Error al conectar a la BD:", error);
@@ -119,7 +119,7 @@ router.get('/getPropuestas', authenticate, async(req, res) => {
 router.get('/getPropuesta/:id', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/propuestas');
-        const propuestas: IActividad[] = await response.json();
+        const propuestas: IPropuesta[] = await response.json();
         const propuestaEncontrada = propuestas.filter((propuesta) => propuesta.id === req.params.id);
         res.send({propuestaEncontrada: propuestaEncontrada});
     } catch (error) {

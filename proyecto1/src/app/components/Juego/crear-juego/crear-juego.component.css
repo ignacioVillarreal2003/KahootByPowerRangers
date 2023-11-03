@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
 
 
-.inicio {
+.crearJuego {
     background-color: #3c1474;
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.inicio h2 {
+.crearJuego h2 {
     font-family: 'Sigmar One', sans-serif;
     font-size: 50px;
     color: white;
@@ -22,7 +22,7 @@
     margin-bottom: 20px;
 }
 
-.inicio form {
+.crearJuego form {
     width: 320px;
     background-color: white;
     padding: 20px;
@@ -31,17 +31,17 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.inicio form label {
+.crearJuego form label {
     color: #333;
     margin-top: 10px;
     display: block;
 }
 
-.inicio form input[type="checkbox"] {
+.crearJuego form input[type="checkbox"] {
     margin-right: 10px;
 }
 
-.inicio form button {
+.crearJuego form button {
     width: 290px;
     height: 48px;
     font-size: 1rem;
@@ -59,7 +59,7 @@
     transition: all 350ms ease;
 }
 
-.inicio form button[type="submit"] {
+.crearJuego form button[type="submit"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -80,7 +80,7 @@
     transition: all 350ms ease;
 }
 
-.inicio form button[type="button"] {
+.crearJuego form button[type="button"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -101,11 +101,11 @@
     transition: all 350ms ease;
 }
 
-.inicio form button:hover {
+.crearJuego form button:hover {
     background-color: #45a049;
     transform: scale(1.05);
 }
-.inicio form button[type="button"]:hover {
+.crearJuego form button[type="button"]:hover {
     background-color: #bb0000c0;  
     transform: scale(1.05);
 }
