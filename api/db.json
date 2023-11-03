@@ -97,6 +97,18 @@
     },
     {
       "id": 6
+    },
+    {
+      "id": "1ad40975-b049-4b3f-aab5-299a57dc3be3",
+      "titulo": "a",
+      "listaActividades": [
+        {
+          "id": "c16e3cb0-976e-45e4-b1d7-5a6ed7aa05b1",
+          "titulo": "actividad2",
+          "descripcion": "descripcion",
+          "imagen": ""
+        }
+      ]
     }
   ]
 }

@@ -74,13 +74,13 @@ export class AdminService {
       titulo: titulo,
       listaActividades: listaActividades
     } 
-    return this.http.post<any>("http://localhost:3001/administrador/crearPropuesta", this.httpOptions).pipe(
+    return this.http.post<any>("http://localhost:3001/administrador/crearPropuesta", requestBody, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
   
   getPropuestas(): Observable<any> {
-    return this.http.get<any>("http://localhost:3001/administrador/getPropuestas", this.httpOptions).pipe(
+    return this.http.get<any>("http://localhost:3001/administrador/getPropuestas",  this.httpOptions).pipe(
       catchError(this.handleError),
       map(response => {
         if (response && response.propuestas) {
