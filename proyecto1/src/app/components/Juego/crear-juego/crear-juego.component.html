@@ -1,15 +1,19 @@
-<div class="inicio">
-    <h2>Seleccionar Propuesta</h2>
-    <form>    
-      <div *ngFor="let propuesta of propuestas">
-        <label>
-          <input type="radio" [(ngModel)]="propuestaSeleccionada" [value]="propuesta">
-          {{ propuesta.nombre }}
-        </label>
-      </div>
-    
-      <button type="submit" (click)="aceptar()">Aceptar</button>
-      <button type="button" routerLink="/crear">Cancelar</button>
-    </form>
-    </div>
+<div class="crearJuego">
+  <h2>Crear Nueva Propuesta</h2>
+
+  <div class="form">
+    <input id="tituloJuego" type="text" placeholder="titulo" [(ngModel)]="tituloJuego">
+    <ul class="listaPropuestas">
+      <li *ngFor="let propuesta of propuestas">
+        <h3>{{propuesta.titulo}}</h3>
+        <input class="propuestaParaJuego" type="checkbox" [id]="propuesta.id">
+      </li>
+    </ul>
+    <button type="submit" (click)="crearJuego()" >Guardar</button>
+    <button type="button" routerLink="/crear">Cancelar</button>
+  </div>
+
+  <div class="forma1"></div>
+  <div class="forma2"></div>
+</div>
     
