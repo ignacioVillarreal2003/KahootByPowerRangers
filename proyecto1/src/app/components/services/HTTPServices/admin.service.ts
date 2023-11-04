@@ -21,10 +21,10 @@ export class AdminService {
     let errorMessage = 'Error desconocido';
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
-      errorMessage = `Error: ${error.status} ${error.error.message}`;
+      errorMessage = error.error.message;
     } else if (error.status) {
       // Error devuelto por el servidor
-      errorMessage = `Error: ${error.status} ${error.error.message}`;
+      errorMessage = error.error.message;
     }
     // Devuelve un mensaje de error observable
     return throwError(errorMessage);

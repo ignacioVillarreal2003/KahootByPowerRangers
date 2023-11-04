@@ -1,4 +1,4 @@
-<div class="inicio">
+<div class="crearActividad">
     <div class="titulo">
         <h1>Crear Nueva Actividad</h1>
     </div>
@@ -12,8 +12,8 @@
         <label for="imagen">Imagen:</label>
         <input type="file" accept="image/*" (change)="onFileSelected($event)" id="imagen" name="imagen">
 
-        <button type="button2" class="iniciar" (click)="crearActividad()">Aceptar</button>
-        <button type="button" class="registrarse" routerLink="/crear">Cancelar</button>
+        <button type="button2" class="aceptar" (click)="crearActividad()">Aceptar</button>
+        <button type="button" class="cancelar" routerLink="/crear">Cancelar</button>
         
         <p class="textoLog">{{ textoLog }}</p>
     </form>

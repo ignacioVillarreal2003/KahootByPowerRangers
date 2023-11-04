@@ -150,3 +150,9 @@
 .crearJuego #tituloJuego:hover{
     transform: scale(1.05);
 }
+
+.textoLog{
+    color: red;
+    font-size: 15px;
+    margin-top: 5px;
+}

@@ -20,18 +20,28 @@ export class CrearActividadComponent {
     if (this.checkDatos()) {
       this.adminService.crearActividad(this.titulo, this.descripcion, this.archivo).subscribe(
         (response: any) => {
-          console.log("Actividad creada con exito.");
+          this.textoLog = response.message;
+          let p = document.querySelector('.textoLog') as HTMLElement;
+          const btnAceptar = document.querySelector('.aceptar') as HTMLInputElement;
+          p.style.color = 'green';
+          btnAceptar.disabled = true;
+          console.log(response);
+          setTimeout(() => {
+            this.respuestaVerdadera(p,btnAceptar);
+          }, 4000);
         },
         (error: any) => {
-          if (error === "Error: 500 Error al conectar a la BD.") {
-            console.log('Error al conectar a la BD.');
-          }
-          else {
-            console.log(error);
-          }
+          this.textoLog = error;
+          console.log(error);
         }
       );
     }
+  }
+
+  respuestaVerdadera(p: HTMLElement, btnAceptar: HTMLInputElement){
+    p.style.color = 'red';
+    this.textoLog = "";
+    btnAceptar.disabled = false;
   }
 
   onFileSelected(event: any): void {
@@ -67,10 +77,6 @@ export class CrearActividadComponent {
     }
     if (this.descripcion.length === 0) {
       this.textoLog = "Requiere descripcion.";
-      return false;
-    }
-    if (this.archivo === null) {
-      this.textoLog = "Requiere imagen.";
       return false;
     }
     return true;

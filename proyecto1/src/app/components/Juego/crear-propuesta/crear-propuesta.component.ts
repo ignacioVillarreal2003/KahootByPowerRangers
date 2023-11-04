@@ -15,11 +15,10 @@ export class CrearPropuestaComponent {
 
   constructor(private adminService: AdminService, private actividadesService: ActividadesService) { }
 
-  listados: any;
-
   actividades: IActividad[] = [];
-
   tituloPropuesta: string = "";
+  textoLog: string = "";
+
 
   ngOnInit(): void {
     this.actividadesService.actividades$.subscribe(actividades => {
@@ -40,9 +39,11 @@ export class CrearPropuestaComponent {
 
   checkDatos(){
     if (this.tituloPropuesta.length === 0){
+      this.textoLog = "Falta el titulo."
       return false;
     }
     if (this.actividadesSeleccionadas.length === 0){
+      this.textoLog = "Seleccione actividades."
       return false;
     }
     return true;

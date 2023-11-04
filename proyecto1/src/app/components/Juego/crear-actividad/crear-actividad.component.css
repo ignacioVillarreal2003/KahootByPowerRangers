@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
 
-.inicio{
+.crearActividad{
     background-color: #3c1474;
     display: flex;
     align-items: center;
@@ -12,18 +12,18 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.inicio .titulo {
+.crearActividad .titulo {
     z-index: 2;
 }
 
-.inicio .titulo h1{
+.crearActividad .titulo h1{
     font-family: 'Sigmar One', sans-serif;
     font-size: 50px;
     color: white;
     font-weight: 500;
 }
 
-.inicio form {
+.crearActividad form {
     width: 320px;
     background-color: white;
     padding: 20px;
@@ -34,7 +34,7 @@
     z-index: 2;
 }
 
-.inicio form label {
+.crearActividad form label {
     width: 290px;
     height: 42px;
     text-align: center;
@@ -51,16 +51,16 @@
 }
 
 
-.inicio form input,
-.inicio form textarea,
-.inicio form button,
-.inicio form select {
+.crearActividad form input,
+.crearActividad form textarea,
+.crearActividad form button,
+.crearActividad form select {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
 }
 
-.inicio form button[type="button2"] {
+.crearActividad form button[type="button2"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -81,7 +81,7 @@
     transition: all 350ms ease;
 }
 
-.inicio form button[type="button"] {
+.crearActividad form button[type="button"] {
     width: 280px;
     height: 48px;
     font-size: 1rem;
@@ -102,11 +102,11 @@
     transition: all 350ms ease;
 }
 
-.inicio form button:hover {
+.crearActividad form button:hover {
     background-color: #45a049;
     transform: scale(1.05);
 }
-.inicio form button[type="button"]:hover {
+.crearActividad form button[type="button"]:hover {
     background-color: #bb0000c0; 
     transform: scale(1.05);
 }

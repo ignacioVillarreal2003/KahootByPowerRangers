@@ -13,8 +13,12 @@ export class CrearJuegoComponent {
   constructor(private adminService: AdminService, private propuestasService: PropuestasService) { }
 
   propuestas: IPropuesta[] = [];
-
   tituloJuego: string = "";
+  codigoSala: string = "";
+  linkSala: string = ""
+  propuestaSeleccionada: IPropuesta|null = null;
+  textoLog: string = "";
+
 
   ngOnInit(): void {
     this.propuestasService.propuestas$.subscribe(propuestas => {
@@ -22,15 +26,31 @@ export class CrearJuegoComponent {
     });
   }
 
+  seleccionarPropuesta(propuesta: IPropuesta): void {
+    if (this.propuestaSeleccionada === propuesta) {
+      this.propuestaSeleccionada = null; 
+    } else {
+      const propuestas = document.querySelectorAll('.propuestaParaJuego') as NodeListOf<HTMLInputElement>;
+      propuestas.forEach(p => {
+        if (p.id !== propuesta.id) {
+          p.checked = false; 
+        }
+      });
+      const propSeleccionada = document.getElementById(propuesta.id) as HTMLInputElement;
+      if (propSeleccionada) {
+        this.propuestaSeleccionada = propuesta; 
+      }
+    }
+  }
+  
 
-  propuestaSeleccionada: IPropuesta|null = null;
-
-
-  checkDatos(){
-    if (this.propuestaSeleccionada === null){
+  checkDatos(): boolean{
+    if (this.tituloJuego.length === 0){
+      this.textoLog = "Falta el titulo."
       return false;
     }
-    if (this.tituloJuego.length === 0){
+    if (this.propuestaSeleccionada === null){
+      this.textoLog = "Seleccione una propuesta."
       return false;
     }
     return true;
@@ -38,8 +58,19 @@ export class CrearJuegoComponent {
 
   crearJuego(): void {   
     if (this.checkDatos()) {
-      
+      this.generarCodigoSala()
+        console.log(this.codigoSala);
     }
+  }
+
+  generarCodigoSala() {
+    let resultado = '';
+    const longitud = 6;
+    for (let i = 0; i < longitud; i++) {
+      const digito = Math.floor(Math.random() * 10); 
+      resultado += digito.toString();
+    }
+    this.codigoSala = resultado;
   }
 
 }

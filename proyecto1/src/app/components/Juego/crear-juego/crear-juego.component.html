@@ -6,11 +6,14 @@
     <ul class="listaPropuestas">
       <li *ngFor="let propuesta of propuestas">
         <h3>{{propuesta.titulo}}</h3>
-        <input class="propuestaParaJuego" type="checkbox" [id]="propuesta.id">
+        <input class="propuestaParaJuego" type="checkbox" [id]="propuesta.id" (change)="seleccionarPropuesta(propuesta)">
       </li>
     </ul>
     <button type="submit" (click)="crearJuego()" >Guardar</button>
     <button type="button" routerLink="/crear">Cancelar</button>
+    
+    <p class="textoLog">{{ textoLog }}</p>
+
   </div>
 
   <div class="forma1"></div>
