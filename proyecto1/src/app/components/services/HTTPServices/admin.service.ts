@@ -5,6 +5,7 @@ import { IActividad } from '../IActividad';
 import { IPropuesta } from '../IPropuesta';
 import { Observable, of, throwError  } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AdminService {
   };
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Error desconocido';
+    let errorMessage = 'Error desconocido';  
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
       errorMessage = error.error.message;

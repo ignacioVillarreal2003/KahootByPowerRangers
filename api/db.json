@@ -162,6 +162,12 @@
       "titulo": "asdfdsg",
       "descripcion": "fdsfsdfsd",
       "imagen": null
+    },
+    {
+      "id": "08762d49-1ea9-4893-89d1-661d17a81b07",
+      "titulo": "fffffffffffffffff",
+      "descripcion": "ff",
+      "imagen": null
     }
   ],
   "propuestas": [
@@ -228,6 +234,36 @@
     {
       "id": "391b3a83-4ee2-4ca2-a49e-10d5168334cb",
       "titulo": "fghfghfghf",
+      "listaActividades": [
+        {
+          "id": "48d7b98b-74ac-4d83-be03-3b84ac50037b",
+          "titulo": "actividad1",
+          "descripcion": "descripcion",
+          "imagen": ""
+        },
+        {
+          "id": "c16e3cb0-976e-45e4-b1d7-5a6ed7aa05b1",
+          "titulo": "actividad2",
+          "descripcion": "descripcion",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "556bd978-dcf9-4f08-b626-9869aed9015a",
+      "titulo": "mmmm",
+      "listaActividades": [
+        {
+          "id": "48d7b98b-74ac-4d83-be03-3b84ac50037b",
+          "titulo": "actividad1",
+          "descripcion": "descripcion",
+          "imagen": ""
+        }
+      ]
+    },
+    {
+      "id": "7ba48c16-993f-4a3b-9ca8-0b2d88806fac",
+      "titulo": "mmmmh",
       "listaActividades": [
         {
           "id": "48d7b98b-74ac-4d83-be03-3b84ac50037b",

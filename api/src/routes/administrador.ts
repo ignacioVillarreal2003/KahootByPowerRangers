@@ -9,16 +9,23 @@ const router = express.Router()
 export function authenticate(req: any, res: any, next: any) {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
-        return res.status(401).send('Unauthorized');
+        return res.status(401).send({
+            message: "Unauthorized"
+        });
     } else {
         const token: string = authorizationHeader.split(' ')[1];
         try {
             jwt.verify(token, 'shhhhh');
             next();
-        } catch (err) {
-            console.log(err);
-            const error = new Error("Error! Something went wrong.");
-            return next(error);
+        } catch (err: any) {
+            if (err.name === 'TokenExpiredError') {
+                res.status(401).send({
+                    message: "TokenExpiredError"
+                });
+            } else {
+                const error = new Error("Error! Something went wrong.");
+                return next(error);
+            }
         }
     }
 }
@@ -40,7 +47,7 @@ router.post('/crearActividad', authenticate, async (req, res) => {
         const actividadExistente = actividadesEnBD.find((act: IActividad) => act.titulo === actividad.titulo);
 
         if (actividadExistente) {
-            // Si se encuentra una actividad con el mismo título, retornar un mensaje o realizar la acción correspondiente
+            // Si se encuentra una actividad con el mismo título
             return res.status(400).send({
                 message: "Ya existe una actividad con este título.",
             });
@@ -70,9 +77,8 @@ router.get('/getActividades', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/actividades');
         const actividades: IActividad[] = await response.json();
-        res.send({ actividades: actividades });
+        res.status(200).send({ actividades: actividades });
     } catch (error) {
-        console.error("Error al conectar a la BD:", error);
         res.status(500).send({
             message: "Error al conectar a la BD."
         });
@@ -85,9 +91,8 @@ router.get('/getActividad/:id', authenticate, async (req, res) => {
         const response = await fetch('http://localhost:3000/actividades');
         const actividades: IActividad[] = await response.json();
         const actividadEncontrada = actividades.filter(actividad => actividad.id === req.params.id);
-        res.send({ actividadEncontrada: actividadEncontrada });
+        res.status(200).send({ actividadEncontrada: actividadEncontrada });
     } catch (error) {
-        console.error("Error al conectar a la BD:", error);
         res.status(500).send({
             message: "Error al conectar a la BD."
         });
@@ -97,23 +102,36 @@ router.get('/getActividad/:id', authenticate, async (req, res) => {
 
 router.post('/crearPropuesta', authenticate, async (req, res) => {
     const propuesta: IPropuesta = {
-
         id: req.body.id,
         titulo: req.body.titulo,
         listaActividades: req.body.listaActividades
     }
-    console.log(propuesta);
-
-    // Guardar la actividad en la base de datos
+    // Guardar la propuesta en la base de datos
     try {
-        await fetch('http://localhost:3000/propuestas', {
-            method: "POST",
-            body: JSON.stringify(propuesta),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        return res.send(200);
+        const prop = await fetch('http://localhost:3000/propuestas');
+        const propuestasEnBD = await prop.json();
+
+        // Verificar si el título de la propuesta ya existe en propuestasEnBD
+        const propuestaExistente = propuestasEnBD.find((prop: IPropuesta) => prop.titulo === propuesta.titulo);
+
+        if (propuestaExistente) {
+            // Si se encuentra una propuesta con el mismo título
+            return res.status(400).send({
+                message: "Ya existe una propuesta con este título.",
+            });
+        } else {
+            // Si no hay propuestas con el mismo título, se guarda la nueva propuesta en la base de datos
+            await fetch('http://localhost:3000/propuestas', {
+                method: "POST",
+                body: JSON.stringify(propuesta),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            return res.status(200).send({
+                message: "Propuesta creada con exito.",
+            });
+        }
     } catch (error) {
         return res.status(500).send({
             message: "Error al conectar a la BD."
@@ -125,9 +143,8 @@ router.get('/getPropuestas', authenticate, async (req, res) => {
     try {
         const response = await fetch('http://localhost:3000/propuestas');
         const propuestas: IActividad[] = await response.json();
-        res.send({ propuestas: propuestas });
+        res.status(200).send({ propuestas: propuestas });
     } catch (error) {
-        console.error("Error al conectar a la BD:", error);
         res.status(500).send({
             message: "Error al conectar a la BD."
         });
@@ -140,9 +157,8 @@ router.get('/getPropuesta/:id', authenticate, async (req, res) => {
         const response = await fetch('http://localhost:3000/propuestas');
         const propuestas: IActividad[] = await response.json();
         const propuestaEncontrada = propuestas.filter((propuesta) => propuesta.id === req.params.id);
-        res.send({ propuestaEncontrada: propuestaEncontrada });
+        res.status(200).send({ propuestaEncontrada: propuestaEncontrada });
     } catch (error) {
-        console.error("Error al conectar a la BD:", error);
         res.status(500).send({
             message: "Error al conectar a la BD."
         });

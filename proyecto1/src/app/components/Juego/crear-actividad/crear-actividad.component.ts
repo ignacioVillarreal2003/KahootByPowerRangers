@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IActividad } from '../../services/IActividad';
 import { AdminService } from '../../services/HTTPServices/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -14,7 +14,7 @@ export class CrearActividadComponent {
   archivo: any = null;
   textoLog: string = "";
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private router: Router) { }
 
   crearActividad(): void {
     if (this.checkDatos()) {
@@ -31,8 +31,12 @@ export class CrearActividadComponent {
           }, 4000);
         },
         (error: any) => {
-          this.textoLog = error;
-          console.log(error);
+          if (error === "TokenExpiredError"){
+            this.router.navigate(['/login']);
+          } else{
+            this.textoLog = error;
+            console.log(error);
+          }
         }
       );
     }

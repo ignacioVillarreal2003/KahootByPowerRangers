@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IActividad } from '../../services/IActividad';
 import { AdminService } from '../../services/HTTPServices/admin.service';
-import { interval } from 'rxjs';
 import { ActividadesService } from '../../services/actividades.service';
-import { IPropuesta } from '../../services/IPropuesta';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +12,7 @@ import { IPropuesta } from '../../services/IPropuesta';
 })
 export class CrearPropuestaComponent {
 
-  constructor(private adminService: AdminService, private actividadesService: ActividadesService) { }
+  constructor(private adminService: AdminService, private actividadesService: ActividadesService, private router: Router) { }
 
   actividades: IActividad[] = [];
   tituloPropuesta: string = "";
@@ -53,17 +52,31 @@ export class CrearPropuestaComponent {
     if (this.checkDatos()) {
       this.adminService.crearPropuesta(this.tituloPropuesta, this.actividadesSeleccionadas).subscribe(
         (response: any) => {
-          console.log("Propuesta creada con éxito.");
+          this.textoLog = response.message;
+          let p = document.querySelector('.textoLog') as HTMLElement;
+          const btnAceptar = document.querySelector('.aceptar') as HTMLInputElement;
+          p.style.color = 'green';
+          btnAceptar.disabled = true;
+          console.log(response);
+          setTimeout(() => {
+            this.respuestaVerdadera(p,btnAceptar);
+          }, 4000);
         },
         (error: any) => {
-          if (error === "Error: 500 Error al conectar a la BD.") {
-            console.log('Error al conectar a la BD.');
-          } else {
-            console.log(error);
+          if (error === "TokenExpiredError"){
+            this.router.navigate(['/login']);
           }
+          this.textoLog = error;
+          console.log(error);
         }
       );
     }
+  }
+  
+  respuestaVerdadera(p: HTMLElement, btnAceptar: HTMLInputElement){
+    p.style.color = 'red';
+    this.textoLog = "";
+    btnAceptar.disabled = false;
   }
 }
 

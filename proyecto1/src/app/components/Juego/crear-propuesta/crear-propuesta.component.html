@@ -9,7 +9,7 @@
         <input class="actividadParaPropuesta" type="checkbox" [id]="actividad.id" (change)="toggleActividad(actividad)">
       </li>
     </ul>
-    <button type="submit" (click)="crearPropuesta()" >Guardar</button>
+    <button type="submit" class="aceptar" (click)="crearPropuesta()" >Guardar</button>
     <button type="button" routerLink="/crear">Cancelar</button>
   
     <p class="textoLog">{{ textoLog }}</p>
