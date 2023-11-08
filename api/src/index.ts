@@ -27,6 +27,30 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
 
+/* BCrypt */
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+async function hashPassword(password: string) {
+    try {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        return hashedPassword;
+    } catch (error) {
+        console.error('Error al hashear la contraseña:', error);
+        throw error;
+    }
+}
+
+async function comparePassword(inputPassword: string, hashedPassword: string) {
+    try {
+        const match = await bcrypt.compare(inputPassword, hashedPassword);
+        return match;
+    } catch (error) {
+        // Manejo de errores
+        console.error('Error al comparar las contraseñas:', error);
+        throw error;
+    }
+}
 
 /* Variables e interfazes */
 import { ICalificarActividad } from './routes/ICalificarActividad';
@@ -55,21 +79,30 @@ app.post('/registrarUsuario', async (req, res) => {
                 message: "El usuario ya está registrado."
             });
         } else {
-            // Obtener el último ID y registrar el nuevo usuario
-            const lastId = users.length > 0 ? users[users.length - 1].id + 1 : 1;
-            const newUser = { id: lastId, username: req.body.username, password: req.body.password };
+            try {
+                // Hashear contraseña
+                const password = await hashPassword(req.body.password);
 
-            // Guardar el nuevo usuario en la base de datos
-            await fetch('http://localhost:3000/usuarios', {
-                method: "POST",
-                body: JSON.stringify(newUser),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+                // Obtener el último ID y registrar el nuevo usuario
+                const lastId = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+                const newUser = { id: lastId, username: req.body.username, password: password };
 
-            const token = generateAccessToken(req.body.username);
-            return res.send({ token: token }); // Se envía el token si todo está correcto
+                // Guardar el nuevo usuario en la base de datos
+                await fetch('http://localhost:3000/usuarios', {
+                    method: "POST",
+                    body: JSON.stringify(newUser),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                const token = generateAccessToken(req.body.username);
+                return res.send({ token: token }); // Se envía el token si todo está correcto
+            } catch (error) {
+                return res.status(500).send({
+                    message: "Error al hashear contraseña."
+                });
+            }
         }
     } catch (error) {
         return res.status(500).send({
@@ -87,7 +120,9 @@ app.post('/loguearUsuario', async (req, res) => {
         // Verificar si el usuario ya está registrado
         const existingUser = users.find(user => user.username === req.body.username);
         if (existingUser) {
-            if (req.body.username == existingUser.username && req.body.password == existingUser.password) {
+            // compara contraseñas
+            const match = await comparePassword(req.body.password, existingUser.password);
+            if (req.body.username == existingUser.username && match) {
                 const token = generateAccessToken(req.body.username);
                 return res.send({ token: token }); // Se envía el token si todo está correcto
             } else {

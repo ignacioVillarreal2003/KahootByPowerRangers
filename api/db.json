@@ -4,6 +4,56 @@
       "id": 1,
       "username": "ignaciovillar",
       "password": "12345678"
+    },
+    {
+      "id": 2,
+      "username": "paturuso",
+      "password": ""
+    },
+    {
+      "id": 3,
+      "username": "dsfsdfsdfsd",
+      "password": ""
+    },
+    {
+      "id": 4,
+      "username": "fsdfsdfdfghfgf",
+      "password": ""
+    },
+    {
+      "id": 5,
+      "username": "vvcxvcvcxcvxcv",
+      "password": {}
+    },
+    {
+      "id": 6,
+      "username": "fsdfdffdgdfg",
+      "password": {}
+    },
+    {
+      "id": 7,
+      "username": "vvvvvvvvvvvvvvvvv",
+      "password": {}
+    },
+    {
+      "id": 8,
+      "username": "bvcvbcvbcv",
+      "password": {}
+    },
+    {
+      "id": 9,
+      "username": "cvxcvxcvxcvxc",
+      "password": "$2b$10$IwAGIuF0dsghi72k0x1z2u1PrD3zptokqtlg6FFZNdxfC1h87seGG"
+    },
+    {
+      "id": 10,
+      "username": "ignacioVilliaria",
+      "password": "$2b$10$IS9EoNyeOB976CadBz1dPuhgP0./TFAls2qyo501s2DPiuMMInvpC"
+    },
+    {
+      "id": 11,
+      "username": "dfgdfgdfggfdg",
+      "password": "$2b$10$iwhwnsmRB7ECoR6u8IQcOueNQeLp0U0Or9.gNvUkGLmSgiA5SfcLe"
     }
   ],
   "actividades": [
