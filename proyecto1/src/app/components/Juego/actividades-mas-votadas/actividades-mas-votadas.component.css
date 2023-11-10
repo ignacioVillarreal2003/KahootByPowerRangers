@@ -24,10 +24,41 @@
     margin-bottom: 1rem;
   }
   
-  .actividad {
-    margin: 1rem 0;
-    padding: 1rem;
-    background-color: #f2f2f2;
-    border-radius: 5px;
+  .cuadro {
+    background-color: #8949C1;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    position: relative; /* Agrega esto para permitir la posición relativa */
   }
   
+  .circulo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 20px; /* Espacio entre el círculo y el contenido del cuadro */
+    background-color: #FFD700;
+  }
+  
+  .amarillo {
+    background-color: #FFD700; /* Amarillo */
+  }
+  
+  .gris {
+    background-color: #808080; /* Gris */
+  }
+  
+  .naranja {
+    background-color: #FFA500; /* Naranja oscuro */
+  }

@@ -27,6 +27,68 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
 
+/* mongoose */
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://EquipoAAAV:PowerRangers5@cluster0.vgvmulv.mongodb.net/Proyecto')
+  .then(() => console.log('Connected!'));
+
+var userSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    usuario: String,
+    contraseña: String
+});
+
+var actividadSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    id: String,
+    titulo: String,
+    descripcion: String,
+    imagen: String
+});
+var propuestaSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    id: String,
+    titulo: String,
+    listaActividades: []
+});
+
+var juegoSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    id: String,
+    titulo: String,
+    pin: String,
+    propuesta: { type: propuestaSchema, default: {} }
+});
+
+var votosSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    idActividad: String,
+    puntuacion: Number,
+    idJuego: String
+});
+
+/*
+var Usuario = mongoose.model('User', userSchema, 'Usuarios');
+
+function prueba1() {
+    var jamieUser = new Usuario({
+        _id: new mongoose.Types.ObjectId(),
+        firstName: 'Pepe',
+        lastName: 'Munro'
+    });
+
+    jamieUser.save()
+        .then(() => {
+            console.log('Usuario guardado exitosamente.');
+        })
+        .catch((err: any) => {
+            console.error('Error al guardar el usuario:', err);
+        });
+}
+
+
+prueba1();  // Call the function to execute the code
+*/
 /* BCrypt */
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
