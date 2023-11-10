@@ -30,4 +30,8 @@ export class SocketService {
 
     return this.actividad$.asObservable();
   }
+
+  public cerrarSocket() {
+    this.socket.disconnect();
+  }
 }
