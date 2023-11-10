@@ -26,23 +26,19 @@ io.on('connection', (socket: any) => {
     socket.on('disconnect', () => {
       console.log('user ' + socket.id.substr(0, 2) + ' disconnected!');
     });
-
-    socket.on('iniciarJuego', async () => {
-        let actividades: IActividad[] = await []; // Acá llamaría a la base de datos con la id de la actividad
-        await mandarActividad(actividades);
-        io.emit('fin');
-    });
-
-    function mandarActividad(actividades: IActividad[]){
-        io.emit('actividad', actividades[actividades.length - 1]);
-        while(actividades.length > 1) {
-            setInterval(() => {
-                actividades.pop();
-                mandarActividad(actividades)
-            }, 15000);
-        }
-    };
   });
+
+function mandarActividad(actividades: IActividad[]){
+    io.emit('actividad', actividades[actividades.length - 1]);
+    actividades.pop();
+    if(actividades.length > 0) {
+        setTimeout(() => {
+            mandarActividad(actividades)
+        }, 10000);
+    } else {
+        io.emit('fin');
+    }
+};
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -57,6 +53,7 @@ app.use('/usuario', usuarioRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
+httpServer.listen(3002);
 
 
 /* Variables e interfazes */
@@ -107,6 +104,12 @@ app.post('/registrarUsuario', async (req, res) => {
             message: "Error al conectar a la BD."
         });
     }
+});
+
+app.post('/iniciarJuego', async (req, res) => {
+    let actividades: IActividad[] = await []; // Acá llamaría a la base de datos con la id de la actividad
+    mandarActividad(actividades);
+    res.status(200);
 });
 
 app.post('/loguearUsuario', async (req, res) => {

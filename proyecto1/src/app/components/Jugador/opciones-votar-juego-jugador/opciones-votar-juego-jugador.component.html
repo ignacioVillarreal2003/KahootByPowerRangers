@@ -1,4 +1,4 @@
-<div class="opcionesVotarJuegoJugador">
+<div class="opcionesVotarJuegoJugador" *ngIf="actividad">
     <div class="contador">5 de 10</div>
     <form class="entrarPin">
         <button class="noMeGusta"routerLink="/despuesCadaPreguntaJugador" (click)="savePin()">No me gusta -1</button>

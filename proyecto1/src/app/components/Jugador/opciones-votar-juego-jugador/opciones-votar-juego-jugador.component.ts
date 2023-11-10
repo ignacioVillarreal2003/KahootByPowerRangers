@@ -15,11 +15,12 @@ export class OpcionesVotarJuegoJugadorComponent{
     
   }
 
-  actividad: IActividad = {id:'', titulo:'', descripcion:'', imagen:''};
+  actividad? : IActividad = undefined;
 
   ngOnInit(){
     this.socketService.getActividad().subscribe((actividad: IActividad) => {
       this.actividad = actividad;
-    })
+    });
+
   }
 }

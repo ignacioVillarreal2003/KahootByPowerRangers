@@ -12,7 +12,7 @@ export class SocketService {
   public actividad$: BehaviorSubject<IActividad> = new BehaviorSubject({id:'', titulo:'', descripcion:'', imagen:''});
   constructor(private Router: Router) {} 
 
-  socket = io('http://localhost:3001');
+  socket = io('http://localhost:3002');
 
   public iniciarJuego(idActividad: string) {
     this.socket.emit('iniciarJuego', idActividad);
@@ -25,7 +25,7 @@ export class SocketService {
     });
 
     this.socket.on('fin', () => {
-      this.Router.navigate(['/login']);
+      this.Router.navigate(['/calificacion']);
     });
 
     return this.actividad$.asObservable();
