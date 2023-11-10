@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IActividad } from '../../services/IActividad';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-inicio-juego',
@@ -7,6 +8,6 @@ import { IActividad } from '../../services/IActividad';
   styleUrls: ['./inicio-juego.component.css']
 })
 export class InicioJuegoComponent {
-
+  constructor(private socketService: SocketService) {}
   
 }

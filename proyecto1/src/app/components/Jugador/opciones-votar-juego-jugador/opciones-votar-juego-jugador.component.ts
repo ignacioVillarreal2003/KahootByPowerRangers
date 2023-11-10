@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { IActividad } from '../../services/IActividad';
+import { UserService } from '../../services/HTTPServices/user.service';
 
 @Component({
   selector: 'app-opciones-votar-juego-jugador',
@@ -9,18 +10,21 @@ import { IActividad } from '../../services/IActividad';
 })
 export class OpcionesVotarJuegoJugadorComponent{
 
-  constructor (private socketService: SocketService) {}
+  constructor (private socketService: SocketService, private userService: UserService) {}
 
   savePin(){
     
   }
 
-  actividad? : IActividad = undefined;
+  actividadId? : string = undefined;
 
   ngOnInit(){
-    this.socketService.getActividad().subscribe((actividad: IActividad) => {
-      this.actividad = actividad;
+    this.socketService.getActividadJugador().subscribe((actividad: IActividad) => {
+      this.actividadId = actividad.id;
     });
+  }
 
+  mandarVoto(voto: number) {
+    this.userService.calificarActividad(this.actividadId as string, voto);
   }
 }

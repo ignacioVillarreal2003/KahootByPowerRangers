@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
-import { IActividad } from '../../services/IActividad';
 
 @Component({
   selector: 'app-pantalla-carga-jugador',

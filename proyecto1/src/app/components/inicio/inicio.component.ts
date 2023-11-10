@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { DatosJugadorService } from '../services/datos-jugador.service';
 
-import { SocketService } from '../services/socket.service';
-
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
@@ -16,5 +14,5 @@ export class InicioComponent {
     this.datosJugadorService.pin = this.pin;
   }
 
-  constructor(private datosJugadorService: DatosJugadorService, private socketService: SocketService){}
+  constructor(private datosJugadorService: DatosJugadorService){}
 }

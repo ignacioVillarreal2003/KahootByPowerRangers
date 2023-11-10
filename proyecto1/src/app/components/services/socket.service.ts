@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from "socket.io-client";
 import { Router } from '@angular/router';
 import { IActividad } from './IActividad';
@@ -8,27 +7,33 @@ import { IActividad } from './IActividad';
   providedIn: 'root',
 })
 export class SocketService {
-
-  public actividad$: BehaviorSubject<IActividad> = new BehaviorSubject({id:'', titulo:'', descripcion:'', imagen:''});
   constructor(private Router: Router) {} 
 
   socket = io('http://localhost:3002');
 
-  public iniciarJuego(idActividad: string) {
-    this.socket.emit('iniciarJuego', idActividad);
-  }
+  actividadActual?: IActividad = undefined;
+  actividadId?: number = undefined;
 
-  public getActividad = () => {
+  public getActividadJugador = () => {
     this.socket.on('actividad', (actividad) => {
       this.Router.navigate(['/opcionesVotarJuegoJugador']);
-      this.actividad$.next(actividad);
+      this.actividadId = actividad.id;
     });
 
     this.socket.on('fin', () => {
-      this.Router.navigate(['/calificacion']);
+      this.Router.navigate(['/calificacionJugador']);
+    });
+  }
+
+  public getActividadAdmin = () => {
+    this.socket.on('actividad', (actividad) => {
+      this.Router.navigate(['/opcionesVotarJuego']);
+      this.actividadActual = actividad;
     });
 
-    return this.actividad$.asObservable();
+    this.socket.on('fin', () => {
+      this.Router.navigate(['/calificacionAdmin']);
+    });
   }
 
   public cerrarSocket() {

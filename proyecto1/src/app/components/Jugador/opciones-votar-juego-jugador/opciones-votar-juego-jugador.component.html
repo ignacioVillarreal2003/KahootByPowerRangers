@@ -1,9 +1,9 @@
 <div class="opcionesVotarJuegoJugador" *ngIf="actividad">
     <div class="contador">5 de 10</div>
     <form class="entrarPin">
-        <button class="noMeGusta"routerLink="/despuesCadaPreguntaJugador" (click)="savePin()">No me gusta -1</button>
-        <button class="meDaIgual" routerLink="/despuesCadaPreguntaJugador" (click)="savePin()">Me da igual</button>
-        <button class="meGusta" routerLink="/despuesCadaPreguntaJugador" (click)="savePin()">Me gusta +1</button>
+        <button class="noMeGusta"routerLink="/despuesCadaPreguntaJugador" (click)="mandarVoto(-1)">No me gusta -1</button>
+        <button class="meDaIgual" routerLink="/despuesCadaPreguntaJugador" (click)="mandarVoto(0)">Me da igual</button>
+        <button class="meGusta" routerLink="/despuesCadaPreguntaJugador" (click)="mandarVoto(1)">Me gusta +1</button>
     </form>
     <div class="forma1"></div>
     <div class="forma2"></div>
