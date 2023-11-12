@@ -30,7 +30,7 @@ app.listen(PORT, () => {
 /* mongoose */
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://EquipoAAAV:PowerRangers5@cluster0.vgvmulv.mongodb.net/Proyecto')
-  .then(() => console.log('Connected!'));
+    .then(() => console.log('Connected!'));
 
 var userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -45,6 +45,7 @@ var actividadSchema = mongoose.Schema({
     descripcion: String,
     imagen: String
 });
+
 var propuestaSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     id: String,
@@ -67,28 +68,68 @@ var votosSchema = mongoose.Schema({
     idJuego: String
 });
 
-/*
-var Usuario = mongoose.model('User', userSchema, 'Usuarios');
 
-function prueba1() {
-    var jamieUser = new Usuario({
+var Usuario = mongoose.model('Usuario', userSchema, 'Usuarios');
+var Actividad = mongoose.model('Actividad', actividadSchema, 'Actividades');
+var Propuesta = mongoose.model('Propuesta', propuestaSchema, 'Propuestas');
+var Juego = mongoose.model('Juego', juegoSchema, 'Juegos');
+var Voto = mongoose.model('Voto', votosSchema, 'Votos');
+
+
+function postUsuario(username: string, password: string): boolean {
+    var usuario = new Usuario({
         _id: new mongoose.Types.ObjectId(),
-        firstName: 'Pepe',
-        lastName: 'Munro'
+        username: username,
+        password: password
     });
-
-    jamieUser.save()
+    usuario.save()
         .then(() => {
-            console.log('Usuario guardado exitosamente.');
+            return true;
         })
         .catch((err: any) => {
-            console.error('Error al guardar el usuario:', err);
+            return false;
         });
+    return false;
+}
+
+function postActividad(id: string, titulo: string, descripcion: string, imagen: string): boolean {
+    var actividad = new Actividad({
+        _id: new mongoose.Types.ObjectId(),
+        id: id,
+        titulo: titulo,
+        descripcion: descripcion,
+        imagen: imagen
+    });
+    actividad.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
+        });
+    return false;
+}
+
+function postPropuesta(id: string, titulo: string, listaActividades: any): boolean {
+    var propuesta = new Propuesta({
+        _id: new mongoose.Types.ObjectId(),
+        id: id,
+        titulo: titulo,
+        listaActividades: listaActividades
+    });
+    propuesta.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
+        });
+    return false;
 }
 
 
-prueba1();  // Call the function to execute the code
-*/
+
+
 /* BCrypt */
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
