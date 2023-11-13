@@ -1,8 +1,9 @@
 import express from 'express'
-import { listaPuntuacionesActividad, jwt } from '../index';
+import { jwt } from '../index';
 import { IActividad } from './IActividad';
 import { IPropuesta } from './IPropuesta';
 import { IJuego } from './IJuego';
+import { mongoose } from '../index';
 
 const router = express.Router()
 
@@ -31,173 +32,326 @@ export function authenticate(req: any, res: any, next: any) {
     }
 }
 
-/* IMPORTANTE: MANEJAR ERRORES DE SI NO ENCUENTRA ID ... */
-
+/* Actividades */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/crearActividad', authenticate, async (req, res) => {
-    const actividad = {
-        id: req.body.id,
-        titulo: req.body.titulo,
-        descripcion: req.body.descripcion,
-        imagen: req.body.imagen,
-    };
     try {
-        const act = await fetch('http://localhost:3000/actividades');
-        const actividadesEnBD = await act.json();
+        // Obtener actividad de la base de datos
+        const actividad: IActividad = await getActividad(req.body.titulo).then((res) => {
+            const act = res[0]
+            const actId = act.id;
+            const actTitulo = act.titulo;
+            const actDescripcion = act.descripcion;
+            const actImagen = act.imagen;
+
+            const activitie: IActividad = {
+                id: actId,
+                titulo: actTitulo,
+                descripcion: actDescripcion,
+                imagen: actImagen
+            }
+            return activitie;
+        });
 
         // Verificar si el título de la actividad ya existe en actividadesEnBD
-        const actividadExistente = actividadesEnBD.find((act: IActividad) => act.titulo === actividad.titulo);
-
-        if (actividadExistente) {
+        if (actividad !== null || actividad !== undefined) {
             // Si se encuentra una actividad con el mismo título
-            return res.status(400).send({
-                message: "Ya existe una actividad con este título.",
-            });
+            return res.status(400).send({ message: "Ya existe una actividad con este título." });
         } else {
             // Si no hay actividad con el mismo título, se guarda la nueva actividad en la base de datos
-            await fetch('http://localhost:3000/actividades', {
-                method: "POST",
-                body: JSON.stringify(actividad),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            return res.status(200).send({
-                message: "Actividad creada con exito.",
-            });
+            postActividad(req.body.id, req.body.titulo, req.body.descripcion, req.body.imagen)
+            return res.status(200).send({ message: "Actividad creada con exito." });
         }
     } catch (error) {
-        return res.status(500).send({
-            message: "Error al conectar a la BD."
-        });
+        return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
-
 
 router.get('/getActividades', authenticate, async (req, res) => {
     // Obtener las actividades de la base de datos
     try {
-        const response = await fetch('http://localhost:3000/actividades');
-        const actividades: IActividad[] = await response.json();
-        res.status(200).send({ actividades: actividades });
-    } catch (error) {
-        res.status(500).send({
-            message: "Error al conectar a la BD."
+        let listaActividades: IActividad[] = [];
+        await getActividades().then((res) => {
+            res.array.forEach((element: any) => {
+                const actId = element.id;
+                const actTitulo = element.titulo;
+                const actDescripcion = element.descripcion;
+                const actImagen = element.imagen;
+
+                const activitie: IActividad = {
+                    id: actId,
+                    titulo: actTitulo,
+                    descripcion: actDescripcion,
+                    imagen: actImagen
+                }
+
+                listaActividades.push(activitie);
+            });
         });
+        if (listaActividades.length > 0) {
+            res.status(200).send({ actividades: listaActividades });
+        } else {
+            res.status(400).send({ message: "No hay actividades disponibles." });
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
-
 
 router.get('/getActividad/:id', authenticate, async (req, res) => {
     try {
-        const response = await fetch('http://localhost:3000/actividades');
-        const actividades: IActividad[] = await response.json();
-        const actividadEncontrada = actividades.filter(actividad => actividad.id === req.params.id);
-        res.status(200).send({ actividadEncontrada: actividadEncontrada });
-    } catch (error) {
-        res.status(500).send({
-            message: "Error al conectar a la BD."
+        const actividad: IActividad = await getActividad(req.body.titulo).then((res) => {
+            const act = res[0]
+            const actId = act.id;
+            const actTitulo = act.titulo;
+            const actDescripcion = act.descripcion;
+            const actImagen = act.imagen;
+
+            const activitie: IActividad = {
+                id: actId,
+                titulo: actTitulo,
+                descripcion: actDescripcion,
+                imagen: actImagen
+            }
+            return activitie;
         });
+        if (actividad !== null || actividad !== undefined) {
+            res.status(200).send({ actividadEncontrada: actividad });
+        } else {
+            res.status(400).send({ message: "Actividad no encontrada." });
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
 
+/* Operaciones en base de datos */
+var actividadSchema = mongoose.Schema({
+    id: String,
+    titulo: String,
+    descripcion: String,
+    imagen: String
+});
 
-router.post('/crearPropuesta', authenticate, async (req, res) => {
-    const propuesta: IPropuesta = {
-        id: req.body.id,
-        titulo: req.body.titulo,
-        listaActividades: req.body.listaActividades
-    }
-    // Guardar la propuesta en la base de datos
+const Actividad = mongoose.model('Actividad', actividadSchema, 'Actividades');
+
+const getActividad = async (titulo: string) => {
     try {
-        const prop = await fetch('http://localhost:3000/propuestas');
-        const propuestasEnBD = await prop.json();
-
-        // Verificar si el título de la propuesta ya existe en propuestasEnBD
-        const propuestaExistente = propuestasEnBD.find((prop: IPropuesta) => prop.titulo === propuesta.titulo);
-
-        if (propuestaExistente) {
-            // Si se encuentra una propuesta con el mismo título
-            return res.status(400).send({
-                message: "Ya existe una propuesta con este título.",
-            });
+        const actividad = await Actividad.find({ titulo: { $eq: titulo } });
+        if (actividad) {
+            return actividad;
         } else {
-            // Si no hay propuestas con el mismo título, se guarda la nueva propuesta en la base de datos
-            await fetch('http://localhost:3000/propuestas', {
-                method: "POST",
-                body: JSON.stringify(propuesta),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            return res.status(200).send({
-                message: "Propuesta creada con exito.",
-            });
+            return null;
         }
     } catch (error) {
-        return res.status(500).send({
-            message: "Error al conectar a la BD."
+        console.error(error);
+        return null;
+    }
+};
+
+const getActividades = async () => {
+    try {
+        const actividad = await Actividad.find();
+        if (actividad) {
+            return actividad;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+function postActividad(id: string, titulo: string, descripcion: string, imagen: string): boolean {
+    var actividad = new Actividad({
+        id: id,
+        titulo: titulo,
+        descripcion: descripcion,
+        imagen: imagen
+    });
+    actividad.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
         });
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Propuestas */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+router.post('/crearPropuesta', authenticate, async (req, res) => {
+    try {
+        // Obtener propuesta de la base de datos
+        const propuesta: IPropuesta = await getPropuesta(req.body.titulo).then((res) => {
+            const prop = res[0]
+            const propId = prop.id;
+            const propTitulo = prop.titulo;
+            const proplistaActividades = prop.listaActividades;
+
+            const proposal: IPropuesta = {
+                id: propId,
+                titulo: propTitulo,
+                listaActividades: proplistaActividades
+            }
+            return proposal;
+        });
+        if (propuesta !== null || propuesta !== undefined) {
+            // Si se encuentra una propuesta con el mismo título
+            return res.status(400).send({ message: "Ya existe una propuesta con este título." });
+        } else {
+            // Si no hay propuestas con el mismo título, se guarda la nueva propuesta en la base de datos
+            postPropuesta(req.body.id, req.body.titulo, req.body.listaActividades)
+            return res.status(200).send({ message: "Propuesta creada con exito." });
+        }
+    } catch (error) {
+        return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 })
 
+
 router.get('/getPropuestas', authenticate, async (req, res) => {
     try {
-        const response = await fetch('http://localhost:3000/propuestas');
-        const propuestas: IActividad[] = await response.json();
-        res.status(200).send({ propuestas: propuestas });
-    } catch (error) {
-        res.status(500).send({
-            message: "Error al conectar a la BD."
+        let listaPropuestas: IPropuesta[] = [];
+        await getPropuestas().then((res) => {
+            res.array.forEach((element: any) => {
+                const propId = element.id;
+                const propTitulo = element.titulo;
+                const propListaActividades = element.listaActividades;
+
+                const proposal: IPropuesta = {
+                    id: propId,
+                    titulo: propTitulo,
+                    listaActividades: propListaActividades
+                }
+
+                listaPropuestas.push(proposal);
+            });
         });
+        if (listaPropuestas.length > 0) {
+            res.status(200).send({ propuestas: listaPropuestas });
+        } else {
+            res.status(400).send({ message: "No hay propuestas disponibles." });
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
 
 
 router.get('/getPropuesta/:id', authenticate, async (req, res) => {
     try {
-        const response = await fetch('http://localhost:3000/propuestas');
-        const propuestas: IActividad[] = await response.json();
-        const propuestaEncontrada = propuestas.filter((propuesta) => propuesta.id === req.params.id);
-        res.status(200).send({ propuestaEncontrada: propuestaEncontrada });
-    } catch (error) {
-        res.status(500).send({
-            message: "Error al conectar a la BD."
+        const propuesta: IPropuesta = await getPropuesta(req.body.titulo).then((res) => {
+            const prop = res[0]
+            const propId = prop.id;
+            const propTitulo = prop.titulo;
+            const proplistaActividades = prop.listaActividades;
+
+            const proposal: IPropuesta = {
+                id: propId,
+                titulo: propTitulo,
+                listaActividades: proplistaActividades
+            }
+            return proposal;
         });
+        if (propuesta !== null || propuesta !== undefined) {
+            res.status(200).send({ propuestaEncontrada: propuesta });
+        } else {
+            res.status(400).send({ message: "Propuesta no encontrada." });
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
 
-router.post('/crearJuego', authenticate, async (req, res) => {
-    const juego: IJuego = {
-        id: req.body.id,
-        titulo: req.body.titulo,
-        codigo: req.body.codigo,
-        link: req.body.link,
-        propuesta: req.body.propuesta
-    };
+/* Operaciones en base de datos */
+var propuestaSchema = mongoose.Schema({
+    id: String,
+    titulo: String,
+    listaActividades: []
+});
+
+const Propuesta = mongoose.model('Propuesta', propuestaSchema, 'Propuestas');
+
+const getPropuesta = async (titulo: string) => {
     try {
-        const jue = await fetch('http://localhost:3000/juego');
-        const juegosEnBD = await jue.json();
-
-        // Verificar si el título de la actividad ya existe en actividadesEnBD
-        const juegoExistente = juegosEnBD.find((game: IJuego) => game.titulo === juego.titulo);
-
-        if (juegoExistente) {
-            // Si se encuentra una actividad con el mismo título
-            return res.status(400).send({
-                message: "Ya existe un juego con este título.",
-            });
+        const propuesta = await Propuesta.find({ titulo: { $eq: titulo } });
+        if (propuesta) {
+            return propuesta;
         } else {
-            // Si no hay actividad con el mismo título, se guarda la nueva actividad en la base de datos
-            await fetch('http://localhost:3000/actividades', {
-                method: "POST",
-                body: JSON.stringify(juego),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            return res.status(200).send({
-                message: "Juego creado con exito.",
-            });
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const getPropuestas = async () => {
+    try {
+        const propuesta = await Propuesta.find({});
+        if (propuesta) {
+            return propuesta;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+function postPropuesta(id: string, titulo: string, listaActividades: any): boolean {
+    var propuesta = new Propuesta({
+        id: id,
+        titulo: titulo,
+        listaActividades: listaActividades
+    });
+    propuesta.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
+        });
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Juegos */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post('/crearJuego', authenticate, async (req, res) => {
+    try {
+        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+            const j = res[0]
+            const jId = j.id;
+            const jTitulo = j.titulo;
+            const jCodigo = j.codigo;
+            const jLink = j.link;
+            const jPropuesta = j.propuesta;
+
+            const game: IJuego = {
+                id: jId,
+                titulo: jTitulo,
+                codigo: jCodigo,
+                link: jLink,
+                propuesta: jPropuesta
+            }
+            return game;
+        });
+        if (juego !== null || juego !== undefined) {
+            // Si se encuentra un juego con el mismo pin
+            return res.status(400).send({ message: "Ya existe un juego con este pin." });
+        } else {
+            // Si no hay juegos con el mismo pin, se guarda el nuevo juego en la base de datos
+            postJuego(req.body.id, req.body.titulo, req.body.pin, req.body.link, req.body.propuesta)
+            return res.status(200).send({ message: "Propuesta creada con exito." });
         }
     } catch (error) {
         return res.status(500).send({
@@ -206,45 +360,182 @@ router.post('/crearJuego', authenticate, async (req, res) => {
     }
 });
 
+router.get('/getJuego/:id', authenticate, async (req, res) => {
+    try {
+        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+            const j = res[0]
+            const jId = j.id;
+            const jTitulo = j.titulo;
+            const jCodigo = j.codigo;
+            const jLink = j.link;
+            const jPropuesta = j.propuesta;
 
-router.get('/calificacionActividad/:id', authenticate, (req, res) => {
-    const actividadId = req.params.id;
-    const actDeID = listaPuntuacionesActividad.filter(id => id.idActividad = actividadId)
-    var total = 0;
-    actDeID.forEach(x => total += x.calificacion)
-    res.send({ total: total });
+            const game: IJuego = {
+                id: jId,
+                titulo: jTitulo,
+                codigo: jCodigo,
+                link: jLink,
+                propuesta: jPropuesta
+            }
+            return game;
+        });
+        if (juego !== null || juego !== undefined) {
+            res.status(200).send({ juegoEncontrado: juego });
+        } else {
+            res.status(400).send({ message: "Juego no encontrado." });
+        }
+    } catch (error) {
+        res.status(500).send({ message: "Error al conectar a la BD." });
+    }
+});
+
+/* Operaciones en base de datos */
+var juegoSchema = mongoose.Schema({
+    id: String,
+    titulo: String,
+    pin: String,
+    link: String,
+    propuesta: []
+});
+
+const Juego = mongoose.model('Juego', juegoSchema, 'Juegos');
+
+const getJuego = async (pin: string) => {
+    try {
+        const juego = await Juego.find({ pin: { $eq: pin } });
+        if (juego) {
+            return juego;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+function postJuego(id: string, titulo: string, pin: string, link: string, propuesta: string): boolean {
+    var juego = new Juego({
+        id: id,
+        titulo: titulo,
+        pin: pin,
+        link: link,
+        propuesta: propuesta,
+    });
+    juego.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
+        });
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Calificaciones */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get('/calificacionActividad/:id', authenticate, async (req, res) => { // mismo juego verificando el pin??
+    try {
+        const actividadId = req.params.id;
+        let total = 0;
+        await getVoto(actividadId).then((res) => {
+            res.array.forEach((element: any) => {
+                const califi = element.calificacion;
+                total += califi
+            });
+        });
+        return res.send({ total: total });
+    } catch (error) {
+        return res.status(500).send({ message: "Error al conectar a la BD." });
+    }
 })
 
 interface Diccionario {
     [clave: string]: number;
 }
 
-router.get('/topCalificaciones', authenticate, (req, res) => {
-    // Total calificaciones
-    const sumaPorId: Diccionario = {};
-    listaPuntuacionesActividad.forEach(obj => {
-        const { idActividad, calificacion } = obj;
-        if (sumaPorId[idActividad]) {
-            sumaPorId[idActividad] += calificacion;
-        } else {
-            sumaPorId[idActividad] = calificacion;
+router.get('/topCalificaciones', authenticate, async (req, res) => {
+    try {
+        // Total calificaciones
+        const sumaPorId: Diccionario = {};
+
+        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+            const j = res[0]
+            const jId = j.id;
+            const jTitulo = j.titulo;
+            const jCodigo = j.codigo;
+            const jLink = j.link;
+            const jPropuesta = j.propuesta;
+
+            const game: IJuego = {
+                id: jId,
+                titulo: jTitulo,
+                codigo: jCodigo,
+                link: jLink,
+                propuesta: jPropuesta
+            }
+            return game;
+        });
+        if (juego !== null || juego !== undefined) {
+            // Si se encuentra un juego con el mismo pin
+            const actividades: IActividad[] = juego.propuesta.listaActividades;
+            actividades.forEach(async (element) => {
+                const calificacionVoto = await getVoto(element.id).then((res) => {
+                    const v = res[0];
+                    return v.calificacion;
+                });
+                if (sumaPorId[element.id]) {
+                    sumaPorId[element.id] += calificacionVoto;
+                } else {
+                    sumaPorId[element.id] = calificacionVoto;
+                }
+            })
         }
-    });
 
-    // Encontrar los tres valores máximos de calificación
-    const valoresCalificacion = Object.values(sumaPorId);
-    const valoresMaximos = valoresCalificacion.sort((a, b) => b - a).slice(0, 3);
+        // Encontrar los tres valores máximos de calificación
+        const valoresCalificacion = Object.values(sumaPorId);
+        const valoresMaximos = valoresCalificacion.sort((a, b) => b - a).slice(0, 3);
 
-    // Filtrar los ID con las calificaciones máximas
-    const actividadesTop = Object.keys(sumaPorId)
-        .filter(id => valoresMaximos.includes(sumaPorId[id]))
-        .map(id => ({
-            idActividad: id,
-            calificacion: sumaPorId[id]
-        }));
+        // Filtrar los ID con las calificaciones máximas
+        const actividadesTop = Object.keys(sumaPorId)
+            .filter(id => valoresMaximos.includes(sumaPorId[id]))
+            .map(id => ({
+                idActividad: id,
+                calificacion: sumaPorId[id]
+            }));
 
-    res.send({ actividadesTop: actividadesTop });
+        return res.send({ actividadesTop: actividadesTop });
+    } catch (error) {
+        return res.status(500).send({ message: "Error al conectar a la BD." });
+    }
+
 })
+
+// Voto 
+var votosSchema = mongoose.Schema({
+    idActividad: String,
+    puntuacion: Number
+});
+
+export const Voto = mongoose.model('Voto', votosSchema, 'Votos');
+
+const getVoto = async (idActividad: string) => {
+    try {
+        const voto = await Voto.find({ idActividad: { $eq: idActividad } });
+        if (voto) {
+            return voto;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
