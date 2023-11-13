@@ -104,6 +104,20 @@ export class AdminService {
     );
   }
 
+  crearJuego(titulo: string, codigo: string, link: string, propuesta: IPropuesta): Observable<any> {
+    const uniqueID = uuidv4();
+    const requestBody = {
+      id: uniqueID,
+      titulo: titulo,
+      codigo: codigo,
+      link: link,
+      propuesta: propuesta
+    };
+    return this.http.post<any>('http://localhost:3001/administrador/crearJuego', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   calificacionActividad(id: string): Observable<any> {
     return this.http.get<any>(`http://localhost:3001/administrador/calificacionActividad/${id}`, this.httpOptions).pipe(
       catchError(this.handleError),

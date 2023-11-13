@@ -2,6 +2,7 @@ import express from 'express'
 import { listaPuntuacionesActividad, jwt } from '../index';
 import { IActividad } from './IActividad';
 import { IPropuesta } from './IPropuesta';
+import { IJuego } from './IJuego';
 
 const router = express.Router()
 
@@ -160,6 +161,46 @@ router.get('/getPropuesta/:id', authenticate, async (req, res) => {
         res.status(200).send({ propuestaEncontrada: propuestaEncontrada });
     } catch (error) {
         res.status(500).send({
+            message: "Error al conectar a la BD."
+        });
+    }
+});
+
+router.post('/crearJuego', authenticate, async (req, res) => {
+    const juego: IJuego = {
+        id: req.body.id,
+        titulo: req.body.titulo,
+        codigo: req.body.codigo,
+        link: req.body.link,
+        propuesta: req.body.propuesta
+    };
+    try {
+        const jue = await fetch('http://localhost:3000/juego');
+        const juegosEnBD = await jue.json();
+
+        // Verificar si el título de la actividad ya existe en actividadesEnBD
+        const juegoExistente = juegosEnBD.find((game: IJuego) => game.titulo === juego.titulo);
+
+        if (juegoExistente) {
+            // Si se encuentra una actividad con el mismo título
+            return res.status(400).send({
+                message: "Ya existe un juego con este título.",
+            });
+        } else {
+            // Si no hay actividad con el mismo título, se guarda la nueva actividad en la base de datos
+            await fetch('http://localhost:3000/actividades', {
+                method: "POST",
+                body: JSON.stringify(juego),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            return res.status(200).send({
+                message: "Juego creado con exito.",
+            });
+        }
+    } catch (error) {
+        return res.status(500).send({
             message: "Error al conectar a la BD."
         });
     }

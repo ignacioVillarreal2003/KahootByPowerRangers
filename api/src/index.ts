@@ -28,11 +28,12 @@ app.listen(PORT, () => {
 });
 
 /* mongoose */
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://EquipoAAAV:PowerRangers5@cluster0.vgvmulv.mongodb.net/Proyecto')
     .then(() => console.log('Connected!'));
 
-var userSchema = mongoose.Schema({
+/*var userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     usuario: String,
     contraseña: String
@@ -45,8 +46,8 @@ var actividadSchema = mongoose.Schema({
     descripcion: String,
     imagen: String
 });
-
-var propuestaSchema = mongoose.Schema({
+*/
+/*var propuestaSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     id: String,
     titulo: String,
@@ -59,24 +60,61 @@ var juegoSchema = mongoose.Schema({
     titulo: String,
     pin: String,
     propuesta: { type: propuestaSchema, default: {} }
-});
+});*/
 
 var votosSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     idActividad: String,
-    puntuacion: Number,
-    idJuego: String
+    puntuacion: Number
 });
 
 
-var Usuario = mongoose.model('Usuario', userSchema, 'Usuarios');
-var Actividad = mongoose.model('Actividad', actividadSchema, 'Actividades');
-var Propuesta = mongoose.model('Propuesta', propuestaSchema, 'Propuestas');
-var Juego = mongoose.model('Juego', juegoSchema, 'Juegos');
-var Voto = mongoose.model('Voto', votosSchema, 'Votos');
+/*const Usuario = mongoose.model('Usuario', userSchema, 'Usuarios');
+const Actividad = mongoose.model('Actividad', actividadSchema, 'Actividades');
+const Propuesta = mongoose.model('Propuesta', propuestaSchema, 'Propuestas');*/
+//const Juego = mongoose.model('Juego', juegoSchema, 'Juegos');
+const Voto = mongoose.model('Voto', votosSchema, 'Votos');
 
 
-function postUsuario(username: string, password: string): boolean {
+function postVoto(idActividad: string, calificacion: number) {
+    var voto = new Voto({
+        idActividad: idActividad,
+        puntuacion: calificacion
+    });
+    voto.save()
+        .then(() => {
+            console.log(true);
+            return true;
+        })
+        .catch((err: any) => {
+            console.log(false)
+            return false;
+        });
+}
+
+function miFuncionDespuesDe5Segundos(){
+    postVoto("23434534534", 6);
+    obtenerVoto("23434534534").then((res)=> console.log(res));
+}
+
+setTimeout(miFuncionDespuesDe5Segundos, 11000);
+
+const obtenerVoto = async (idActividad: string) => {
+    try {
+        const voto = await Voto.find({idActividad:{$eq: idActividad}} );
+        if (voto) {
+            return voto;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+
+
+/*function postUsuario(username: string, password: string): boolean {
     var usuario = new Usuario({
         _id: new mongoose.Types.ObjectId(),
         username: username,
@@ -127,7 +165,39 @@ function postPropuesta(id: string, titulo: string, listaActividades: any): boole
     return false;
 }
 
+function postJuego(id: string, titulo: string, codigo: string, link: string, propuesta: string): boolean {
+    var juego = new Juego({
+        _id: new mongoose.Types.ObjectId(),
+        id: id,
+        titulo: titulo,
+        codigo: codigo,
+        link: link,
+        propuesta: propuesta,
+    });
+    juego.save()
+        .then(() => {
+            return true;
+        })
+        .catch((err: any) => {
+            return false;
+        });
+    return false;
+}
 
+const obtenerJuego = async (id: string) => {
+    try {
+        const juego = await Juego.findById(id);
+        if (juego) {
+            return juego;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+*/
 
 
 /* BCrypt */
