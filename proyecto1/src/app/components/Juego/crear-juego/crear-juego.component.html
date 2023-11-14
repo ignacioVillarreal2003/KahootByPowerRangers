@@ -9,8 +9,8 @@
         <input class="propuestaParaJuego" type="checkbox" [id]="propuesta.id" (change)="seleccionarPropuesta(propuesta)">
       </li>
     </ul>
-    <button type="submit" (click)="crearJuego()" >Guardar</button>
-    <button type="button" routerLink="/crear">Cancelar</button>
+    <button type="submit" class="aceptar" (click)="crearJuego()">Guardar</button>
+    <button type="button" class="cancelar" routerLink="/crear">Cancelar</button>
     
     <p class="textoLog">{{ textoLog }}</p>
 

@@ -37,24 +37,28 @@ export function authenticate(req: any, res: any, next: any) {
 router.post('/crearActividad', authenticate, async (req, res) => {
     try {
         // Obtener actividad de la base de datos
-        const actividad: IActividad = await getActividad(req.body.titulo).then((res) => {
+        const actividad: IActividad | null = await getActividad(req.body.titulo).then((res) => {
             const act = res[0]
-            const actId = act.id;
-            const actTitulo = act.titulo;
-            const actDescripcion = act.descripcion;
-            const actImagen = act.imagen;
+            if (act !== undefined) {
+                const actId = act.id;
+                const actTitulo = act.titulo;
+                const actDescripcion = act.descripcion;
+                const actImagen = act.imagen;
 
-            const activitie: IActividad = {
-                id: actId,
-                titulo: actTitulo,
-                descripcion: actDescripcion,
-                imagen: actImagen
+                const activitie: IActividad = {
+                    id: actId,
+                    titulo: actTitulo,
+                    descripcion: actDescripcion,
+                    imagen: actImagen
+                }
+                return activitie;
+            } else {
+                return null
             }
-            return activitie;
         });
 
         // Verificar si el título de la actividad ya existe en actividadesEnBD
-        if (actividad !== null || actividad !== undefined) {
+        if (actividad !== null) {
             // Si se encuentra una actividad con el mismo título
             return res.status(400).send({ message: "Ya existe una actividad con este título." });
         } else {
@@ -63,6 +67,7 @@ router.post('/crearActividad', authenticate, async (req, res) => {
             return res.status(200).send({ message: "Actividad creada con exito." });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -72,7 +77,7 @@ router.get('/getActividades', authenticate, async (req, res) => {
     try {
         let listaActividades: IActividad[] = [];
         await getActividades().then((res) => {
-            res.array.forEach((element: any) => {
+            res.forEach((element: any) => {
                 const actId = element.id;
                 const actTitulo = element.titulo;
                 const actDescripcion = element.descripcion;
@@ -84,7 +89,6 @@ router.get('/getActividades', authenticate, async (req, res) => {
                     descripcion: actDescripcion,
                     imagen: actImagen
                 }
-
                 listaActividades.push(activitie);
             });
         });
@@ -94,33 +98,39 @@ router.get('/getActividades', authenticate, async (req, res) => {
             res.status(400).send({ message: "No hay actividades disponibles." });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
 
 router.get('/getActividad/:id', authenticate, async (req, res) => {
     try {
-        const actividad: IActividad = await getActividad(req.body.titulo).then((res) => {
+        const actividad: IActividad | null = await getActividad(req.body.titulo).then((res) => {
             const act = res[0]
-            const actId = act.id;
-            const actTitulo = act.titulo;
-            const actDescripcion = act.descripcion;
-            const actImagen = act.imagen;
+            if (act !== undefined) {
+                const actId = act.id;
+                const actTitulo = act.titulo;
+                const actDescripcion = act.descripcion;
+                const actImagen = act.imagen;
 
-            const activitie: IActividad = {
-                id: actId,
-                titulo: actTitulo,
-                descripcion: actDescripcion,
-                imagen: actImagen
+                const activitie: IActividad = {
+                    id: actId,
+                    titulo: actTitulo,
+                    descripcion: actDescripcion,
+                    imagen: actImagen
+                }
+                return activitie;
+            } else {
+                return null
             }
-            return activitie;
         });
-        if (actividad !== null || actividad !== undefined) {
+        if (actividad !== null) {
             res.status(200).send({ actividadEncontrada: actividad });
         } else {
             res.status(400).send({ message: "Actividad no encontrada." });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -188,20 +198,24 @@ function postActividad(id: string, titulo: string, descripcion: string, imagen: 
 router.post('/crearPropuesta', authenticate, async (req, res) => {
     try {
         // Obtener propuesta de la base de datos
-        const propuesta: IPropuesta = await getPropuesta(req.body.titulo).then((res) => {
+        const propuesta: IPropuesta | null = await getPropuesta(req.body.titulo).then((res) => {
             const prop = res[0]
-            const propId = prop.id;
-            const propTitulo = prop.titulo;
-            const proplistaActividades = prop.listaActividades;
+            if (prop !== undefined) {
+                const propId = prop.id;
+                const propTitulo = prop.titulo;
+                const proplistaActividades = prop.listaActividades;
 
-            const proposal: IPropuesta = {
-                id: propId,
-                titulo: propTitulo,
-                listaActividades: proplistaActividades
+                const proposal: IPropuesta = {
+                    id: propId,
+                    titulo: propTitulo,
+                    listaActividades: proplistaActividades
+                }
+                return proposal;
+            } else {
+                return null
             }
-            return proposal;
         });
-        if (propuesta !== null || propuesta !== undefined) {
+        if (propuesta !== null) {
             // Si se encuentra una propuesta con el mismo título
             return res.status(400).send({ message: "Ya existe una propuesta con este título." });
         } else {
@@ -210,6 +224,7 @@ router.post('/crearPropuesta', authenticate, async (req, res) => {
             return res.status(200).send({ message: "Propuesta creada con exito." });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 })
@@ -219,7 +234,7 @@ router.get('/getPropuestas', authenticate, async (req, res) => {
     try {
         let listaPropuestas: IPropuesta[] = [];
         await getPropuestas().then((res) => {
-            res.array.forEach((element: any) => {
+            res.forEach((element: any) => {
                 const propId = element.id;
                 const propTitulo = element.titulo;
                 const propListaActividades = element.listaActividades;
@@ -239,6 +254,7 @@ router.get('/getPropuestas', authenticate, async (req, res) => {
             res.status(400).send({ message: "No hay propuestas disponibles." });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -246,25 +262,30 @@ router.get('/getPropuestas', authenticate, async (req, res) => {
 
 router.get('/getPropuesta/:id', authenticate, async (req, res) => {
     try {
-        const propuesta: IPropuesta = await getPropuesta(req.body.titulo).then((res) => {
+        const propuesta: IPropuesta | null = await getPropuesta(req.body.titulo).then((res) => {
             const prop = res[0]
-            const propId = prop.id;
-            const propTitulo = prop.titulo;
-            const proplistaActividades = prop.listaActividades;
+            if (prop !== undefined) {
+                const propId = prop.id;
+                const propTitulo = prop.titulo;
+                const proplistaActividades = prop.listaActividades;
 
-            const proposal: IPropuesta = {
-                id: propId,
-                titulo: propTitulo,
-                listaActividades: proplistaActividades
+                const proposal: IPropuesta = {
+                    id: propId,
+                    titulo: propTitulo,
+                    listaActividades: proplistaActividades
+                }
+                return proposal;
+            } else {
+                return null;
             }
-            return proposal;
         });
-        if (propuesta !== null || propuesta !== undefined) {
+        if (propuesta !== null) {
             res.status(200).send({ propuestaEncontrada: propuesta });
         } else {
             res.status(400).send({ message: "Propuesta no encontrada." });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -328,24 +349,28 @@ function postPropuesta(id: string, titulo: string, listaActividades: any): boole
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/crearJuego', authenticate, async (req, res) => {
     try {
-        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+        const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
             const j = res[0]
-            const jId = j.id;
-            const jTitulo = j.titulo;
-            const jCodigo = j.codigo;
-            const jLink = j.link;
-            const jPropuesta = j.propuesta;
+            if (j !== undefined) {
+                const jId = j.id;
+                const jTitulo = j.titulo;
+                const jCodigo = j.codigo;
+                const jLink = j.link;
+                const jPropuesta = j.propuesta;
 
-            const game: IJuego = {
-                id: jId,
-                titulo: jTitulo,
-                codigo: jCodigo,
-                link: jLink,
-                propuesta: jPropuesta
+                const game: IJuego = {
+                    id: jId,
+                    titulo: jTitulo,
+                    codigo: jCodigo,
+                    link: jLink,
+                    propuesta: jPropuesta
+                }
+                return game;
+            } else {
+                return null;
             }
-            return game;
         });
-        if (juego !== null || juego !== undefined) {
+        if (juego !== null) {
             // Si se encuentra un juego con el mismo pin
             return res.status(400).send({ message: "Ya existe un juego con este pin." });
         } else {
@@ -354,37 +379,42 @@ router.post('/crearJuego', authenticate, async (req, res) => {
             return res.status(200).send({ message: "Propuesta creada con exito." });
         }
     } catch (error) {
-        return res.status(500).send({
-            message: "Error al conectar a la BD."
-        });
+        console.log(error);
+        return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
 
 router.get('/getJuego/:id', authenticate, async (req, res) => {
     try {
-        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+        const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
             const j = res[0]
-            const jId = j.id;
-            const jTitulo = j.titulo;
-            const jCodigo = j.codigo;
-            const jLink = j.link;
-            const jPropuesta = j.propuesta;
+            if (j !== undefined) {
 
-            const game: IJuego = {
-                id: jId,
-                titulo: jTitulo,
-                codigo: jCodigo,
-                link: jLink,
-                propuesta: jPropuesta
+                const jId = j.id;
+                const jTitulo = j.titulo;
+                const jCodigo = j.codigo;
+                const jLink = j.link;
+                const jPropuesta = j.propuesta;
+
+                const game: IJuego = {
+                    id: jId,
+                    titulo: jTitulo,
+                    codigo: jCodigo,
+                    link: jLink,
+                    propuesta: jPropuesta
+                }
+                return game;
+            } else {
+                return null;
             }
-            return game;
         });
-        if (juego !== null || juego !== undefined) {
+        if (juego !== null) {
             res.status(200).send({ juegoEncontrado: juego });
         } else {
             res.status(400).send({ message: "Juego no encontrado." });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -441,7 +471,7 @@ router.get('/calificacionActividad/:id', authenticate, async (req, res) => { // 
         const actividadId = req.params.id;
         let total = 0;
         await getVoto(actividadId).then((res) => {
-            res.array.forEach((element: any) => {
+            res.forEach((element: any) => {
                 const califi = element.calificacion;
                 total += califi
             });
@@ -461,39 +491,48 @@ router.get('/topCalificaciones', authenticate, async (req, res) => {
         // Total calificaciones
         const sumaPorId: Diccionario = {};
 
-        const juego: IJuego = await getJuego(req.body.pin).then((res) => {
+        const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
             const j = res[0]
-            const jId = j.id;
-            const jTitulo = j.titulo;
-            const jCodigo = j.codigo;
-            const jLink = j.link;
-            const jPropuesta = j.propuesta;
+            if (j !== undefined) {
+                const jId = j.id;
+                const jTitulo = j.titulo;
+                const jCodigo = j.codigo;
+                const jLink = j.link;
+                const jPropuesta = j.propuesta;
 
-            const game: IJuego = {
-                id: jId,
-                titulo: jTitulo,
-                codigo: jCodigo,
-                link: jLink,
-                propuesta: jPropuesta
+                const game: IJuego = {
+                    id: jId,
+                    titulo: jTitulo,
+                    codigo: jCodigo,
+                    link: jLink,
+                    propuesta: jPropuesta
+                }
+                return game;
+            } else {
+                return null;
             }
-            return game;
         });
-        if (juego !== null || juego !== undefined) {
+        if (juego !== null) {
             // Si se encuentra un juego con el mismo pin
             const actividades: IActividad[] = juego.propuesta.listaActividades;
             actividades.forEach(async (element) => {
                 const calificacionVoto = await getVoto(element.id).then((res) => {
                     const v = res[0];
-                    return v.calificacion;
+                    if (v !== undefined) {
+                        return v.calificacion;
+                    } else {
+                        return null;
+                    }
                 });
-                if (sumaPorId[element.id]) {
-                    sumaPorId[element.id] += calificacionVoto;
-                } else {
-                    sumaPorId[element.id] = calificacionVoto;
+                if (calificacionVoto !== null) {
+                    if (sumaPorId[element.id]) {
+                        sumaPorId[element.id] += calificacionVoto;
+                    } else {
+                        sumaPorId[element.id] = calificacionVoto;
+                    }
                 }
             })
         }
-
         // Encontrar los tres valores máximos de calificación
         const valoresCalificacion = Object.values(sumaPorId);
         const valoresMaximos = valoresCalificacion.sort((a, b) => b - a).slice(0, 3);
@@ -505,9 +544,9 @@ router.get('/topCalificaciones', authenticate, async (req, res) => {
                 idActividad: id,
                 calificacion: sumaPorId[id]
             }));
-
         return res.send({ actividadesTop: actividadesTop });
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 

@@ -1,6 +1,4 @@
 import express from 'express'
-import administradorRouter from './routes/administrador'
-import usuarioRouter from './routes/usuario'
 import { IUsuario } from './routes/IUsuario';
 
 export const listaUsuariosEnPantalla: string[] = [];
@@ -24,8 +22,6 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use('/administrador', administradorRouter);
-app.use('/usuario', usuarioRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
@@ -37,6 +33,7 @@ export const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://ignaciovillarreal20031231:As8k2oosvQQJON92@cluster0.hce3g5c.mongodb.net/pruebaProyecto')
     .then(() => console.log('Connected!'));
 
+
 // Usuario
 var userSchema = mongoose.Schema({
     username: String,
@@ -47,7 +44,7 @@ const Usuario = mongoose.model('Usuario', userSchema, 'Usuarios');
 
 const getUsuario = async (username: string) => {
     try {
-        const usuario = await Usuario.find({username:{$eq: username}} );
+        const usuario = await Usuario.find({ username: { $eq: username } });
         if (usuario) {
             return usuario;
         } else {
@@ -113,18 +110,22 @@ function generateAccessToken(username: string) {
 app.post('/registrarUsuario', async (req, res) => {
     try {
         // Obtener usuario de la base de datos
-        const usuario: IUsuario = await getUsuario(req.body.username).then((res)=> {
+        const usuario: IUsuario | null = await getUsuario(req.body.username).then((res) => {
             const usr = res[0]
-            const usrName = usr.username;
-            const usrPass= usr.password;
-            const user: IUsuario = {
-                username: usrName,
-                password: usrPass
+            if (usr !== undefined) {
+                const usrName = usr.username;
+                const usrPass = usr.password;
+                const user: IUsuario = {
+                    username: usrName,
+                    password: usrPass
+                }
+                return user;
+            } else {
+                return null;
             }
-            return user;
         });
         // Verificar si el usuario ya está registrado
-        if (usuario !== null || usuario !== undefined) {
+        if (usuario !== null) {
             return res.status(400).send({ message: "El usuario ya está registrado." });
         } else {
             try {
@@ -134,12 +135,13 @@ app.post('/registrarUsuario', async (req, res) => {
                 postUsuario(req.body.username, password);
                 // Se envía el token si todo está correcto
                 const token = generateAccessToken(req.body.username);
-                return res.send({ token: token }); 
+                return res.send({ token: token });
             } catch (error) {
                 return res.status(500).send({ message: "Error al hashear contraseña." });
             }
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -147,24 +149,28 @@ app.post('/registrarUsuario', async (req, res) => {
 app.post('/loguearUsuario', async (req, res) => {
     try {
         // Obtener usuario de la base de datos
-        const usuario: IUsuario = await getUsuario(req.body.username).then((res)=> {
+        const usuario: IUsuario | null = await getUsuario(req.body.username).then((res) => {
             const usr = res[0]
-            const usrName = usr.username;
-            const usrPass= usr.password;
-            const user: IUsuario = {
-                username: usrName,
-                password: usrPass
+            if (usr !== undefined) {
+                const usrName = usr.username;
+                const usrPass = usr.password;
+                const user: IUsuario = {
+                    username: usrName,
+                    password: usrPass
+                }
+                return user;
+            } else {
+                return null;
             }
-            return user;
         });
         // Verificar si el usuario ya está registrado
-        if (usuario !== null || usuario !== undefined) {
+        if (usuario !== null) {
             // compara contraseñas
             const match = await comparePassword(req.body.password, usuario.password);
             if (req.body.username == usuario.username && match) {
                 const token = generateAccessToken(req.body.username);
                 // Se envía el token si todo está correcto
-                return res.send({ token: token }); 
+                return res.send({ token: token });
             } else {
                 return res.status(400).send({ message: "Contraseña incorrecta." });
             }
@@ -172,6 +178,7 @@ app.post('/loguearUsuario', async (req, res) => {
             return res.status(400).send({ message: "El usuario no está registrado." });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
 });
@@ -184,6 +191,11 @@ app.get('/getToken', (req, res) => {
 
 
 
+import administradorRouter from './routes/administrador'
+import usuarioRouter from './routes/usuario'
+
+app.use('/administrador', administradorRouter);
+app.use('/usuario', usuarioRouter);
 
 // npm run dev
 // json-server --watch db.json

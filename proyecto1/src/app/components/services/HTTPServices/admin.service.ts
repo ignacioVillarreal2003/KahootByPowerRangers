@@ -104,12 +104,12 @@ export class AdminService {
     );
   }
 
-  crearJuego(titulo: string, codigo: string, link: string, propuesta: IPropuesta): Observable<any> {
+  crearJuego(titulo: string, pin: string, link: string, propuesta: IPropuesta): Observable<any> {
     const uniqueID = uuidv4();
     const requestBody = {
       id: uniqueID,
       titulo: titulo,
-      codigo: codigo,
+      pin: pin,
       link: link,
       propuesta: propuesta
     };
