@@ -352,16 +352,14 @@ router.post('/crearJuego', authenticate, async (req, res) => {
         const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
             const j = res[0]
             if (j !== undefined) {
-                const jId = j.id;
                 const jTitulo = j.titulo;
                 const jCodigo = j.codigo;
                 const jLink = j.link;
                 const jPropuesta = j.propuesta;
 
                 const game: IJuego = {
-                    id: jId,
                     titulo: jTitulo,
-                    codigo: jCodigo,
+                    pin: jCodigo,
                     link: jLink,
                     propuesta: jPropuesta
                 }
@@ -375,7 +373,7 @@ router.post('/crearJuego', authenticate, async (req, res) => {
             return res.status(400).send({ message: "Ya existe un juego con este pin." });
         } else {
             // Si no hay juegos con el mismo pin, se guarda el nuevo juego en la base de datos
-            postJuego(req.body.id, req.body.titulo, req.body.pin, req.body.link, req.body.propuesta)
+            postJuego(req.body.titulo, req.body.pin, req.body.link, req.body.propuesta)
             return res.status(200).send({ message: "Propuesta creada con exito." });
         }
     } catch (error) {
@@ -389,17 +387,14 @@ router.get('/getJuego/:id', authenticate, async (req, res) => {
         const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
             const j = res[0]
             if (j !== undefined) {
-
-                const jId = j.id;
                 const jTitulo = j.titulo;
                 const jCodigo = j.codigo;
                 const jLink = j.link;
                 const jPropuesta = j.propuesta;
 
                 const game: IJuego = {
-                    id: jId,
                     titulo: jTitulo,
-                    codigo: jCodigo,
+                    pin: jCodigo,
                     link: jLink,
                     propuesta: jPropuesta
                 }
@@ -421,7 +416,6 @@ router.get('/getJuego/:id', authenticate, async (req, res) => {
 
 /* Operaciones en base de datos */
 var juegoSchema = mongoose.Schema({
-    id: String,
     titulo: String,
     pin: String,
     link: String,
@@ -444,9 +438,8 @@ const getJuego = async (pin: string) => {
     }
 };
 
-function postJuego(id: string, titulo: string, pin: string, link: string, propuesta: string): boolean {
+function postJuego(titulo: string, pin: string, link: string, propuesta: string): boolean {
     var juego = new Juego({
-        id: id,
         titulo: titulo,
         pin: pin,
         link: link,
@@ -469,8 +462,9 @@ function postJuego(id: string, titulo: string, pin: string, link: string, propue
 router.get('/calificacionActividad/:id', authenticate, async (req, res) => { // mismo juego verificando el pin??
     try {
         const actividadId = req.params.id;
+        const pin: string = req.query.pin as string;
         let total = 0;
-        await getVoto(actividadId).then((res) => {
+        await getVoto(actividadId, pin).then((res) => {
             res.forEach((element: any) => {
                 const califi = element.calificacion;
                 total += califi
@@ -486,24 +480,22 @@ interface Diccionario {
     [clave: string]: number;
 }
 
-router.get('/topCalificaciones', authenticate, async (req, res) => {
+router.get('/topCalificaciones/:pin', authenticate, async (req, res) => {
     try {
         // Total calificaciones
         const sumaPorId: Diccionario = {};
 
-        const juego: IJuego | null = await getJuego(req.body.pin).then((res) => {
+        const juego: IJuego | null = await getJuego(req.params.pin).then((res) => {
             const j = res[0]
             if (j !== undefined) {
-                const jId = j.id;
                 const jTitulo = j.titulo;
                 const jCodigo = j.codigo;
                 const jLink = j.link;
                 const jPropuesta = j.propuesta;
 
                 const game: IJuego = {
-                    id: jId,
                     titulo: jTitulo,
-                    codigo: jCodigo,
+                    pin: jCodigo,
                     link: jLink,
                     propuesta: jPropuesta
                 }
@@ -516,7 +508,7 @@ router.get('/topCalificaciones', authenticate, async (req, res) => {
             // Si se encuentra un juego con el mismo pin
             const actividades: IActividad[] = juego.propuesta.listaActividades;
             actividades.forEach(async (element) => {
-                const calificacionVoto = await getVoto(element.id).then((res) => {
+                const calificacionVoto = await getVoto(element.id, req.params.pin).then((res) => {
                     const v = res[0];
                     if (v !== undefined) {
                         return v.calificacion;
@@ -555,14 +547,15 @@ router.get('/topCalificaciones', authenticate, async (req, res) => {
 // Voto 
 var votosSchema = mongoose.Schema({
     idActividad: String,
-    puntuacion: Number
+    puntuacion: Number,
+    pin: String
 });
 
 export const Voto = mongoose.model('Voto', votosSchema, 'Votos');
 
-const getVoto = async (idActividad: string) => {
+const getVoto = async (idActividad: string, pin: string) => {
     try {
-        const voto = await Voto.find({ idActividad: { $eq: idActividad } });
+        const voto = await Voto.find({ idActividad: { $eq: idActividad }, pin: { $eq: pin } });
         if (voto) {
             return voto;
         } else {

@@ -1,4 +1,5 @@
 export interface ICalificarActividad{
     idActividad: string,
-    calificacion: number
+    calificacion: number,
+    pin: string
 }

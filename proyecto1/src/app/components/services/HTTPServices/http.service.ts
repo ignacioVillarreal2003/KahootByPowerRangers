@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { IUsuario } from '../IUsuario';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class HttpService {
   }
 
   registrarUsuario(username: string, password: string): Observable<any> {
-    const requestBody = { username: username, password: password };
+    const requestBody: IUsuario = { username: username, password: password };
     return this.http.post<any>('http://localhost:3001/registrarUsuario', requestBody, this.httpOptions).pipe(
       catchError(this.handleError),
       map(response => {
@@ -42,7 +43,7 @@ export class HttpService {
   }
 
   loguearUsuario(username: string, password: string): Observable<any> {
-    const requestBody = { username: username, password: password };
+    const requestBody: IUsuario = { username: username, password: password };
     return this.http.post<any>('http://localhost:3001/loguearUsuario', requestBody, this.httpOptions).pipe(
       catchError(this.handleError),
       map(response => {

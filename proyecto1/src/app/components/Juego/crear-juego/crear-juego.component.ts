@@ -44,7 +44,6 @@ export class CrearJuegoComponent {
     }
   }
 
-
   checkDatos(): boolean {
     if (this.tituloJuego.length === 0) {
       this.textoLog = "Falta el titulo."

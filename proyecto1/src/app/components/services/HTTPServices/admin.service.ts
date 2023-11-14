@@ -6,6 +6,7 @@ import { IPropuesta } from '../IPropuesta';
 import { Observable, of, throwError  } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { IJuego } from '../IJuego';
 
 @Injectable({
   providedIn: 'root'
@@ -105,9 +106,7 @@ export class AdminService {
   }
 
   crearJuego(titulo: string, pin: string, link: string, propuesta: IPropuesta): Observable<any> {
-    const uniqueID = uuidv4();
-    const requestBody = {
-      id: uniqueID,
+    const requestBody: IJuego = {
       titulo: titulo,
       pin: pin,
       link: link,
@@ -118,8 +117,8 @@ export class AdminService {
     );
   }
 
-  calificacionActividad(id: string): Observable<any> {
-    return this.http.get<any>(`http://localhost:3001/administrador/calificacionActividad/${id}`, this.httpOptions).pipe(
+  calificacionActividad(id: string, pin: string): Observable<any> {
+    return this.http.get<any>(`http://localhost:3001/administrador/calificacionActividad/${id}?pin=${pin}`, this.httpOptions).pipe(
       catchError(this.handleError),
       map(response => {
         if (response && response.total) {
@@ -130,8 +129,8 @@ export class AdminService {
     );
   }
 
-  topCalificaciones(): Observable<any> {
-    return this.http.get<any>('http://localhost:3001/administrador/topCalificaciones', this.httpOptions).pipe(
+  topCalificaciones(pin: string): Observable<any> {
+    return this.http.get<any>(`http://localhost:3001/administrador/topCalificaciones/${pin}`, this.httpOptions).pipe(
       catchError(this.handleError),
       map(response => {
         if (response && response.actividadesTop) {

@@ -39,10 +39,11 @@ export class UserService {
     );
   }
 
-  calificarActividad(idActividad: string, calificacion: number): Observable<any> {
+  calificarActividad(idActividad: string, calificacion: number, pin: string): Observable<any> {
     const requestBody: ICalificarActividad = {
       idActividad: idActividad,
-      calificacion: calificacion
+      calificacion: calificacion,
+      pin: pin
     }
     return this.http.post<any>('http://localhost:3001/usuario/calificarActividad', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)

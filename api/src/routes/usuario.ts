@@ -17,7 +17,7 @@ router.post('/agregarUsuarioEnPantalla', (req, res) => {
 /* Calificar actividades */
 router.post('/calificarActividad', (req, res) => {
     try {
-        postVoto(req.body.idActividad, req.body.calificacion)
+        postVoto(req.body.idActividad, req.body.calificacion, req.body.pin)
         return res.status(200).send({ message: "Votacion efectuada." });
     } catch (error) {
         return res.status(500).send({ message: "Error al conectar a la BD." });
@@ -25,10 +25,11 @@ router.post('/calificarActividad', (req, res) => {
 })
 
 /* Operaciones en base de datos */
-function postVoto(idActividad: string, calificacion: number) {
+function postVoto(idActividad: string, calificacion: number, pin: string) {
     var voto = new Voto({
         idActividad: idActividad,
-        puntuacion: calificacion
+        puntuacion: calificacion,
+        pin: pin
     });
     voto.save()
         .then(() => {
