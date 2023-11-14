@@ -1,5 +1,5 @@
 import express from 'express'
-import { IUsuario } from './routes/IUsuario';
+import { IUsuario } from './routes/interfaces/IUsuario';
 
 export const listaUsuariosEnPantalla: string[] = [];
 

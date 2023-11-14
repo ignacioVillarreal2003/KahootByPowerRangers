@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPropuesta } from './IPropuesta';
+import { IPropuesta } from './interfaces/IPropuesta';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

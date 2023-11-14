@@ -1,5 +1,5 @@
 <div class="crearJuego">
-  <h2>Crear Nueva Propuesta</h2>
+  <h2>Crear nuevo juego</h2>
 
   <div class="form">
     <input id="tituloJuego" type="text" placeholder="titulo" [(ngModel)]="tituloJuego">
@@ -9,11 +9,10 @@
         <input class="propuestaParaJuego" type="checkbox" [id]="propuesta.id" (change)="seleccionarPropuesta(propuesta)">
       </li>
     </ul>
-    <button type="submit" class="aceptar" (click)="crearJuego()">Guardar</button>
-    <button type="button" class="cancelar" routerLink="/crear">Cancelar</button>
+    <button class="aceptar" (click)="crearJuego()">Iniciar</button>
+    <button class="cancelar" routerLink="/crear">Cancelar</button>
     
     <p class="textoLog">{{ textoLog }}</p>
-
   </div>
 
   <div class="forma1"></div>

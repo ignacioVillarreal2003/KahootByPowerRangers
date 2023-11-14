@@ -1,7 +1,12 @@
 <div class="pantallaCargaJuego">
-    <h5>Código del juego</h5>
+    <h3>Código del juego: {{pin}}</h3>
+
     <button class="empezar-btn" routerLink="/pantallaCargaJuego">Empezar</button>
     <h1>Esperando jugadores...</h1>
-    <h5>Aquí va la lista de jugadores</h5>
+    <ul>
+        <li *ngFor="let usuario of usuarios">
+            <h2>usuario</h2>
+        </li>
+    </ul>
 </div>
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatosJugadorService } from '../datos-jugador.service';
-import { ICalificarActividad } from '../ICalificarActividad';
+import { ICalificarActividad } from '../interfaces/ICalificarActividad';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';

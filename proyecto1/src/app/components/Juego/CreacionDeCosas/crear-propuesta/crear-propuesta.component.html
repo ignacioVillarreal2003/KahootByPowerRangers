@@ -1,5 +1,5 @@
 <div class="crearPropuesta">
-  <h2>Crear Nueva Propuesta</h2>
+  <h2>Crear nueva propuesta</h2>
 
   <div class="form">
     <input id="tituloPropuesta" type="text" placeholder="titulo" [(ngModel)]="tituloPropuesta">
@@ -9,8 +9,8 @@
         <input class="actividadParaPropuesta" type="checkbox" [id]="actividad.id" (change)="toggleActividad(actividad)">
       </li>
     </ul>
-    <button type="submit" class="aceptar" (click)="crearPropuesta()" >Guardar</button>
-    <button type="button" routerLink="/crear">Cancelar</button>
+    <button class="aceptar" (click)="crearPropuesta()" >Guardar</button>
+    <button class="cancelar" routerLink="/crear">Cancelar</button>
   
     <p class="textoLog">{{ textoLog }}</p>
 

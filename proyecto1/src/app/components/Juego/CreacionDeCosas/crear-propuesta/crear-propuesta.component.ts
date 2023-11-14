@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IActividad } from '../../services/IActividad';
-import { AdminService } from '../../services/HTTPServices/admin.service';
-import { ActividadesService } from '../../services/actividades.service';
+import { IActividad } from '../../../services/interfaces/IActividad';
+import { AdminService } from '../../../services/HTTPServices/admin.service';
+import { ActividadesService } from '../../../services/actividades.service';
 import { Router } from '@angular/router';
 
 

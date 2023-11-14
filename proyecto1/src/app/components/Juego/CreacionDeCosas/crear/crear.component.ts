@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AdminService } from '../../services/HTTPServices/admin.service';
-import { ActividadesService } from '../../services/actividades.service';
-import { PropuestasService } from '../../services/propuestas.service';
+import { AdminService } from '../../../services/HTTPServices/admin.service';
+import { ActividadesService } from '../../../services/actividades.service';
+import { PropuestasService } from '../../../services/propuestas.service';
 import { Router } from '@angular/router';
 
 @Component({

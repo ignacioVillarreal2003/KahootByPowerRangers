@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AdminService } from '../../services/HTTPServices/admin.service';
-import { PropuestasService } from '../../services/propuestas.service';
-import { IPropuesta } from '../../services/IPropuesta';
+import { AdminService } from '../../../services/HTTPServices/admin.service';
+import { PropuestasService } from '../../../services/propuestas.service';
+import { IPropuesta } from '../../../services/interfaces/IPropuesta';
 import { Router } from '@angular/router';
+import { DatosJuegoService } from 'src/app/components/services/datos-juego.service';
 
 @Component({
   selector: 'app-crear-juego',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CrearJuegoComponent {
 
-  constructor(private adminService: AdminService, private propuestasService: PropuestasService, private router: Router) { }
+  constructor(private adminService: AdminService, private propuestasService: PropuestasService, private router: Router, private datosJuegoService: DatosJuegoService) { }
 
   propuestas: IPropuesta[] = [];
   tituloJuego: string = "";
@@ -63,14 +64,9 @@ export class CrearJuegoComponent {
         this.adminService.crearJuego(this.tituloJuego, this.codigoSala, this.linkSala, this.propuestaSeleccionada).subscribe(
           (response: any) => {
             this.textoLog = response.message;
-            let p = document.querySelector('.textoLog') as HTMLElement;
-            const btnAceptar = document.querySelector('.aceptar') as HTMLInputElement;
-            p.style.color = 'green';
-            btnAceptar.disabled = true;
             console.log(response);
-            setTimeout(() => {
-              this.respuestaVerdadera(p, btnAceptar);
-            }, 4000);
+            this.datosJuegoService.pin = this.codigoSala;
+            this.router.navigate(['/salaDeJuego'])
           },
           (error: any) => {
             if (error === "TokenExpiredError") {
@@ -85,11 +81,7 @@ export class CrearJuegoComponent {
     }
   }
 
-  respuestaVerdadera(p: HTMLElement, btnAceptar: HTMLInputElement) {
-    p.style.color = 'red';
-    this.textoLog = "";
-    btnAceptar.disabled = false;
-  }
+
 
   generarCodigoSala() {
     let resultado = '';

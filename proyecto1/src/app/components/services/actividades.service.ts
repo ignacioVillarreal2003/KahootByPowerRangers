@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActividad } from './IActividad';
+import { IActividad } from './interfaces/IActividad';
 import { BehaviorSubject } from 'rxjs';
 
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
-import { IActividad } from '../IActividad';
-import { IPropuesta } from '../IPropuesta';
+import { IActividad } from '../interfaces/IActividad';
+import { IPropuesta } from '../interfaces/IPropuesta';
 import { Observable, of, throwError  } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { IJuego } from '../IJuego';
+import { IJuego } from '../interfaces/IJuego';
 
 @Injectable({
   providedIn: 'root'

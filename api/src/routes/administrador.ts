@@ -1,8 +1,8 @@
 import express from 'express'
 import { jwt } from '../index';
-import { IActividad } from './IActividad';
-import { IPropuesta } from './IPropuesta';
-import { IJuego } from './IJuego';
+import { IActividad } from './interfaces/IActividad';
+import { IPropuesta } from './interfaces/IPropuesta';
+import { IJuego } from './interfaces/IJuego';
 import { mongoose } from '../index';
 
 const router = express.Router()
