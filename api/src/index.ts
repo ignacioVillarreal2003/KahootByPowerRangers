@@ -33,12 +33,21 @@ function mandarActividad(actividades: IActividad[]){
     actividades.pop();
     if(actividades.length > 0) {
         setTimeout(() => {
-            mandarActividad(actividades)
+            delay5(actividades)
         }, 10000);
     } else {
-        io.emit('fin');
+        setTimeout(() => {
+            io.emit('fin');
+        });
     }
 };
+
+function delay5(actividades: IActividad[]) {
+    io.emit('delay');
+    setTimeout(() => {
+        mandarActividad(actividades);
+    }, 5000);
+}
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -69,6 +78,7 @@ async function hashPassword(password: string) {
     }
 }
 
+/*
 async function comparePassword(inputPassword: string, hashedPassword: string) {
     try {
         const match = await bcrypt.compare(inputPassword, hashedPassword);
@@ -79,6 +89,7 @@ async function comparePassword(inputPassword: string, hashedPassword: string) {
         throw error;
     }
 }
+*/
 
 /* Variables e interfazes */
 import { ICalificarActividad } from './routes/ICalificarActividad';
@@ -86,7 +97,7 @@ import { ICalificarActividad } from './routes/ICalificarActividad';
 export const listaUsuariosEnPantalla: string[] = [];
 export const listaPuntuacionesActividad: ICalificarActividad[] = [];
 
-
+let pin: string = '';
 
 /* Generar tokens */
 
@@ -139,11 +150,27 @@ app.post('/registrarUsuario', async (req, res) => {
     }
 });
 
-app.post('/iniciarJuego', async (req, res) => {
-    let actividades: IActividad[] = await []; // Acá llamaría a la base de datos con la id de la actividad
-    mandarActividad(actividades);
+app.post('/iniciarJuego', (req, res) => {
+    let actividades: IActividad[] = [
+        {id:'1', descripcion:'Sale un furbol', titulo:'Futbol', imagen:''},
+        {id:'2', descripcion:'Sale un basket', titulo:'Basketball', imagen:''},
+        {id:'3', descripcion:'Hora de programar', titulo:'Programación', imagen:''}
+    ]; // Acá llamaría a la base de datos con la id de la actividad
+    console.log('iniciando juego');
+    delay5(actividades);
+    res.status(200).send({
+        message: "Bien."
+    });
+});
+
+app.post('/crearPin', async (req, res) => {
+    pin = req.body.pin;
     res.status(200);
 });
+
+app.get('/getPin', async (req, res) => {
+    res.send(pin);
+})
 
 app.post('/loguearUsuario', async (req, res) => {
     try {
@@ -155,7 +182,8 @@ app.post('/loguearUsuario', async (req, res) => {
         const existingUser = users.find(user => user.username === req.body.username);
         if (existingUser) {
             // compara contraseñas
-            const match = await comparePassword(req.body.password, existingUser.password);
+            //const match = await comparePassword(req.body.password, existingUser.password);
+            const match = req.body.password == existingUser.password;
             if (req.body.username == existingUser.username && match) {
                 const token = generateAccessToken(req.body.username);
                 return res.send({ token: token }); // Se envía el token si todo está correcto

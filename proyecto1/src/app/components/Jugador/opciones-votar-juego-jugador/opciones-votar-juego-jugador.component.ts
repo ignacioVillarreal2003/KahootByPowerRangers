@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
-import { IActividad } from '../../services/IActividad';
 import { UserService } from '../../services/HTTPServices/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-opciones-votar-juego-jugador',
@@ -10,7 +10,7 @@ import { UserService } from '../../services/HTTPServices/user.service';
 })
 export class OpcionesVotarJuegoJugadorComponent{
 
-  constructor (private socketService: SocketService, private userService: UserService) {}
+  constructor (private socketService: SocketService, private userService: UserService, private router: Router) {}
 
   savePin(){
     
@@ -19,8 +19,14 @@ export class OpcionesVotarJuegoJugadorComponent{
   actividadId? : string = undefined;
 
   ngOnInit(){
-    this.socketService.getActividadJugador().subscribe((actividad: IActividad) => {
-      this.actividadId = actividad.id;
+    this.actividadId = this.socketService.getActividadId();
+    this.socketService.getNewMessage().subscribe((message: string) => {
+      if(message == 'delay') {
+        this.router.navigate(['/preguntaTerminadaJugador']);
+      }
+      if(message == 'fin') {
+        this.router.navigate(['/finalJugador']);
+      }
     });
   }
 

@@ -31,6 +31,23 @@ export class AdminService {
     return throwError(errorMessage);
   }
 
+  pin?: string = undefined;
+
+  iniciarJuego() {
+    fetch("http://localhost:3001/inciarJuego", {method: "POST"});
+  };
+
+  crearPin(pin: string) {
+    this.pin = pin;
+    return this.http.post<any>('http://localhost:3001/crearPin', {'pin': pin}, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPin() {
+    return this.pin;
+  }
+
   crearActividad(titulo: string, descripcion: string, imagen: any): Observable<any> {
     const uniqueID = uuidv4();
     const requestBody: IActividad = {

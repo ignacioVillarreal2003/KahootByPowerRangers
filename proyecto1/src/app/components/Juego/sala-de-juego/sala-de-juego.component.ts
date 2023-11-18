@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-sala-de-juego',
@@ -7,5 +6,5 @@ import { SocketService } from '../../services/socket.service';
   styleUrls: ['./sala-de-juego.component.css']
 })
 export class SalaDeJuegoComponent {
-  constructor(private socketService: SocketService) {}
+  constructor() {}
 }

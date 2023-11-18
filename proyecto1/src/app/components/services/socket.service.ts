@@ -1,39 +1,42 @@
 import { Injectable } from '@angular/core';
 import { io } from "socket.io-client";
-import { Router } from '@angular/router';
 import { IActividad } from './IActividad';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
-  constructor(private Router: Router) {} 
+  public message$: BehaviorSubject<string> = new BehaviorSubject('');
+  constructor() {} 
 
   socket = io('http://localhost:3002');
 
-  actividadActual?: IActividad = undefined;
-  actividadId?: number = undefined;
+  private actividadActual?: IActividad = undefined;
 
-  public getActividadJugador = () => {
-    this.socket.on('actividad', (actividad) => {
-      this.Router.navigate(['/opcionesVotarJuegoJugador']);
-      this.actividadId = actividad.id;
-    });
-
-    this.socket.on('fin', () => {
-      this.Router.navigate(['/calificacionJugador']);
-    });
-  }
-
-  public getActividadAdmin = () => {
-    this.socket.on('actividad', (actividad) => {
-      this.Router.navigate(['/opcionesVotarJuego']);
+  public getNewMessage = () => {
+    this.socket.on('actividad', (actividad: IActividad) =>{
+      this.message$.next('actividad');
       this.actividadActual = actividad;
     });
 
     this.socket.on('fin', () => {
-      this.Router.navigate(['/calificacionAdmin']);
+      this.message$.next('fin');
     });
+
+    this.socket.on('delay', () => {
+      this.message$.next('delay');
+    });
+
+    return this.message$.asObservable();
+  };
+
+  public getActividadId(): string {
+    return this.actividadActual?.id as string;
+  }
+
+  public getActividad(): IActividad {
+    return this.actividadActual as IActividad;
   }
 
   public cerrarSocket() {

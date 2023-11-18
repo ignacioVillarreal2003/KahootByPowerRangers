@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdminService } from '../../services/HTTPServices/admin.service';
 import { PropuestasService } from '../../services/propuestas.service';
 import { IPropuesta } from '../../services/IPropuesta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-juego',
@@ -10,7 +11,7 @@ import { IPropuesta } from '../../services/IPropuesta';
 })
 export class CrearJuegoComponent {
   
-  constructor(private adminService: AdminService, private propuestasService: PropuestasService) { }
+  constructor(private adminService: AdminService, private propuestasService: PropuestasService, private router: Router) { }
 
   propuestas: IPropuesta[] = [];
   tituloJuego: string = "";
@@ -58,12 +59,12 @@ export class CrearJuegoComponent {
 
   crearJuego(): void {   
     if (this.checkDatos()) {
-      this.generarCodigoSala()
-        console.log(this.codigoSala);
-    }
+      this.adminService.crearPin(this.generarCodigoSala());
+    };
+    this.router.navigate(['/salaDeJuego']);
   }
 
-  generarCodigoSala() {
+  generarCodigoSala(): string {
     let resultado = '';
     const longitud = 6;
     for (let i = 0; i < longitud; i++) {
@@ -71,6 +72,7 @@ export class CrearJuegoComponent {
       resultado += digito.toString();
     }
     this.codigoSala = resultado;
+    return this.codigoSala;
   }
 
 }
