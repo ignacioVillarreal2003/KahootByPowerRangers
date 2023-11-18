@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { DatosJugadorService } from '../../services/datos-jugador.service';
+import { SocketService } from '../../services/socket.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sala-espera-jugador',
@@ -11,7 +13,17 @@ export class SalaEsperaJugadorComponent {
   
   foto: string = this.datosJugadorService.imagen;
 
+  ngOnInit(){
+    this.socketService.getNewMessage().subscribe((message: string) => {
+      if(message == 'delay') {
+        this.router.navigate(['/pantallaCargaJugador']);
+      }
+      if(message == 'fin') {
+        this.router.navigate(['/finalJugador']);
+      }
+    });
+  }
 
-  constructor (private datosJugadorService: DatosJugadorService){}
+  constructor (private datosJugadorService: DatosJugadorService, private socketService: SocketService, private router: Router){}
 
 }

@@ -1,5 +1,7 @@
 import express from 'express'
 import { IUsuario } from './routes/interfaces/IUsuario';
+import { IActividad } from './routes/interfaces/IActividad';
+import { createServer } from 'http';
 
 export const listaUsuariosEnPantalla: any[] = [];
 
@@ -10,6 +12,11 @@ const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+
+const httpServer = createServer(app);
+const io = require('socket.io')(httpServer, {
+  cors: {origin : '*'}
+});
 
 export const jwt = require('jsonwebtoken');
 
@@ -26,7 +33,7 @@ app.use(cors(corsOptions));
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
-
+httpServer.listen(3002);
 
 /* mongoose */
 export const mongoose = require('mongoose');
@@ -188,14 +195,42 @@ app.get('/getToken', (req, res) => {
     return res.send({ token: jwt.verify(req.body.token, 'shhhhh') });
 })
 
+function mandarActividad(actividades: IActividad[]){
+    io.emit('actividad', actividades[actividades.length - 1]);
+    actividades.pop();
+    if(actividades.length > 0) {
+        setTimeout(() => {
+            delay(actividades)
+        }, 10000);
+    } else {
+        setTimeout(() => {
+            io.emit('fin');
+        }, 10000);
+    }
+}
 
-
+export function delay(actividades: IActividad[]) {
+    io.emit('delay');
+    setTimeout(() => {
+        mandarActividad(actividades);
+    }, 3000);
+}
 
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
 
 app.use('/administrador', administradorRouter);
 app.use('/usuario', usuarioRouter);
+
+// socket.io
+io.on('connection', (socket: any) => {
+    console.log('user ' + socket.id.substr(0, 2) + ' connected');
+  
+    socket.on('disconnect', () => {
+      console.log('user ' + socket.id.substr(0, 2) + ' disconnected!');
+    });
+});
+
 
 // npm run dev
 // json-server --watch db.json
