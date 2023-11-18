@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { SocketService } from 'src/app/components/services/socket.service';
+import { Router } from '@angular/router';
+import { AdminService } from 'src/app/components/services/HTTPServices/admin.service';
 
 @Component({
   selector: 'app-pantalla-carga-juego',
@@ -6,5 +9,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./pantalla-carga-juego.component.css']
 })
 export class PantallaCargaJuegoComponent {
+  constructor(private socketService: SocketService, private router: Router, private adminService: AdminService) {}
 
+  ngOnInit() {
+    this.adminService.iniciarJuego();
+    this.socketService.getNewMessage().subscribe((message: string) => {
+      if(message == 'actividad') {
+        this.router.navigate(['/inicioJuego']);
+      }
+      if(message == 'fin') {
+        this.router.navigate(['/actividadesMasVotadas']);
+      }
+    });
+  }
 }

@@ -32,6 +32,16 @@ export class AdminService {
     return throwError(errorMessage);
   }
 
+  iniciarJuego(): Observable<any> {
+    const uniqueID = uuidv4();
+    const requestBody = {
+      id: uniqueID
+    };
+    return this.http.post<any>('http:/localhost:3001/iniciarJuego', requestBody, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   crearActividad(titulo: string, descripcion: string, imagen: any): Observable<any> {
     const uniqueID = uuidv4();
     const requestBody: IActividad = {
