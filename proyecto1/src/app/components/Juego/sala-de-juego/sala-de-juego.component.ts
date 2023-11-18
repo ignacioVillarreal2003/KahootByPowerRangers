@@ -12,8 +12,10 @@ export class SalaDeJuegoComponent {
   constructor(private datosJuegoService: DatosJuegoService){}
 
   pin: string = this.datosJuegoService.pin;
+  link: string = this.datosJuegoService.link;
   usuarios = []
 
   
-
+  
 }
+

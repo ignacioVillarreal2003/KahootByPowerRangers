@@ -6,10 +6,19 @@ const router = express.Router()
 
 /* Usuarios en pantalla */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-router.post('/agregarUsuarioEnPantalla', (req, res) => {
-    const nombreUsuario: string = req.body.usuario
-    listaUsuariosEnPantalla.push(nombreUsuario);
-    res.status(200)
+router.post('/entrarAJuego', (req, res) => {
+    try {
+        const usuario = {
+            nombre: req.body.nombreUsuario,
+            pin: req.body.pin,
+            link: req.body.link,
+            imagen: req.body.imagen
+        }
+        listaUsuariosEnPantalla.push(usuario);
+        return res.status(200).send({ message: "Todo bien" });
+    } catch (error) {
+        return res.status(400).send({ message: "Error inesperado." });
+    }
 })
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

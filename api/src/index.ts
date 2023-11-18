@@ -1,7 +1,7 @@
 import express from 'express'
 import { IUsuario } from './routes/interfaces/IUsuario';
 
-export const listaUsuariosEnPantalla: string[] = [];
+export const listaUsuariosEnPantalla: any[] = [];
 
 
 /* Configuracion de servidor */

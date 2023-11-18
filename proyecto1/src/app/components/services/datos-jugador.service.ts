@@ -7,6 +7,7 @@ export class DatosJugadorService {
 
   pin: string = "";
   nombre: string = "";
+  imagen: string = ""
 
   constructor() { }
 }

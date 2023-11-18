@@ -35,13 +35,13 @@ const routes: Routes = [
   { path: 'despuesCadaPreguntaJugador', component: DespuesCadaPreguntaJugadorComponent},
   { path: 'finalJugador', component: FinalJugadorComponent },
   { path: 'opcionesVotarJuegoJugador', component: OpcionesVotarJuegoJugadorComponent },
-  { path: 'nombreJugador', component: NombreJugadorComponent },
   { path: 'pantallaCargaJugador', component: PantallaCargaJugadorComponent },
   { path: 'preguntaTerminadaJugador', component: PreguntaTerminadaJugadorComponent },
   { path: 'salaEsperaJugador', component: SalaEsperaJugadorComponent },
   { path: 'salaDeJuego', component: SalaDeJuegoComponent},
   { path: 'actividadConOpciones', component: ActividadConOpcionesComponent},
-  { path: 'actividadesMasVotadas', component: ActividadesMasVotadasComponent}
+  { path: 'actividadesMasVotadas', component: ActividadesMasVotadasComponent},
+  { path: 'nombreJugador/:pin', component: NombreJugadorComponent },
 ];
 
 @NgModule({

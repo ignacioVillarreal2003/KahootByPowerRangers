@@ -1,11 +1,13 @@
 <div class="pantallaCargaJuego">
     <h3>Código del juego: {{pin}}</h3>
+    <h3>Link del juego: {{link}}</h3>
 
     <button class="empezar-btn" routerLink="/pantallaCargaJuego">Empezar</button>
     <h1>Esperando jugadores...</h1>
     <ul>
         <li *ngFor="let usuario of usuarios">
-            <h2>usuario</h2>
+            <h2>usuario.nombre</h2>
+            <img src="" alt="../../../assets/avatars/{{usuario.imagen}}">
         </li>
     </ul>
 </div>

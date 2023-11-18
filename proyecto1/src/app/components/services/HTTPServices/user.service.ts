@@ -30,11 +30,14 @@ export class UserService {
     return throwError(errorMessage);
   }
 
-  agregarUsuarioEnPantalla(): Observable<any> {
+  entrarAJuego(link: string, imagen: string | undefined): Observable<any> {
     const requestBody = {
-      nombreUsuario: this.datosJugadorService.nombre
-    };
-    return this.http.post<any>('http://localhost:3001/usuario/agregarUsuarioEnPantalla', requestBody, this.httpOptions).pipe(
+      nombreUsuario: this.datosJugadorService.nombre,
+      pin: this.datosJugadorService.pin,
+      link: link,
+      imagen: imagen
+    };        
+    return this.http.post<any>('http://localhost:3001/usuario/entrarAJuego', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }

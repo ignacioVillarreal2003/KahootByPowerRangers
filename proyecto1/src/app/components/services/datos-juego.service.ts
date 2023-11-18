@@ -8,5 +8,6 @@ export class DatosJuegoService {
   constructor() { }
 
   pin: string = "";
+  link: string = "";
   
 }

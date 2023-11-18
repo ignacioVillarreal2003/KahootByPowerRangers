@@ -7,19 +7,10 @@ import { DatosJugadorService } from '../../services/datos-jugador.service';
   styleUrls: ['./sala-espera-jugador.component.css']
 })
 export class SalaEsperaJugadorComponent {
-  nombre: any = this.datosJugadorService.nombre || "Unamed"; /* Borrar unamed despues */
+  nombre: string = this.datosJugadorService.nombre;
   
-  listaAvatares: string[] = ["avatar1.png","avatar2.png","avatar3.png","avatar4.png","avatar5.png","avatar6.png"]
-  
-  foto ?: string;
+  foto: string = this.datosJugadorService.imagen;
 
-  randomAvatar(): string{
-    return this.listaAvatares[Math.floor(Math.random() * this.listaAvatares.length)]
-  }
-
-  ngOnInit(){
-    this.foto = this.randomAvatar();
-  }
 
   constructor (private datosJugadorService: DatosJugadorService){}
 
