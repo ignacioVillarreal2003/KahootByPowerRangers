@@ -195,19 +195,6 @@ app.get('/getToken', (req, res) => {
     return res.send({ token: jwt.verify(req.body.token, 'shhhhh') });
 })
 
-app.post('/iniciarJuego', (req, res) => {
-    // Acá llamaría a la base de datos con la id de la actividad
-    let actividades: IActividad[] = [
-        {id:'1', descripcion:'Sale un furbol', titulo:'Futbol', imagen:''},
-        {id:'2', descripcion:'Sale un basket', titulo:'Basketball', imagen:''},
-        {id:'3', descripcion:'Hora de programar', titulo:'Programación', imagen:''}
-    ]; 
-    delay(actividades);
-    res.status(200).send({
-        message: "Iniciando Juego."
-    });
-});
-
 function mandarActividad(actividades: IActividad[]){
     io.emit('actividad', actividades[actividades.length - 1]);
     actividades.pop();
@@ -222,7 +209,7 @@ function mandarActividad(actividades: IActividad[]){
     }
 }
 
-function delay(actividades: IActividad[]) {
+export function delay(actividades: IActividad[]) {
     io.emit('delay');
     setTimeout(() => {
         mandarActividad(actividades);

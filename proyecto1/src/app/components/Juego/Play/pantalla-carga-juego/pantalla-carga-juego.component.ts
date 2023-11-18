@@ -12,7 +12,7 @@ export class PantallaCargaJuegoComponent {
   constructor(private socketService: SocketService, private router: Router, private adminService: AdminService) {}
 
   ngOnInit() {
-    this.adminService.iniciarJuego();
+    this.adminService.iniciarJuego().subscribe();
     this.socketService.getNewMessage().subscribe((message: string) => {
       if(message == 'actividad') {
         this.router.navigate(['/inicioJuego']);

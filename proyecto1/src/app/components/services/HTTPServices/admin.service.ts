@@ -37,7 +37,7 @@ export class AdminService {
     const requestBody = {
       id: uniqueID
     };
-    return this.http.post<any>('http:/localhost:3001/iniciarJuego', requestBody, this.httpOptions).pipe(
+    return this.http.post<any>('http://localhost:3001/administrador/iniciarJuego', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
