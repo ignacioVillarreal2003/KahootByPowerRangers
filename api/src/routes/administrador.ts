@@ -4,6 +4,7 @@ import { IActividad } from './interfaces/IActividad';
 import { IPropuesta } from './interfaces/IPropuesta';
 import { IJuego } from './interfaces/IJuego';
 import { mongoose } from '../index';
+import { delay } from '../index';
 
 const router = express.Router()
 
@@ -31,6 +32,19 @@ export function authenticate(req: any, res: any, next: any) {
         }
     }
 }
+
+router.post('/iniciarJuego', (req, res) => {
+    // Acá llamaría a la base de datos con la id de la actividad
+    let actividades: IActividad[] = [
+        {id:'1', descripcion:'Sale un furbol', titulo:'Futbol', imagen:''},
+        {id:'2', descripcion:'Sale un basket', titulo:'Basketball', imagen:''},
+        {id:'3', descripcion:'Hora de programar', titulo:'Programación', imagen:''}
+    ]; 
+    delay(actividades);
+    res.status(200).send({
+        message: "Iniciando Juego."
+    });
+});
 
 /* Actividades */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
