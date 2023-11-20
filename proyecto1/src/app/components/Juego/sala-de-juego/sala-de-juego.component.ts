@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DatosJuegoService } from '../../services/datos-juego.service';
-import { IUsuario } from '../../services/interfaces/IUsuario';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-sala-de-juego',
@@ -9,7 +9,7 @@ import { IUsuario } from '../../services/interfaces/IUsuario';
 })
 export class SalaDeJuegoComponent {
 
-  constructor(private datosJuegoService: DatosJuegoService){}
+  constructor(private datosJuegoService: DatosJuegoService, private socketService: SocketService){}
 
   pin: string = this.datosJuegoService.pin;
   link: string = this.datosJuegoService.link;
@@ -18,6 +18,13 @@ export class SalaDeJuegoComponent {
     imagen: "avatar1.png"
   }]
 
+  ngOnInit() {
+    this.socketService.getNewMessage().subscribe((message) => {
+      let player = JSON.parse(message);
+      let usuario = {nombre: player.nombre, imagen: player.imagen};
+      this.usuarios.push(usuario);
+    });
+  }
   
   
 }

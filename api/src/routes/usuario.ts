@@ -1,6 +1,7 @@
 import express from 'express'
 import { listaUsuariosEnPantalla } from '../index';
 import { Voto } from './administrador';
+import { enviarJugador } from '../index';
 
 const router = express.Router()
 
@@ -15,6 +16,7 @@ router.post('/entrarAJuego', (req, res) => {
             imagen: req.body.imagen
         }
         listaUsuariosEnPantalla.push(usuario);
+        enviarJugador({nombre: usuario.nombre as string, imagen: usuario.imagen as string});
         return res.status(200).send({ message: "Todo bien" });
     } catch (error) {
         return res.status(400).send({ message: "Error inesperado." });

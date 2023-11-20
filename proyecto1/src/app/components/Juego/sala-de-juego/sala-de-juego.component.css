@@ -41,3 +41,7 @@
     margin-bottom: 31rem;
 }
 
+.imagenPequeña {
+  max-width: 50px;
+  max-height: 50px;
+}

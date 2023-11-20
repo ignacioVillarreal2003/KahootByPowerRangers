@@ -6,8 +6,8 @@
     <h1>Esperando jugadores...</h1>
     <ul>
         <li *ngFor="let usuario of usuarios">
-            <h2>usuario.nombre</h2>
-            <img src="" alt="../../../assets/avatars/{{usuario.imagen}}">
+            <h2>{{usuario.nombre}}</h2>
+            <img class="imagenPequeña" src="../../../assets/avatars/{{usuario.imagen}}" alt="">
         </li>
     </ul>
 </div>
