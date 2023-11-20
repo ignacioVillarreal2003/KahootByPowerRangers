@@ -62,6 +62,7 @@ export class CrearJuegoComponent {
       this.generarCodigoSala()
       this.linkSala = `http://localhost:4200/nombreJugador/${this.codigoSala}`;
       if (this.propuestaSeleccionada !== null) {
+        this.datosJuegoService.propuesta = this.propuestaSeleccionada;
         this.adminService.crearJuego(this.tituloJuego, this.codigoSala, this.linkSala, this.propuestaSeleccionada).subscribe(
           (response: any) => {
             this.textoLog = response.message;
