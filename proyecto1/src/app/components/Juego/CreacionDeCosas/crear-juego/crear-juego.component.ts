@@ -68,7 +68,7 @@ export class CrearJuegoComponent {
             console.log(response);
             this.datosJuegoService.link = `http://localhost:4200/nombreJugador/${this.codigoSala}`;
             this.datosJuegoService.pin = this.codigoSala;
-            this.router.navigate(['/salaDeJuego'])
+            this.router.navigate([`/salaDeJuego/${this.codigoSala}`])
           },
           (error: any) => {
             if (error === "TokenExpiredError") {

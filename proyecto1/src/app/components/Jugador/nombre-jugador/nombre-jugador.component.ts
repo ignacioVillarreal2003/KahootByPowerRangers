@@ -38,10 +38,8 @@ export class NombreJugadorComponent {
       this.datosJugadorService.pin = this.salaPin
     }
     this.userService.entrarAJuego(this.url, this.foto).subscribe(
-      (response: any) => {
-        console.log(123);
-        
-        this.router.navigate(['/salaEsperaJugador'])
+      (response: any) => {        
+        this.router.navigate([`/salaEsperaJugador/${this.salaPin}`])
       },
       (error: any) => {
         console.log(error);

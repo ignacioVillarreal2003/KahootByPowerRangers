@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { UserService } from '../../services/HTTPServices/user.service';
 import { Router } from '@angular/router';
+import { DatosJugadorService } from '../../services/datos-jugador.service';
 
 @Component({
   selector: 'app-opciones-votar-juego-jugador',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./opciones-votar-juego-jugador.component.css']
 })
 export class OpcionesVotarJuegoJugadorComponent {
-  constructor (private socketService: SocketService, private userService: UserService, private router: Router) {}
+  constructor (private socketService: SocketService, private userService: UserService, private router: Router, private datosJugadorService: DatosJugadorService) {}
 
   savePin(){}
 
@@ -19,16 +20,19 @@ export class OpcionesVotarJuegoJugadorComponent {
     this.actividadId = this.socketService.getActividadId();
     this.socketService.getNewMessage().subscribe((message: string) => {
       if(message == 'delay') {
-        this.router.navigate(['/preguntaTerminadaJugador']);
+        this.router.navigate([`/preguntaTerminadaJugador/${this.datosJugadorService.pin}`]);
       }
       if(message == 'fin') {
-        this.router.navigate(['/finalJugador']);
+        this.router.navigate([`/finalJugador/${this.datosJugadorService.pin}`]);
       }
     });
+    this.pin = this.datosJugadorService.pin
   }
 
   mandarVoto(voto: number) {
     this.userService.calificarActividad(this.actividadId as string, voto, "pin");
   }
+
+  pin: string = "";
 
 }
