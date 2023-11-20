@@ -44,7 +44,6 @@ function postVoto(idActividad: string, calificacion: number, pin: string) {
     });
     voto.save()
         .then(() => {
-            console.log(true);
             return true;
         })
         .catch((err: any) => {

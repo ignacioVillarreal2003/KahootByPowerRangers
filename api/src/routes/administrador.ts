@@ -173,6 +173,20 @@ const getActividad = async (titulo: string) => {
     }
 };
 
+const getActividadPorId = async (id: string) => {
+    try {
+        const actividad = await Actividad.find({ id: { $eq: id } });
+        if (actividad) {
+            return actividad;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
 const getActividades = async () => {
     try {
         const actividad = await Actividad.find();
@@ -490,73 +504,46 @@ router.get('/calificacionActividad/:id', authenticate, async (req, res) => { // 
     }
 })
 
-interface Diccionario {
-    [clave: string]: number;
-}
-
 router.get('/topCalificaciones/:pin', authenticate, async (req, res) => {
     try {
-        // Total calificaciones
-        const sumaPorId: Diccionario = {};
+        let miDiccionario: { [clave: string]: any } = {};
+        const votos = await getVotosPorPin(req.params.pin);
 
-        const juego: IJuego | null = await getJuego(req.params.pin).then((res) => {
-            const j = res[0]
-            if (j !== undefined) {
-                const jTitulo = j.titulo;
-                const jCodigo = j.codigo;
-                const jLink = j.link;
-                const jPropuesta = j.propuesta;
-
-                const game: IJuego = {
-                    titulo: jTitulo,
-                    pin: jCodigo,
-                    link: jLink,
-                    propuesta: jPropuesta
-                }
-                return game;
+        votos.forEach((element: any) => {
+            const califi = element.puntuacion;
+            const id = element.idActividad;
+            if (!(id in miDiccionario)) {
+                miDiccionario[id] = califi;
             } else {
-                return null;
+                miDiccionario[id] += califi;
             }
         });
-        if (juego !== null) {
-            // Si se encuentra un juego con el mismo pin
-            const actividades: IActividad[] = juego.propuesta.listaActividades;
-            actividades.forEach(async (element) => {
-                const calificacionVoto = await getVoto(element.id, req.params.pin).then((res) => {
-                    const v = res[0];
-                    if (v !== undefined) {
-                        return v.calificacion;
-                    } else {
-                        return null;
-                    }
-                });
-                if (calificacionVoto !== null) {
-                    if (sumaPorId[element.id]) {
-                        sumaPorId[element.id] += calificacionVoto;
-                    } else {
-                        sumaPorId[element.id] = calificacionVoto;
-                    }
-                }
-            })
-        }
-        // Encontrar los tres valores máximos de calificación
-        const valoresCalificacion = Object.values(sumaPorId);
-        const valoresMaximos = valoresCalificacion.sort((a, b) => b - a).slice(0, 3);
 
-        // Filtrar los ID con las calificaciones máximas
-        const actividadesTop = Object.keys(sumaPorId)
-            .filter(id => valoresMaximos.includes(sumaPorId[id]))
-            .map(id => ({
-                idActividad: id,
-                calificacion: sumaPorId[id]
-            }));
-        return res.send({ actividadesTop: actividadesTop });
+        // Convertir el diccionario a un array de pares [clave, valor]
+        const diccionarioArray = Object.entries(miDiccionario);
+
+        // Ordenar el array en función de las calificaciones de mayor a menor
+        diccionarioArray.sort((a, b) => b[1] - a[1]);
+
+        // Tomar los tres primeros elementos (las calificaciones más altas)
+        const mejoresTres = diccionarioArray.slice(0, 3);
+
+        const listaFinal: any[] = [];
+
+        // Utilizar un bucle for...of para manejar el await correctamente
+        for (const [id, puntuacion] of mejoresTres) {
+            const titulo = await getActividadPorId(id).then((res) => {                
+                return res[0].titulo;
+            });
+            listaFinal.push([ id, puntuacion, titulo ]);
+        }
+        return res.status(200).send({ actividadesTop: listaFinal });
     } catch (error) {
         console.log(error);
         return res.status(500).send({ message: "Error al conectar a la BD." });
     }
+});
 
-})
 
 // Voto 
 var votosSchema = mongoose.Schema({
@@ -570,6 +557,20 @@ export const Voto = mongoose.model('Voto', votosSchema, 'Votos');
 const getVoto = async (idActividad: string, pin: string) => {
     try {
         const voto = await Voto.find({ idActividad: { $eq: idActividad }, pin: { $eq: pin } });
+        if (voto) {
+            return voto;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const getVotosPorPin = async (pin: string) => {
+    try {
+        const voto = await Voto.find({ pin: { $eq: pin } });
         if (voto) {
             return voto;
         } else {
