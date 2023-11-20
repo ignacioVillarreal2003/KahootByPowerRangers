@@ -1,21 +1,25 @@
-<div class="fondo">
-    <h1 class="titulo-actividades">Actividades Más Votadas</h1>
+<div class="votacionFinal">
+  <h1 class="titulo-actividades">Actividades Más Votadas</h1>
 
-    <div class="cuadro">
-        <div class="circulo amarillo">{{ listaTopCalificaciones[0][0] }}</div>
-        <p>{{ listaTopCalificaciones[0][2] }}</p>
-        <p>Calificacion: {{ listaTopCalificaciones[0][1] }}</p>
-      </div>
-    
-      <div class="cuadro">
-        <div class="circulo gris">{{ listaTopCalificaciones[1][0] }}</div>
-        <p>{{ listaTopCalificaciones[1][2] }}</p>
-        <p>Calificacion: {{ listaTopCalificaciones[1][1] }}</p>
-      </div>
-    
-      <div class="cuadro">
-        <div class="circulo naranja">{{ listaTopCalificaciones[2][0] }}</div>
-        <p>{{ listaTopCalificaciones[2][2] }}</p>
-        <p>Calificacion: {{ listaTopCalificaciones[2][1] }}</p>
-      </div>
+  <div class="votos">
+    <div class="cuadro p2">
+      <span class="puesto2"></span>
+      <p>{{ listaTopCalificaciones[1][2] }}</p>
+      <p>Calificacion: {{ listaTopCalificaciones[1][1] }}</p>
+    </div>
+
+    <div class="cuadro p1">
+      <span class="puesto1"></span>
+      <p>{{ listaTopCalificaciones[0][2] }}</p>
+      <p>Calificacion: {{ listaTopCalificaciones[0][1] }}</p>
+    </div>
+
+    <div class="cuadro p3">
+      <span class="puesto3"></span>
+      <p>{{ listaTopCalificaciones[2][2] }}</p>
+      <p>Calificacion: {{ listaTopCalificaciones[2][1] }}</p>
+    </div>
+  </div>
+
+  <button class="fin-btn" routerLink="">Inicio</button>
 </div>

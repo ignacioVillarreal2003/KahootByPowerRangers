@@ -20,7 +20,16 @@
     align-items: center;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.801);
-    width: 100%;
+    width: 80%;
+    padding: 20px 0;
+}
+
+.inicioJuego .pregunta h1 {
+    text-align: center;
+}
+
+.inicioJuego .pregunta h3 {
+    text-align: center;
 }
 
 .inicioJuego .pregunta p{
@@ -35,14 +44,14 @@
     width: 90%;
     height: 20px;
     border-radius: 20px;
-    top: 65%;
+    top: 70%;
 }
 
 .inicioJuego .contador{
     position: absolute;
     top: 30px;
     right: 30px;
-    background-color: blue;
+    background-color: rgba(100, 100, 201, 0.938);
     border-radius: 30px;
     padding: 0px 15px;
     color: white;

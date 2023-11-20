@@ -19,6 +19,7 @@
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 .despuesCadaPreguntaJugador .spinner{
@@ -41,10 +42,12 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+    height: 100px;
 }
 
 .despuesCadaPreguntaJugador .jugador img{
-    width: 100px;
+    max-width: 110px;
+    max-height: 110px;
     margin-left: 20px;
     position: relative;
     bottom: 10px;

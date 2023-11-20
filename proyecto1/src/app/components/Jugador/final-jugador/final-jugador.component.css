@@ -19,6 +19,7 @@
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 .finalJugador .spinner{
@@ -41,10 +42,12 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+    height: 100px;
 }
 
 .finalJugador .jugador img{
-    width: 100px;
+    max-width: 110px;
+    max-height: 110px;
     margin-left: 20px;
     position: relative;
     bottom: 10px;
@@ -60,3 +63,23 @@
     font-weight: 700;
     margin-top: 20px;
 }
+
+.finalJugador .inicio-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px -4px inset;
+    background: rgb(51, 51, 51);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 350ms ease;
+    width: 110px;
+  }
+  
+  .finalJugador .inicio-btn:hover {
+    background-color: rgb(52, 63, 206);
+  }

@@ -1,64 +1,118 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap');
 
-.fondo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url(../../../../../assets/fondo/fondo1.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-    flex-direction: column;
-    font-family: 'Noto Sans Arabic', sans-serif;
+.votacionFinal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../../../../../assets/fondo/fondo1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  font-family: 'Noto Sans Arabic', sans-serif;
 }
-.actividadesMasVotadas {
-    text-align: center;
-  }
-  
-  .titulo-actividades {
-    color: white;
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-  }
-  
-  .cuadro {
-    background-color: #8949C1;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 10px;
-    width: 300px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    position: relative; /* Agrega esto para permitir la posición relativa */
-  }
-  
-  .circulo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-right: 20px; /* Espacio entre el círculo y el contenido del cuadro */
-    background-color: #FFD700;
-  }
-  
-  .amarillo {
-    background-color: #FFD700; /* Amarillo */
-  }
-  
-  .gris {
-    background-color: #808080; /* Gris */
-  }
-  
-  .naranja {
-    background-color: #FFA500; /* Naranja oscuro */
-  }
+
+.votacionFinal .actividadesMasVotadas {
+  text-align: center;
+}
+
+.votacionFinal .titulo-actividades {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  position: relative;
+  bottom: 140px;
+  text-align: center;
+}
+
+.votacionFinal .votos {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: absolute;
+  bottom: 80px;
+}
+
+.votacionFinal .cuadro {
+  background-color: rgb(70, 23, 143);
+  border-top-right-radius: 0.375rem;
+  border-top-left-radius: 0.375rem;
+  padding: 20px;
+  max-width: 260px;
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 37px 37px 0px;
+}
+
+.votacionFinal .puesto1 {
+  width: 120px;
+  height: 120px;
+  background-image: url(../../../../../assets/puesto1.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+
+.votacionFinal .p1 {
+  height: 400px;
+  transform: scale(1.01);
+}
+
+.votacionFinal .puesto2 {
+  width: 110px;
+  height: 110px;
+  background-image: url(../../../../../assets/puesto2.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+.votacionFinal .p2 {
+  height: 350px;
+}
+
+.votacionFinal .puesto3 {
+  width: 100px;
+  height: 100px;
+  background-image: url(../../../../../assets/puesto3.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+  margin-bottom: 20px;
+}
+
+.votacionFinal .p3 {
+  height: 300px;
+}
+
+.votacionFinal .fin-btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px -4px inset;
+  background: rgb(51, 51, 51);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 350ms ease;
+  width: 110px;
+}
+
+.votacionFinal .fin-btn:hover {
+  background-color: rgb(72, 91, 204);
+}

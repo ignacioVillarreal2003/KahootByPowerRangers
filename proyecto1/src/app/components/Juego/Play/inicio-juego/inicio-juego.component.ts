@@ -12,7 +12,7 @@ import { DatosJuegoService } from 'src/app/components/services/datos-juego.servi
   styleUrls: ['./inicio-juego.component.css']
 })
 export class InicioJuegoComponent {
-  constructor(private socketService: SocketService, private router: Router, private datosJuegoService: DatosJuegoService) {}
+  constructor(private socketService: SocketService, private router: Router, private datosJuegoService: DatosJuegoService) { }
 
   actividad?: IActividad = undefined;
   conteo?: number[] = undefined;
@@ -23,16 +23,26 @@ export class InicioJuegoComponent {
     this.actividad = this.socketService.getActividad();
     this.conteo = this.socketService.getNumActividad();
     this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
-      if(message[0] == 'fin') {
+      if (message[0] == 'fin') {
         this.router.navigate([`/actividadesMasVotadas/${this.datosJuegoService.pin}`]);
       }
-      if(message[0] == 'delay') {
+      if (message[0] == 'delay') {
         this.router.navigate([`/pantallaCargaJuego/${this.datosJuegoService.pin}`]);
 
       }
     })
+    this.progressBar();
   }
   ngOnDestroy() {
     (this.subscription as Subscription).unsubscribe();
+  }
+
+  progressBar() {
+    const bar = document.querySelector('.progress-bar') as HTMLElement;
+    bar.style.width = '100%';
+    bar.style.transition = 'width 10s linear';
+    setTimeout(() => {
+      bar.style.width = '0%';
+    }, 100);
   }
 }

@@ -41,10 +41,12 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+    height: 100px;
 }
 
 .pantallaCargaJugador .jugador img{
-    width: 100px;
+    max-width: 110px;
+    max-height: 110px;
     margin-left: 20px;
     position: relative;
     bottom: 10px;
