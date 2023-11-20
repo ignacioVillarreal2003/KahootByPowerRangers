@@ -5,6 +5,7 @@ import { IPropuesta } from './interfaces/IPropuesta';
 import { IJuego } from './interfaces/IJuego';
 import { mongoose } from '../index';
 import { delay } from '../index';
+import { numActividades } from '../index';
 
 const router = express.Router()
 
@@ -37,7 +38,9 @@ router.post('/iniciarJuego', (req, res) => {
     // Acá llamaría a la base de datos con la id de la actividad
     let propuesta: IPropuesta = req.body.propuesta;
     let actividades: IActividad[] = propuesta.listaActividades;
-    delay(actividades);
+    let conteo = 1;
+    numActividades(actividades.length);
+    delay(actividades, conteo);
     res.status(200).send({
         message: "Iniciando Juego."
     });

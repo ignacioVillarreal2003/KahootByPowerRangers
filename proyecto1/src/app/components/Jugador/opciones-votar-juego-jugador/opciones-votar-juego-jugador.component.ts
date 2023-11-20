@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { UserService } from '../../services/HTTPServices/user.service';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { DatosJugadorService } from '../../services/datos-jugador.service';
 
 @Component({
@@ -12,19 +13,27 @@ import { DatosJugadorService } from '../../services/datos-jugador.service';
 export class OpcionesVotarJuegoJugadorComponent {
   constructor (private socketService: SocketService, private userService: UserService, private router: Router, private datosJugadorService: DatosJugadorService) {}
 
+  private subscription?: Subscription;
+
   actividadId? : string = undefined;
+  conteo?: number[] = undefined;
 
   ngOnInit(){
     this.actividadId = this.socketService.getActividadId();
-    this.socketService.getNewMessage().subscribe((message: string) => {
-      if(message == 'delay') {
+    this.conteo = this.socketService.getNumActividad();
+    this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
+      if(message[0] == 'delay') {
         this.router.navigate([`/preguntaTerminadaJugador/${this.datosJugadorService.pin}`]);
       }
-      if(message == 'fin') {
+      if(message[0] == 'fin') {
         this.router.navigate([`/finalJugador/${this.datosJugadorService.pin}`]);
       }
     });
     this.pin = this.datosJugadorService.pin
+  }
+
+  ngOnDestroy() {
+    (this.subscription as Subscription).unsubscribe();
   }
 
   guardarRespuesta(voto: number) {

@@ -1,5 +1,5 @@
 <div class="opcionesVotarJuegoJugador">
-    <div class="contador">5 de 10</div>
+    <div class="contador" *ngIf="conteo">{{conteo[0]}} de {{conteo[1]}}</div>
     <form class="entrarPin">
         <button class="noMeGusta"routerLink="/despuesCadaPreguntaJugador/{{pin}}" (click)="guardarRespuesta(-1)">No me gusta -1</button>
         <button class="meDaIgual" routerLink="/despuesCadaPreguntaJugador/{{pin}}" (click)="guardarRespuesta(0)">Me da igual</button>
