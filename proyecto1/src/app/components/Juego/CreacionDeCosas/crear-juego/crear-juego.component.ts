@@ -62,13 +62,14 @@ export class CrearJuegoComponent {
       this.generarCodigoSala()
       this.linkSala = `http://localhost:4200/nombreJugador/${this.codigoSala}`;
       if (this.propuestaSeleccionada !== null) {
+        this.datosJuegoService.propuesta = this.propuestaSeleccionada;
         this.adminService.crearJuego(this.tituloJuego, this.codigoSala, this.linkSala, this.propuestaSeleccionada).subscribe(
           (response: any) => {
             this.textoLog = response.message;
             console.log(response);
             this.datosJuegoService.link = `http://localhost:4200/nombreJugador/${this.codigoSala}`;
             this.datosJuegoService.pin = this.codigoSala;
-            this.router.navigate(['/salaDeJuego'])
+            this.router.navigate([`/salaDeJuego/${this.codigoSala}`])
           },
           (error: any) => {
             if (error === "TokenExpiredError") {

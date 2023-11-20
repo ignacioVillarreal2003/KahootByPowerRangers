@@ -36,11 +36,8 @@ export function authenticate(req: any, res: any, next: any) {
 
 router.post('/iniciarJuego', (req, res) => {
     // Acá llamaría a la base de datos con la id de la actividad
-    let actividades: IActividad[] = [
-        {id:'1', descripcion:'Sale un furbol', titulo:'Futbol', imagen:''},
-        {id:'2', descripcion:'Sale un basket', titulo:'Basketball', imagen:''},
-        {id:'3', descripcion:'Hora de programar', titulo:'Programación', imagen:''}
-    ];
+    let propuesta: IPropuesta = req.body.propuesta;
+    let actividades: IActividad[] = propuesta.listaActividades;
     let conteo = 1;
     numActividades(actividades.length);
     delay(actividades, conteo);

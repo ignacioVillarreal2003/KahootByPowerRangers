@@ -20,10 +20,10 @@ export class SalaEsperaJugadorComponent {
   ngOnInit(){
     this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
       if(message[0] == 'delay') {
-        this.router.navigate(['/pantallaCargaJugador']);
+        this.router.navigate([`/pantallaCargaJugador/${this.datosJugadorService.pin}`]);
       }
       if(message[0] == 'fin') {
-        this.router.navigate(['/finalJugador']);
+        this.router.navigate([`/finalJugador/${this.datosJugadorService.pin}`]);
       }
     });
   }

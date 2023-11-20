@@ -32,10 +32,11 @@ export class AdminService {
     return throwError(errorMessage);
   }
 
-  iniciarJuego(): Observable<any> {
+  iniciarJuego(propuesta: IPropuesta): Observable<any> {
     const uniqueID = uuidv4();
     const requestBody = {
-      id: uniqueID
+      id: uniqueID,
+      propuesta: propuesta
     };
     return this.http.post<any>('http://localhost:3001/administrador/iniciarJuego', requestBody, this.httpOptions).pipe(
       catchError(this.handleError)

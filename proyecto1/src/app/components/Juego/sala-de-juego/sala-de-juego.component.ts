@@ -16,10 +16,7 @@ export class SalaDeJuegoComponent {
   
   pin: string = this.datosJuegoService.pin;
   link: string = this.datosJuegoService.link;
-  usuarios = [{
-    nombre: "hola",
-    imagen: "avatar1.png"
-  }]
+  usuarios: any = []
 
   ngOnInit() {
     this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
