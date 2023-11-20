@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pantalla-carga-jugador',
@@ -10,14 +11,20 @@ import { Router } from '@angular/router';
 export class PantallaCargaJugadorComponent {
   constructor(private socketService: SocketService, private router: Router) {}
 
+  private subscription?: Subscription;
+
   ngOnInit() {
-    this.socketService.getNewMessage().subscribe((message: string) => {
-      if(message == 'actividad') {
+    this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
+      if(message[0] == 'actividad') {
         this.router.navigate(['/opcionesVotarJuegoJugador']);
       }
-      if(message == 'fin') {
+      if(message[0] == 'fin') {
         this.router.navigate(['/finalJugador']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    (this.subscription as Subscription).unsubscribe();
   }
 }

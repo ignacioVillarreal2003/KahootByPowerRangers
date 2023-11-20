@@ -1,7 +1,8 @@
 <div class="inicioJuego">
-    <div class="contador">5 de 10</div>
-    <div class="pregunta">
-        <p>¿Que es rojo?</p>
+    <div class="contador" *ngIf="conteo">{{conteo[0]}} de {{conteo[1]}}</div>
+    <div class="pregunta" *ngIf="actividad">
+        <h1>{{actividad.titulo}}</h1>
+        <h3>{{actividad.descripcion}}</h3>
     </div>
     <div class="progress barra-carga" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar bg-danger" style="width: 90%"></div>

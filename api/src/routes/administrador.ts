@@ -5,6 +5,7 @@ import { IPropuesta } from './interfaces/IPropuesta';
 import { IJuego } from './interfaces/IJuego';
 import { mongoose } from '../index';
 import { delay } from '../index';
+import { numActividades } from '../index';
 
 const router = express.Router()
 
@@ -39,8 +40,10 @@ router.post('/iniciarJuego', (req, res) => {
         {id:'1', descripcion:'Sale un furbol', titulo:'Futbol', imagen:''},
         {id:'2', descripcion:'Sale un basket', titulo:'Basketball', imagen:''},
         {id:'3', descripcion:'Hora de programar', titulo:'Programación', imagen:''}
-    ]; 
-    delay(actividades);
+    ];
+    let conteo = 1;
+    numActividades(actividades.length);
+    delay(actividades, conteo);
     res.status(200).send({
         message: "Iniciando Juego."
     });

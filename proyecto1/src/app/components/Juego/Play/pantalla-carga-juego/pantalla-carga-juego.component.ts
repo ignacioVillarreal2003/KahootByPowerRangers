@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SocketService } from 'src/app/components/services/socket.service';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/components/services/HTTPServices/admin.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pantalla-carga-juego',
@@ -11,15 +12,21 @@ import { AdminService } from 'src/app/components/services/HTTPServices/admin.ser
 export class PantallaCargaJuegoComponent {
   constructor(private socketService: SocketService, private router: Router, private adminService: AdminService) {}
 
+  private subscription?: Subscription;
+
   ngOnInit() {
     this.adminService.iniciarJuego().subscribe();
-    this.socketService.getNewMessage().subscribe((message: string) => {
-      if(message == 'actividad') {
+    this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
+      if(message[0] == 'actividad') {
         this.router.navigate(['/inicioJuego']);
       }
-      if(message == 'fin') {
+      if(message[0] == 'fin') {
         this.router.navigate(['/actividadesMasVotadas']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    (this.subscription as Subscription).unsubscribe();
   }
 }

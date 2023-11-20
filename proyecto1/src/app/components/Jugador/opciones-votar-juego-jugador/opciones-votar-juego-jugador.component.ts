@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { UserService } from '../../services/HTTPServices/user.service';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-opciones-votar-juego-jugador',
@@ -13,18 +14,26 @@ export class OpcionesVotarJuegoJugadorComponent {
 
   savePin(){}
 
+  private subscription?: Subscription;
+
   actividadId? : string = undefined;
+  conteo?: number[] = undefined;
 
   ngOnInit(){
     this.actividadId = this.socketService.getActividadId();
-    this.socketService.getNewMessage().subscribe((message: string) => {
-      if(message == 'delay') {
+    this.conteo = this.socketService.getNumActividad();
+    this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
+      if(message[0] == 'delay') {
         this.router.navigate(['/preguntaTerminadaJugador']);
       }
-      if(message == 'fin') {
+      if(message[0] == 'fin') {
         this.router.navigate(['/finalJugador']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    (this.subscription as Subscription).unsubscribe();
   }
 
   mandarVoto(voto: number) {

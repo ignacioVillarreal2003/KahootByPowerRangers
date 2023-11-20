@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-despues-cada-pregunta-jugador',
@@ -10,14 +11,20 @@ import { Router } from '@angular/router';
 export class DespuesCadaPreguntaJugadorComponent {
   constructor(private socketService: SocketService, private router: Router) {}
 
+  private subscription?: Subscription;
+
   ngOnInit() {
-    this.socketService.getNewMessage().subscribe((message) => {
-      if(message == 'delay') {
+    this.subscription = this.socketService.getNewMessage().subscribe((message: string[]) => {
+      if(message[0] == 'delay') {
         this.router.navigate(['/preguntaTerminadaJugador']);
       }
-      if(message == 'fin') {
+      if(message[0] == 'fin') {
         this.router.navigate(['/finalJugador']);
       }
     });
+  }
+
+  ngOnDestroy() {
+    (this.subscription as Subscription).unsubscribe();
   }
 }

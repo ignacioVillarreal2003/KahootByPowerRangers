@@ -195,12 +195,12 @@ app.get('/getToken', (req, res) => {
     return res.send({ token: jwt.verify(req.body.token, 'shhhhh') });
 })
 
-function mandarActividad(actividades: IActividad[]){
-    io.emit('actividad', actividades[actividades.length - 1]);
+function mandarActividad(actividades: IActividad[], conteo: number){
+    io.emit('actividad', actividades[actividades.length - 1], conteo);
     actividades.pop();
     if(actividades.length > 0) {
         setTimeout(() => {
-            delay(actividades)
+            delay(actividades, conteo + 1)
         }, 10000);
     } else {
         setTimeout(() => {
@@ -209,11 +209,15 @@ function mandarActividad(actividades: IActividad[]){
     }
 }
 
-export function delay(actividades: IActividad[]) {
+export function delay(actividades: IActividad[], conteo: number) {
     io.emit('delay');
     setTimeout(() => {
-        mandarActividad(actividades);
+        mandarActividad(actividades, conteo);
     }, 3000);
+}
+
+export function numActividades(num: number) {
+    io.emit('numActividades', num);
 }
 
 export function enviarJugador(player: {nombre: string, imagen: string}) {
