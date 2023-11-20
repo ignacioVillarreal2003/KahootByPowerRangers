@@ -28,6 +28,10 @@ export class SocketService {
       this.message$.next('delay');
     });
 
+    this.socket.on('player', (player) => {
+      this.message$.next(JSON.stringify(player));
+    });
+
     return this.message$.asObservable();
   };
 

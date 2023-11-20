@@ -216,6 +216,10 @@ export function delay(actividades: IActividad[]) {
     }, 3000);
 }
 
+export function enviarJugador(player: {nombre: string, imagen: string}) {
+    io.emit('player', player);
+}
+
 import administradorRouter from './routes/administrador'
 import usuarioRouter from './routes/usuario'
 
