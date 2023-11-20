@@ -12,8 +12,6 @@ import { DatosJugadorService } from '../../services/datos-jugador.service';
 export class OpcionesVotarJuegoJugadorComponent {
   constructor (private socketService: SocketService, private userService: UserService, private router: Router, private datosJugadorService: DatosJugadorService) {}
 
-  savePin(){}
-
   actividadId? : string = undefined;
 
   ngOnInit(){
@@ -29,8 +27,14 @@ export class OpcionesVotarJuegoJugadorComponent {
     this.pin = this.datosJugadorService.pin
   }
 
-  mandarVoto(voto: number) {
-    this.userService.calificarActividad(this.actividadId as string, voto, "pin");
+  guardarRespuesta(voto: number) {
+    this.userService.calificarActividad(this.actividadId as string, voto, this.pin).subscribe(
+      (response: any) => {
+        console.log("Votacion efectuada.");
+      },
+      (error: any) => {
+        console.error(error);
+      })
   }
 
   pin: string = "";
