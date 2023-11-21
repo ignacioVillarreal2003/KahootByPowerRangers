@@ -3,6 +3,9 @@
     <div class="pregunta" *ngIf="actividad">
         <h1>{{actividad.titulo}}</h1>
         <h3>{{actividad.descripcion}}</h3>
+        <div class="imagen" *ngIf="actividad.imagen">
+            <img [src]="actividad.imagen" alt="">
+        </div>
     </div>
     <div class="progress barra-carga" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar bg-danger" style="width: 100%"></div>
