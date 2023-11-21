@@ -49,7 +49,7 @@ router.post('/iniciarJuego', (req, res) => {
 /* Actividades */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/crearActividad', authenticate, async (req, res) => {
-    try {
+    try {        
         // Obtener actividad de la base de datos
         const actividad: IActividad | null = await getActividad(req.body.titulo).then((res) => {
             const act = res[0]

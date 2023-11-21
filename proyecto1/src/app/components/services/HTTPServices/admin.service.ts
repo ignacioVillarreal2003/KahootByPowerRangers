@@ -43,7 +43,7 @@ export class AdminService {
     );
   }
 
-  crearActividad(titulo: string, descripcion: string, imagen: any): Observable<any> {
+  crearActividad(titulo: string, descripcion: string, imagen: any): Observable<any> {    
     const uniqueID = uuidv4();
     const requestBody: IActividad = {
       id: uniqueID,
