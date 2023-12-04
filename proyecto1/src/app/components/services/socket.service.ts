@@ -36,7 +36,7 @@ export class SocketService {
       this.conteo = this.conteo + 0.5;
     });
 
-    this.socket.on('player', (player) => {
+    this.socket.on('player', (player: any) => {
       this.message$.next(['player', JSON.stringify(player)]);
     });
 
