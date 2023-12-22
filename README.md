@@ -31,6 +31,6 @@ A continuación se explicarán los detalles de cómo debería funcionar la aplic
 - Iniciar Aplicación Frontend: cd proyecto1 && ng serve --open
 - Iniciar Servidor Backend: cd api && npm run dev
 
-La aplicación estará disponible en http://localhost:4200, y el servidor backend en http://localhost:3000. Corre localmente. 
+La aplicación estará disponible en http://localhost:4200, y el servidor backend en http://localhost:3001. Corre localmente. 
 Puede habrir varias pestañas para utilizarla.
 
