@@ -30,6 +30,7 @@ A continuación se explicarán los detalles de cómo debería funcionar la aplic
 - Instalar Dependencias Backend: cd api && npm install
 - Iniciar Aplicación Frontend: cd proyecto1 && ng serve --open
 - Iniciar Servidor Backend: cd api && npm run dev
+- Crear un archivo en la api con el nombre .env y escribir: MONGOSTRING="String de la conexión a mongo"
 
 La aplicación estará disponible en http://localhost:4200, y el servidor backend en http://localhost:3001. Corre localmente. 
 Puede habrir varias pestañas para utilizarla.
