@@ -26,10 +26,10 @@ A continuación se explicarán los detalles de cómo debería funcionar la aplic
 
 ## Instalacion
 - Clonar el Repositorio
-- Instalar Dependencias Frontend: cd ... && npm install
-- Instalar Dependencias Backend: cd ... && npm install
-- Iniciar Aplicación Frontend: cd ... && ng serve --open
-- Iniciar Servidor Backend: cd ... && npm run dev
+- Instalar Dependencias Frontend: cd proyecto1 && npm install
+- Instalar Dependencias Backend: cd api && npm install
+- Iniciar Aplicación Frontend: cd proyecto1 && ng serve --open
+- Iniciar Servidor Backend: cd api && npm run dev
 
 La aplicación estará disponible en http://localhost:4200, y el servidor backend en http://localhost:3000. Corre localmente. 
 Puede habrir varias pestañas para utilizarla.
