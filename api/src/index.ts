@@ -3,6 +3,8 @@ import { IUsuario } from './routes/interfaces/IUsuario';
 import { IActividad } from './routes/interfaces/IActividad';
 import { createServer } from 'http';
 
+require('dotenv').config();
+
 export const listaUsuariosEnPantalla: any[] = [];
 
 
@@ -40,7 +42,7 @@ httpServer.listen(3002);
 
 /* mongoose */
 export const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://ignaciovillarreal20031231:As8k2oosvQQJON92@cluster0.hce3g5c.mongodb.net/pruebaProyecto')
+mongoose.connect(process.env.MONGOSTRING )
     .then(() => console.log('Connected!'));
 
 
