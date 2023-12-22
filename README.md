@@ -1,8 +1,7 @@
 # ProyectoDWM - Obligatorio Desarrollo Web y Mobile
 
 ## Desarrollo
-Se requiere un juego estilo Kahoot implementando un software web y mobile que les permita proponer juegos/chistes/imágenes para reuniones sociales o fiestas (actividades).
-A continuación se explicarán los detalles de cómo debería funcionar la aplicación:
+Se requiere un juego estilo Kahoot implementando un software web y mobile que les permita proponer juegos/chistes/imágenes para reuniones sociales o fiestas (actividades). A continuación, se explicarán los detalles de cómo debería funcionar la aplicación:
 
 -	Creación del juego: El anfitrión deberá crear una sala de juego con una propuesta, código único y un link para que los jugadores puedan ingresar a la sala. 
 -	Creación de propuestas: El anfitrión deberá crear una propuesta a partir de un conjunto de actividades que se encuentran en el sistema, para mostrar al resto de los jugadores. 
