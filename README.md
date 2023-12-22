@@ -10,10 +10,10 @@ A continuación se explicarán los detalles de cómo debería funcionar la aplic
 -	Preparación: Para jugar será necesaria una pantalla grande (como televisión o computadora) para mostrar la interfaz del juego a todos los jugadores. Cada jugador debe tener su propio dispositivo móvil con acceso a un navegador web.
 -	Conexión a la sala de juego: El anfitrión inicia una sala de juego y comparte un código único y/o link, para que los jugadores puedan ingresar desde sus dispositivos mobile para unirse a la partida.
 -	Jugabilidad: Una vez que el anfitrion decida (mediante un boton en la interfaz), el juego comienza. La propuesta creada por el anfitrión será presentada en la pantalla principal con sus respectivas actividades. Cada actividad se muestra de manera única en la pantalla del jugador, las cuales iran pasando de una en una. En ningun momento los jugadores pueden todas las actividades juntas, solamente al mostrar los resultados. Al momento de presentar la actividad, las opciones de votación serán: 
---	Me gusta (+1)
---	No me gusta (-1)
---	Me da igual (0)
---	Luego de pasadas todas las actividades, se mostrarán en la pantalla grande los resultados, contabilizando los votos de las 3 más votadas.
+	>>Me gusta (+1)
+	>>No me gusta (-1)
+	>>Me da igual (0)
+- Luego de pasadas todas las actividades, se mostrarán en la pantalla grande los resultados, contabilizando los votos de las 3 más votadas.
 
 ## Tecnologias usadas y componentes importantes
 - JWT
